@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebak — Shinobi Sympathist | Living Character Sheet</title>
+  <style>
+    :root {
+      --bg-dark: #0b0c10;
+      --bg-panel: #14161d;
+      --bg-panel-alt: #1b1e28;
+      --uchiha-red: #b91c1c;
+      --uchiha-glow: #ef4444;
+      --chakra-blue: #38bdf8;
+      --sympathy-amber: #f59e0b;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #2a2e3d;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(185, 28, 28, 0.12) 0%, transparent 35%),
+        radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+      color: var(--text-main);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* LIVE SYNC BAR */
+    .sync-bar {
+      background: #11131a;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+
+    .sync-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .sync-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sync-input {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      width: 280px;
+    }
+
+    /* HEADER */
+    .header-banner {
+      background: linear-gradient(135deg, #161822 0%, #241418 100%);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--uchiha-red);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .identity-block h1 {
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .crow-badge {
+      font-size: 0.85rem;
+      background: rgba(185, 28, 28, 0.25);
+      border: 1px solid var(--uchiha-red);
+      color: #fca5a5;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .subtitle { color: var(--text-muted); font-size: 0.98rem; margin-top: 4px; }
+
+    .identity-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+    .tag {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: #d1d5db;
+    }
+
+    .btn {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.84rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.2); }
+    .btn-primary { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
+    .btn-sync { background: rgba(56, 189, 248, 0.15); border-color: var(--chakra-blue); color: var(--chakra-blue); }
+
+    /* VITALS BAR */
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+    }
+
+    .vital-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vital-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--uchiha-red);
+    }
+
+    .vital-card.chakra::before { background: var(--chakra-blue); }
+    .vital-card.sympathy::before { background: var(--sympathy-amber); }
+
+    .vital-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+    .vital-value { font-size: 1.75rem; font-weight: 700; color: #fff; }
+    .vital-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 4px; }
+
+    .counter-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; }
+    .counter-btn {
+      width: 26px; height: 26px; border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-panel-alt); color: #fff; cursor: pointer; font-weight: bold;
+    }
+
+    /* MAIN GRID */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr 380px;
+      gap: 20px;
+    }
+
+    @media (max-width: 1120px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #fff;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .ability-box {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease;
+    }
+    .ability-box:hover { transform: translateY(-2px); border-color: var(--uchiha-glow); }
+    .ability-name { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
+    .ability-mod { font-size: 1.55rem; font-weight: 800; color: #fff; margin: 2px 0; }
+    .ability-score { font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 99px; }
+
+    .skill-list { display: flex; flex-direction: column; gap: 6px; }
+    .skill-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 7px 10px; background: var(--bg-panel-alt);
+      border: 1px solid transparent; border-radius: 6px; font-size: 0.88rem; cursor: pointer;
+    }
+    .skill-row:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.12); }
+    .skill-left { display: flex; align-items: center; gap: 8px; }
+    .prof-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; }
+    .prof-dot.proficient { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
+    .prof-dot.expertise { background: var(--sympathy-amber); border-color: #fde68a; box-shadow: 0 0 6px var(--sympathy-amber); }
+    .skill-bonus { font-weight: 700; color: #fff; }
+
+    .mechanic-card {
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--uchiha-red);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .mechanic-card.chakra-card { border-left-color: var(--chakra-blue); }
+    .mechanic-card.sympathy-card { border-left-color: var(--sympathy-amber); }
+    .mechanic-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .mechanic-title { font-weight: 700; color: #fff; font-size: 0.95rem; }
+    .badge-cost { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(56, 189, 248, 0.15); color: var(--chakra-blue); border: 1px solid rgba(56, 189, 248, 0.35); }
+    .badge-locked { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(185, 28, 28, 0.2); color: #fca5a5; border: 1px solid var(--uchiha-red); }
+    .mechanic-desc { font-size: 0.85rem; color: #d1d5db; }
+
+    .weapons-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .weapons-table th { text-align: left; color: var(--text-muted); padding: 8px; border-bottom: 1px solid var(--border-color); }
+    .weapons-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .weapons-table tr:hover { background: rgba(255, 255, 255, 0.03); cursor: pointer; }
+
+    .orb-group { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+    .chakra-orb {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid var(--chakra-blue); background: var(--chakra-blue);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.6); transition: all 0.15s ease;
+    }
+    .chakra-orb.empty { background: transparent; box-shadow: none; opacity: 0.45; }
+
+    .dice-roller-box {
+      background: linear-gradient(135deg, #1b1622 0%, #12151f 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .roll-total { font-size: 1.5rem; font-weight: 800; color: var(--sympathy-amber); }
+
+    .encounter-card {
+      background: rgba(185, 28, 28, 0.08);
+      border: 1px solid rgba(185, 28, 28, 0.4);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .enemy-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); font-size: 0.85rem; }
+    .currency-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .coin-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; text-align: center; font-size: 0.82rem; }
+    .coin-box strong { display: block; font-size: 1.15rem; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LIVE GOOGLE SHEETS BACKEND SYNC BAR -->
+    <div class="sync-bar">
+      <div class="sync-status">
+        <span class="status-dot" id="sync-dot"></span>
+        <span id="sync-text">Live DM Backend ready - click Sync to load stats</span>
+      </div>
+      <div class="sync-controls">
+        <input type="text" id="sheet-url-input" class="sync-input" placeholder="Paste Google Sheet URL or CSV link (optional override)" />
+        <button class="btn btn-sync" onclick="syncFromGoogleSheet()">🔄 Sync Live Stats</button>
+      </div>
+    </div>
+
+    <!-- TOP IDENTITY BANNER -->
+    <header class="header-banner">
+      <div class="identity-block">
+        <h1>
+          <span id="char-name">Sebak</span>
+          <span class="crow-badge">The Crow in the Wind</span>
+        </h1>
+        <p class="subtitle" id="char-lineage">Half-Uchiha (Son of Uchiha Itachi) &bull; Unknown Maternal Bloodline &bull; Shinobi Sympathist</p>
+        <div class="identity-tags">
+          <span class="tag" id="char-class"><strong>Class:</strong> Rogue (Shinobi Sympathist) - Level 1</span>
+          <span class="tag" id="char-location"><strong>Location:</strong> Road to Imre (Omethi River)</span>
+          <span class="tag" id="char-employer"><strong>Employer:</strong> Bram (Tinker)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- VITALS BAR -->
+    <section class="vitals-grid">
+      <div class="vital-card">
+        <div class="vital-label">Hit Points</div>
+        <div class="vital-value"><span id="hp-current">10</span> / <span id="hp-max">10</span></div>
+        <div class="counter-controls">
+          <span class="vital-sub">Hit Die: 1d8</span>
+        </div>
+      </div>
+
+      <div class="vital-card">
+        <div class="vital-label">Armour Class</div>
+        <div class="vital-value" id="ac-val">14</div>
+        <div class="vital-sub">Dark Shinobi Vest (11 + 3 DEX)</div>
+      </div>
+
+      <div class="vital-card">
+        <div class="vital-label">Initiative &amp; Speed</div>
+        <div class="vital-value"><span id="init-val">+3</span> / <span id="speed-val">30 ft.</span></div>
+        <div class="vital-sub">Proficiency Bonus: <span id="prof-val">+2</span></div>
+      </div>
+
+      <div class="vital-card chakra">
+        <div class="vital-label">Internal Chakra Pool</div>
+        <div class="vital-value"><span id="chakra-count">3</span> / <span id="chakra-max">3</span></div>
+        <div class="orb-group" id="chakra-orbs">
+          <div class="chakra-orb"></div>
+          <div class="chakra-orb"></div>
+          <div class="chakra-orb"></div>
+        </div>
+      </div>
+
+      <div class="vital-card sympathy">
+        <div class="vital-label">Alar &amp; Sympathy</div>
+        <div class="vital-value"><span id="alar-atk">+5</span> / DC <span id="alar-dc">13</span></div>
+        <div class="vital-sub">Active Mental Splits: <span id="alar-splits">1</span></div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE ROLL BANNER -->
+    <div class="dice-roller-box">
+      <div class="roll-result" id="roll-log">
+        <strong>DM Log:</strong> <span id="dm-last-log">Surprise round ready. Click any Ability, Save, Skill, or Weapon below to roll!</span>
+      </div>
+      <div class="roll-total" id="roll-total">--</div>
+    </div>
+
+    <!-- THREE-COLUMN DASHBOARD -->
+    <main class="dashboard-grid">
+      <!-- LEFT COLUMN: ABILITIES, SAVES & SKILLS -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>Ability Scores</span>
+          <small style="color:var(--text-muted);font-size:0.75rem;">Click to Roll</small>
+        </div>
+        <div class="ability-grid">
+          <div class="ability-box" onclick="rollCheck('Strength Check', 0)">
+            <div class="ability-name">Strength</div>
+            <div class="ability-mod">+0</div>
+            <div class="ability-score" id="str-score">10</div>
+          </div>
+          <div class="ability-box" onclick="rollCheck('Dexterity Check', 3)">
+            <div class="ability-name">Dexterity</div>
+            <div class="ability-mod">+3</div>
+            <div class="ability-score" id="dex-score">16</div>
+          </div>
+          <div class="ability-box" onclick="rollCheck('Constitution Check', 2)">
+            <div class="ability-name">Constitution</div>
+            <div class="ability-mod">+2</div>
+            <div class="ability-score" id="con-score">14</div>
+          </div>
+          <div class="ability-box" onclick="rollCheck('Intelligence Check', 3)">
+            <div class="ability-name">Intelligence</div>
+            <div class="ability-mod">+3</div>
+            <div class="ability-score" id="int-score">16</div>
+          </div>
+          <div class="ability-box" onclick="rollCheck('Wisdom Check', 1)">
+            <div class="ability-name">Wisdom</div>
+            <div class="ability-mod">+1</div>
+            <div class="ability-score" id="wis-score">12</div>
+          </div>
+          <div class="ability-box" onclick="rollCheck('Charisma Check', -1)">
+            <div class="ability-name">Charisma</div>
+            <div class="ability-mod">-1</div>
+            <div class="ability-score" id="cha-score">8</div>
+          </div>
+        </div>
+
+        <div class="panel-title">Saving Throws</div>
+        <div class="skill-list">
+          <div class="skill-row" onclick="rollCheck('Dexterity Save', 5)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Dexterity Save</div>
+            <span class="skill-bonus">+5</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Intelligence Save', 5)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Intelligence Save</div>
+            <span class="skill-bonus">+5</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Constitution Save (Binder Chills)', 2)">
+            <div class="skill-left"><span class="prof-dot"></span> Constitution Save</div>
+            <span class="skill-bonus">+2</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Wisdom Save', 1)">
+            <div class="skill-left"><span class="prof-dot"></span> Wisdom Save</div>
+            <span class="skill-bonus">+1</span>
+          </div>
+        </div>
+
+        <div class="panel-title">Skills <small style="color:var(--sympathy-amber);font-size:0.72rem;">&#9679; Expertise</small></div>
+        <div class="skill-list">
+          <div class="skill-row" onclick="rollCheck('Stealth (Expertise)', 7)">
+            <div class="skill-left"><span class="prof-dot expertise"></span> Stealth (DEX)</div>
+            <span class="skill-bonus">+7</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Investigation (Expertise)', 7)">
+            <div class="skill-left"><span class="prof-dot expertise"></span> Investigation (INT)</div>
+            <span class="skill-bonus">+7</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Acrobatics', 5)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Acrobatics (DEX)</div>
+            <span class="skill-bonus">+5</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Arcana / Sympathy & Sygaldry', 5)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Arcana / Sympathy (INT)</div>
+            <span class="skill-bonus">+5</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Sleight of Hand', 5)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Sleight of Hand (DEX)</div>
+            <span class="skill-bonus">+5</span>
+          </div>
+          <div class="skill-row" onclick="rollCheck('Perception', 3)">
+            <div class="skill-left"><span class="prof-dot proficient"></span> Perception (WIS)</div>
+            <span class="skill-bonus">+3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER COLUMN: WEAPONS, SYMPATHY & CHAKRA MECHANICS -->
+      <div class="panel">
+        <div class="panel-title">Weapons &amp; Shinobi Arsenal <small style="color:var(--text-muted);font-size:0.75rem;">Click Row to Roll Attack</small></div>
+        <table class="weapons-table">
+          <thead>
+            <tr>
+              <th>Weapon</th>
+              <th>Atk</th>
+              <th>Damage</th>
+              <th>Ammo / Properties</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="rollWeapon('Wakizashi (Shortsword)', 5, 6, 3)">
+              <td><strong>Wakizashi</strong></td>
+              <td>+5</td>
+              <td>1d6 + 3</td>
+              <td>Finesse, Light (5 ft)</td>
+            </tr>
+            <tr onclick="rollWeapon('Kunai', 5, 4, 3)">
+              <td><strong>Kunai</strong></td>
+              <td>+5</td>
+              <td>1d4 + 3</td>
+              <td><strong id="kunai-count">6</strong> left &bull; Thrown (20/60)</td>
+            </tr>
+            <tr onclick="rollWeapon('Shuriken', 5, 4, 3)">
+              <td><strong>Shuriken</strong></td>
+              <td>+5</td>
+              <td>1d4 + 3</td>
+              <td><strong id="shuriken-count">10</strong> left &bull; Thrown (20/60)</td>
+            </tr>
+            <tr onclick="rollWeapon('Sympathetic Binding (Alar)', 5, 6, 0)">
+              <td><strong>Alar Binding</strong></td>
+              <td>+5</td>
+              <td>Variable / DC 13</td>
+              <td>1 Active Mental Split</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="panel-title">Internal Chakra Techniques</div>
+        <div class="mechanic-card chakra-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Body Flicker (Shunshin)</span>
+            <span class="badge-cost">1 Chakra &bull; Bonus Action</span>
+          </div>
+          <p class="mechanic-desc">Teleport/dash up to 30 ft. to an unoccupied space you can see without provoking opportunity attacks.</p>
+        </div>
+
+        <div class="mechanic-card chakra-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Chakra-Fuelled Sympathetic Link</span>
+            <span class="badge-cost">1 Chakra &bull; Free w/ Link</span>
+          </div>
+          <p class="mechanic-desc">Act as a pure, lossless thermal/kinetic source for a Sympathetic binding for 1 round, bypassing the need for an external flame or the risk of Binder's Chills.</p>
+        </div>
+
+        <div class="mechanic-card chakra-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Precision Throw (Uchiha Trajectory)</span>
+            <span class="badge-cost">1 Chakra &bull; Attack Mod</span>
+          </div>
+          <p class="mechanic-desc">Curve a thrown kunai or shuriken around half or three-quarters cover, granting <strong>Advantage</strong> on the attack roll (triggers Sneak Attack).</p>
+        </div>
+
+        <div class="panel-title">Alar &amp; Sympathy Mechanics</div>
+        <div class="mechanic-card sympathy-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Link Efficiency &amp; Binder's Chills</span>
+            <span class="badge-cost" style="color:var(--sympathy-amber);border-color:var(--sympathy-amber);">Alar +5 | DC 13</span>
+          </div>
+          <p class="mechanic-desc">
+            &bull; <strong>Perfect Link (Same piece):</strong> ~80–90% efficiency<br/>
+            &bull; <strong>Good Link (Similar + blood/hair):</strong> ~40–60% efficiency<br/>
+            &bull; <strong>Poor Link (Crude similarity):</strong> ~5–15% efficiency (High slippage)<br/>
+            &bull; <strong>Binder's Chills:</strong> Drawing heat from body requires CON Save (DC 10 + energy level) or take 1d4 Cold damage + 1 Exhaustion.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: BLOODLINES, INVENTORY & ACTIVE ENCOUNTER -->
+      <div class="panel">
+        <div class="panel-title">Bloodlines &amp; Class Traits</div>
+        <div class="mechanic-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Sneak Attack (1d6)</span>
+            <span class="badge-cost" style="color:#fff;">1 / Turn</span>
+          </div>
+          <p class="mechanic-desc">Deal +1d6 damage when hitting with Advantage, or when an ally/active Sympathetic kinetic binding is distracting the enemy within 5 ft.</p>
+        </div>
+
+        <div class="mechanic-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Uchiha Dormancy (Sharingan)</span>
+            <span class="badge-locked">LOCKED</span>
+          </div>
+          <p class="mechanic-desc">Inherited from Uchiha Itachi. Dormant until triggered by extreme emotional trauma or life-or-death catalysis.</p>
+        </div>
+
+        <div class="mechanic-card">
+          <div class="mechanic-header">
+            <span class="mechanic-title">Unknown Maternal Bloodline</span>
+            <span class="badge-locked">UNKNOWN</span>
+          </div>
+          <p class="mechanic-desc">Strange heavy resonance under extreme strain or sympathetic slippage causes surrounding matter to hum and vibrate.</p>
+        </div>
+
+        <div class="panel-title">Temerant Purse</div>
+        <div class="currency-bar">
+          <div class="coin-box"><strong id="coin-talents">2</strong>Silver Talents</div>
+          <div class="coin-box"><strong id="coin-jots">6</strong>Iron Jots</div>
+          <div class="coin-box"><strong id="coin-drabs">4</strong>Copper Drabs</div>
+        </div>
+
+        <div class="panel-title">Sympathy Pouch &amp; Gear</div>
+        <div class="mechanic-desc" style="background:var(--bg-panel-alt);padding:12px;border-radius:8px;border:1px solid var(--border-color);">
+          &bull; <strong>Sympathy Kit:</strong> <span id="sympathy-kit">3x pine pitch vials, wax-coated twine, 4x iron nails &amp; filings, lead &amp; copper chunk, 2x tallow candles, tinderbox</span><br/>
+          &bull; <strong>Keepsake:</strong> <span id="keepsake-item">Small wooden amulet containing a single black crow feather</span>
+        </div>
+
+        <div class="panel-title">Active Encounter Tracker</div>
+        <div class="encounter-card">
+          <div style="font-weight:700;color:#fca5a5;margin-bottom:6px;" id="encounter-title">Surprise Round — Felled Oak Ambush</div>
+          <div class="enemy-item">
+            <span id="enemy-1">1. Crossbowman in Ash Tree (30ft away, 15ft up)</span>
+          </div>
+          <div class="enemy-item">
+            <span id="enemy-2">2. Two Club Brigands in Left Ditch (20ft away)</span>
+          </div>
+          <div class="enemy-item" style="border:none;">
+            <span id="env-source" style="color:var(--sympathy-amber);">Source: Lit brass whale-oil lantern on Bram's wagon</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    let hp = 10;
+    let maxHp = 10;
+    let orbs = [true, true, true];
+
+    // Load saved Google Sheet URL override if user pasted one
+    const savedUrl = localStorage.getItem('sebak_sheet_url');
+    if (savedUrl) {
+      document.getElementById('sheet-url-input').value = savedUrl;
+    }
+
+    function renderOrbs() {
+      const container = document.getElementById('chakra-orbs').children;
+      let count = 0;
+      for (let i = 0; i < orbs.length; i++) {
+        if (orbs[i]) {
+          container[i].classList.remove('empty');
+          count++;
+        } else {
+          container[i].classList.add('empty');
+        }
+      }
+      document.getElementById('chakra-count').textContent = count;
+    }
+
+    function setChakraCount(n) {
+      for (let i = 0; i < orbs.length; i++) {
+        orbs[i] = i < n;
+      }
+      renderOrbs();
+    }
+
+    function rollCheck(name, mod) {
+      const d20 = Math.floor(Math.random() * 20) + 1;
+      const total = d20 + mod;
+      const sign = mod >= 0 ? '+' : '';
+      const critText = d20 === 20 ? ' <span style="color:#10b981;font-weight:bold;">(CRITICAL!)</span>' : (d20 === 1 ? ' <span style="color:#ef4444;font-weight:bold;">(NAT 1!)</span>' : '');
+      document.getElementById('roll-log').innerHTML = `<strong>${name}:</strong> Rolled 1d20 (${d20}) ${sign}${mod}${critText}`;
+      document.getElementById('roll-total').textContent = total;
+    }
+
+    function rollWeapon(name, atkMod, dmgDie, dmgMod) {
+      const d20 = Math.floor(Math.random() * 20) + 1;
+      const atkTotal = d20 + atkMod;
+      const dmgRoll = Math.floor(Math.random() * dmgDie) + 1;
+      const sneak = Math.floor(Math.random() * 6) + 1;
+      const dmgTotal = dmgRoll + dmgMod;
+      document.getElementById('roll-log').innerHTML =
+        `<strong>${name}:</strong> To Hit: <strong>${atkTotal}</strong> (d20=${d20}+${atkMod}) | Base Dmg: <strong>${dmgTotal}</strong> (1d${dmgDie}=${dmgRoll}+${dmgMod}) | +Sneak Attack (1d6=${sneak}): <strong>${dmgTotal + sneak}</strong>`;
+      document.getElementById('roll-total').textContent = atkTotal + ' Hit';
+    }
+
+    // Parse CSV text into key-value map (handles quotes, commas, newlines, CRLF)
+    function parseCSV(csvText) {
+      const rows = [];
+      let row = [], field = '', inQuotes = false;
+      for (let i = 0; i < csvText.length; i++) {
+        const c = csvText[i];
+        if (inQuotes) {
+          if (c === '"' && csvText[i + 1] === '"') { field += '"'; i++; }
+          else if (c === '"') inQuotes = false;
+          else field += c;
+        } else if (c === '"') inQuotes = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n' || c === '\r') {
+          if (c === '\r' && csvText[i + 1] === '\n') i++;
+          row.push(field); field = ''; rows.push(row); row = [];
+        } else field += c;
+      }
+      if (field !== '' || row.length) { row.push(field); rows.push(row); }
+      const map = {};
+      for (let i = 1; i < rows.length; i++) { // row 0 = header
+        if (rows[i].length < 2) continue;
+        const key = rows[i][0].trim();
+        if (key) map[key] = rows[i][1].trim();
+      }
+      return map;
+    }
+
+    // Turn any Google Sheet link into a CORS-friendly CSV URL
+    function toCsvUrl(rawUrl) {
+      // Published-to-web link: /spreadsheets/d/e/<id>/pubhtml or /pub?output=csv
+      if (/\/spreadsheets\/d\/e\//.test(rawUrl)) {
+        if (/output=csv/.test(rawUrl)) return rawUrl;
+        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
+        return rawUrl.replace(/\/pub(html)?.*$/, '/pub') + '?output=csv' + (gid ? '&gid=' + gid : '');
+      }
+      // Normal share/edit link: use gviz endpoint (sends CORS headers)
+      const m = rawUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+      if (m) {
+        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
+        return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv${gid ? '&gid=' + gid : ''}`;
+      }
+      return rawUrl;
+    }
+
+    // Load sheet via <script> tag (JSONP) - not subject to CORS, works from file://
+    function loadSheetJsonp(rawUrl) {
+      return new Promise((resolve, reject) => {
+        const m = rawUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+        if (!m) return reject(new Error('Not a Google Sheet link'));
+        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
+        const cb = '__sheetCb' + Date.now();
+        const script = document.createElement('script');
+        const cleanup = () => { delete window[cb]; script.remove(); };
+        const timer = setTimeout(() => { cleanup(); reject(new Error('Timed out. Check the sheet is shared as "Anyone with the link -> Viewer".')); }, 15000);
+        window[cb] = (resp) => {
+          clearTimeout(timer); cleanup();
+          if (resp.status !== 'ok' || !resp.table) return reject(new Error('Sheet error: ' + ((resp.errors && resp.errors[0] && resp.errors[0].detailed_message) || 'unknown')));
+          const map = {};
+          resp.table.rows.forEach(r => {
+            const c = r.c || [];
+            const k = c[0] && (c[0].v ?? c[0].f);
+            const v = c[1] && (c[1].f ?? c[1].v);
+            if (k != null && v != null) map[String(k).trim()] = String(v).trim();
+          });
+          resolve(map);
+        };
+        script.onerror = () => { clearTimeout(timer); cleanup(); reject(new Error('Could not load sheet. Set sharing to "Anyone with the link -> Viewer".')); };
+        script.src = `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?headers=0&tqx=responseHandler:${cb}${gid ? '&gid=' + gid : ''}`;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function syncFromGoogleSheet() {
+      const inputEl = document.getElementById('sheet-url-input');
+      let rawUrl = inputEl.value.trim();
+      if (rawUrl) {
+        localStorage.setItem('sebak_sheet_url', rawUrl);
+      } else {
+        // Default to the Sebak_Live_State_Backend sheet link if shared
+        rawUrl = document.querySelector('meta[name="backend-sheet"]')?.content || localStorage.getItem('sebak_sheet_url') || 'https://docs.google.com/spreadsheets/d/1h5DhRqH9YN86ekNuVut8XaX-32_XqunLM43wAR1MTHM/edit?usp=sharing';
+      }
+
+      if (!rawUrl) {
+        document.getElementById('sync-text').textContent = 'Paste your Sebak_Live_State_Backend Share Link in the box to sync!';
+        return;
+      }
+
+      const csvUrl = toCsvUrl(rawUrl);
+
+      try {
+        document.getElementById('sync-text').textContent = 'Syncing with DM Backend...';
+        let data;
+        if (/\/spreadsheets\/d\/e\//.test(rawUrl) || /output=csv/.test(rawUrl)) {
+          const res = await fetch(csvUrl); // published-to-web CSV supports CORS
+          if (!res.ok) throw new Error('Could not fetch published CSV (HTTP ' + res.status + ')');
+          data = parseCSV(await res.text());
+        } else {
+          data = await loadSheetJsonp(rawUrl);
+        }
+        if (!Object.keys(data).length) throw new Error('Sheet loaded but no key/value rows found (need keys in column A, values in column B).');
+
+        if (data.hp_current) { hp = parseInt(data.hp_current, 10); document.getElementById('hp-current').textContent = hp; }
+        if (data.hp_max) { maxHp = parseInt(data.hp_max, 10); document.getElementById('hp-max').textContent = maxHp; }
+        if (data.ac) document.getElementById('ac-val').textContent = data.ac;
+        if (data.chakra_current) setChakraCount(parseInt(data.chakra_current, 10));
+        if (data.kunai_count) document.getElementById('kunai-count').textContent = data.kunai_count;
+        if (data.shuriken_count) document.getElementById('shuriken-count').textContent = data.shuriken_count;
+        if (data.silver_talents) document.getElementById('coin-talents').textContent = data.silver_talents;
+        if (data.iron_jots) document.getElementById('coin-jots').textContent = data.iron_jots;
+        if (data.copper_drabs) document.getElementById('coin-drabs').textContent = data.copper_drabs;
+        if (data.sympathy_kit) document.getElementById('sympathy-kit').textContent = data.sympathy_kit;
+        if (data.location) document.getElementById('char-location').innerHTML = `<strong>Location:</strong> ${data.location}`;
+        if (data.encounter_title) document.getElementById('encounter-title').textContent = data.encounter_title;
+        if (data.enemy_1) document.getElementById('enemy-1').textContent = `1. ${data.enemy_1}`;
+        if (data.enemy_2) document.getElementById('enemy-2').textContent = `2. ${data.enemy_2}`;
+        if (data.environment_source) document.getElementById('env-source').textContent = `Source: ${data.environment_source}`;
+        if (data.last_log) document.getElementById('dm-last-log').textContent = data.last_log;
+
+        const now = new Date().toLocaleTimeString();
+        document.getElementById('sync-text').textContent = `Synced with DM Backend at ${now}`;
+      } catch (err) {
+        document.getElementById('sync-text').textContent = `Sync notice: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
