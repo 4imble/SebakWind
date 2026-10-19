@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sebak — Shinobi Sympathist | Living Character Sheet</title>
+  <title>Sebak Character Sheet</title>
   <style>
     :root {
       --bg-dark: #0b0c10;
@@ -14,6 +14,7 @@
       --chakra-blue: #38bdf8;
       --sympathy-amber: #f59e0b;
       --text-main: #f3f4f6;
+      --text-soft: #d1d5db;
       --text-muted: #9ca3af;
       --border-color: #2a2e3d;
       --success: #10b981;
@@ -23,69 +24,19 @@
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
+      background-image:
         radial-gradient(circle at 15% 15%, rgba(185, 28, 28, 0.12) 0%, transparent 35%),
         radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
       color: var(--text-main);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.5;
-      padding: 24px;
+      padding: 20px;
       min-height: 100vh;
     }
 
-    .container {
-      max-width: 1320px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    /* LIVE SYNC BAR */
-    .sync-bar {
-      background: #11131a;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.85rem;
-    }
-
-    .sync-status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 8px var(--success);
-    }
-
-    .sync-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .sync-input {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      width: 320px;
-    }
+    .container { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .muted { color: var(--text-muted); font-size: 0.82rem; }
 
     /* HEADER */
     .header-banner {
@@ -93,702 +44,746 @@
       border: 1px solid var(--border-color);
       border-left: 5px solid var(--uchiha-red);
       border-radius: 12px;
-      padding: 24px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
-      gap: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    }
-
-    .identity-block h1 {
-      font-size: 2.2rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
       gap: 12px;
-      color: #fff;
     }
-
+    .identity-block h1 {
+      font-size: 1.9rem; letter-spacing: 1px; text-transform: uppercase;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 12px; color: #fff; line-height: 1.2;
+    }
     .crow-badge {
-      font-size: 0.85rem;
-      background: rgba(185, 28, 28, 0.25);
-      border: 1px solid var(--uchiha-red);
-      color: #fca5a5;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 600;
+      font-size: 0.8rem; background: rgba(185, 28, 28, 0.25); border: 1px solid var(--uchiha-red);
+      color: #fca5a5; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.5px;
     }
-
-    .subtitle { color: var(--text-muted); font-size: 0.98rem; margin-top: 4px; }
-
-    .identity-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-
-    .tag {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      color: #d1d5db;
+    .subtitle { color: var(--text-muted); font-size: 0.92rem; margin-top: 4px; }
+    .sync { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text-muted); max-width: 360px; }
+    .status-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+    .status-dot.stale { background: var(--sympathy-amber); box-shadow: 0 0 8px var(--sympathy-amber); }
+    .status-dot.error { background: var(--uchiha-glow); box-shadow: 0 0 8px var(--uchiha-glow); }
+    .icon-btn {
+      flex: none; background: var(--bg-panel-alt); border: 1px solid var(--border-color); color: var(--chakra-blue);
+      border-radius: 6px; padding: 3px 8px; cursor: pointer; font-size: 0.8rem;
     }
+    .icon-btn:hover { border-color: var(--chakra-blue); }
 
-    .btn {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.84rem;
-      transition: all 0.15s ease;
-    }
-
-    .btn:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.2); }
-    .btn-sync { background: rgba(56, 189, 248, 0.15); border-color: var(--chakra-blue); color: var(--chakra-blue); }
-
-    /* VITALS BAR */
-    .vitals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 14px;
-    }
-
+    /* VITALS STRIP */
+    .vitals-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
     .vital-card {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 10px;
+      padding: 12px; text-align: center; position: relative; overflow: hidden;
     }
-
-    .vital-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px;
-      background: var(--uchiha-red);
-    }
-
+    .vital-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--uchiha-red); }
     .vital-card.chakra::before { background: var(--chakra-blue); }
     .vital-card.sympathy::before { background: var(--sympathy-amber); }
-
-    .vital-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
-    .vital-value { font-size: 1.75rem; font-weight: 700; color: #fff; }
-    .vital-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 4px; }
-
-    .counter-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; }
-
-    /* MAIN GRID */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 320px 1fr 380px;
-      gap: 20px;
+    .vital-card.neutral::before { background: var(--border-color); }
+    .vital-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .vital-value { font-size: 1.55rem; font-weight: 700; color: #fff; line-height: 1.3; }
+    .vital-sub { font-size: 0.72rem; color: var(--text-muted); }
+    .hp-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; margin-top: 6px; overflow: hidden; }
+    .hp-bar > div { height: 100%; background: var(--success); transition: width 0.3s ease, background 0.3s ease; }
+    .orb-group { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+    .chakra-orb {
+      width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--chakra-blue); background: var(--chakra-blue);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
     }
+    .chakra-orb.empty { background: transparent; box-shadow: none; opacity: 0.45; }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 4px; }
+    .chip {
+      font-size: 0.7rem; padding: 1px 8px; border-radius: 99px; background: rgba(185, 28, 28, 0.2);
+      color: #fca5a5; border: 1px solid var(--uchiha-red); white-space: nowrap;
+    }
+    .chip.amber { background: rgba(245, 158, 11, 0.12); color: #fcd34d; border-color: rgba(245, 158, 11, 0.5); }
+    .chip.blue { background: rgba(56, 189, 248, 0.12); color: var(--chakra-blue); border-color: rgba(56, 189, 248, 0.4); }
 
-    @media (max-width: 1120px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    /* TABS */
+    .tabs {
+      position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; overflow-x: auto;
+      background: rgba(11, 12, 16, 0.92); backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border-color); padding: 6px 0 0; scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex: none; position: relative; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); font: inherit; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;
+      padding: 8px 14px 10px; cursor: pointer;
+    }
+    .tab:hover { color: #fff; }
+    .tab[aria-selected="true"] { color: #fff; border-bottom-color: var(--uchiha-glow); }
+    .tab .dot {
+      display: none; position: absolute; top: 8px; right: 4px; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--sympathy-amber); box-shadow: 0 0 6px var(--sympathy-amber);
+    }
+    .tab.changed .dot { display: block; }
+    [role="tabpanel"][hidden] { display: none; }
 
+    /* PANELS */
+    .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+    /* Now tab: situation and map on the left, encounter and latest story on the
+       right; stacked situation → map → encounter → story on narrow screens. */
+    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; }
+    .now-grid > .stack { gap: 14px; }
+    .panel[hidden] { display: none; }
+    .panel-grid > * { min-width: 0; }
     .panel {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px;
+      padding: 18px; display: flex; flex-direction: column; gap: 12px;
     }
-
     .panel-title {
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #fff;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);
+      display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
     }
+    * + .panel-title { margin-top: 6px; }
+    .panel-title .chips { margin: 0; }
+    .stack { display: flex; flex-direction: column; gap: 8px; }
 
-    .ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .ability-box {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.12s ease;
+    /* NOW TAB */
+    .dm-log {
+      font-size: 1.05rem; color: #fff; border-left: 3px solid var(--sympathy-amber);
+      padding: 4px 0 4px 12px; font-style: italic;
     }
-    .ability-box:hover { transform: translateY(-2px); border-color: var(--uchiha-glow); }
-    .ability-name { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
-    .ability-mod { font-size: 1.55rem; font-weight: 800; color: #fff; margin: 2px 0; }
-    .ability-score { font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 99px; }
+    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; font-size: 0.88rem; }
+    .facts dt { color: var(--text-muted); }
+    .facts dd { color: var(--text-soft); }
+    .encounter-panel.active { border-color: rgba(185, 28, 28, 0.5); background: linear-gradient(180deg, rgba(185, 28, 28, 0.1), var(--bg-panel) 60%); }
+    .encounter-title { font-weight: 700; color: #fca5a5; font-size: 1.05rem; }
+    .encounter-panel:not(.active) .encounter-title { color: var(--text-muted); font-weight: 400; font-size: 0.9rem; }
+    .enemy {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; padding: 10px 12px;
+      background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .enemy-name { font-weight: 700; color: #fff; }
+    .enemy-meta { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.8rem; }
+    .battle-map { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--border-color); background: #1a1d16; }
+    .battle-map text { font-family: inherit; pointer-events: none; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.78rem; color: var(--text-soft); }
+    .map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .map-legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .env-item { font-size: 0.85rem; color: #fcd34d; }
+    .env-item::before { content: "◆ "; color: var(--sympathy-amber); }
 
-    .skill-list { display: flex; flex-direction: column; gap: 6px; }
-    .skill-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 7px 10px; background: var(--bg-panel-alt);
-      border: 1px solid transparent; border-radius: 6px; font-size: 0.88rem; cursor: pointer;
-    }
-    .skill-row:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.12); }
-    .skill-left { display: flex; align-items: center; gap: 8px; }
-    .prof-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; }
-    .prof-dot.proficient { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
-    .prof-dot.expertise { background: var(--sympathy-amber); border-color: #fde68a; box-shadow: 0 0 6px var(--sympathy-amber); }
-    .skill-bonus { font-weight: 700; color: #fff; }
+    /* STORY LOG */
+    .log-entry { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; }
+    .log-entry time { font-size: 0.72rem; color: var(--text-muted); }
+    .log-entry h3 { font-size: 0.92rem; color: #fff; margin: 2px 0 4px; }
+    .log-entry p { font-size: 0.86rem; color: var(--text-soft); white-space: pre-wrap; }
+    .link-btn { background: none; border: none; color: var(--chakra-blue); font: inherit; font-size: 0.8rem; cursor: pointer; text-transform: none; letter-spacing: 0; }
+
+    /* COMBAT TAB */
+    .table-wrap { overflow-x: auto; }
+    .weapons-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .weapons-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--border-color); }
+    .weapons-table td { padding: 9px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: top; }
+    .weapons-table .ammo { font-weight: 700; color: #fff; white-space: nowrap; }
+    .weapons-table .ammo.low { color: var(--uchiha-glow); }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center; }
+    .stat-box strong { display: block; font-size: 1.2rem; color: #fff; }
+    .stat-box span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
     .mechanic-card {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      border-left: 3px solid var(--uchiha-red);
-      border-radius: 8px;
-      padding: 14px;
+      background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-left: 3px solid var(--uchiha-red);
+      border-radius: 8px; padding: 12px 14px;
     }
     .mechanic-card.chakra-card { border-left-color: var(--chakra-blue); }
     .mechanic-card.sympathy-card { border-left-color: var(--sympathy-amber); }
-    .mechanic-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .mechanic-title { font-weight: 700; color: #fff; font-size: 0.95rem; }
-    .badge-cost { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(56, 189, 248, 0.15); color: var(--chakra-blue); border: 1px solid rgba(56, 189, 248, 0.35); }
-    .badge-locked { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(185, 28, 28, 0.2); color: #fca5a5; border: 1px solid var(--uchiha-red); }
-    .mechanic-desc { font-size: 0.85rem; color: #d1d5db; }
+    .mechanic-card.locked { border-left-style: dashed; }
+    .mechanic-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .mechanic-title { font-weight: 700; color: #fff; font-size: 0.92rem; }
+    .mechanic-desc { font-size: 0.84rem; color: var(--text-soft); }
 
-    .weapons-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
-    .weapons-table th { text-align: left; color: var(--text-muted); padding: 8px; border-bottom: 1px solid var(--border-color); }
-    .weapons-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-    .weapons-table tr:hover { background: rgba(255, 255, 255, 0.03); cursor: pointer; }
-
-    .orb-group { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
-    .chakra-orb {
-      width: 22px; height: 22px; border-radius: 50%;
-      border: 2px solid var(--chakra-blue); background: var(--chakra-blue);
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.6); transition: all 0.15s ease;
+    /* CHARACTER TAB */
+    .ability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .ability-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; text-align: center; }
+    .ability-name { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .ability-mod { font-size: 1.5rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .ability-foot { display: flex; justify-content: space-between; gap: 4px; font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+    .ability-foot .prof { color: #fca5a5; font-weight: 700; }
+    .skill-list { display: flex; flex-direction: column; gap: 4px; }
+    .skill-row {
+      display: flex; justify-content: space-between; align-items: center; padding: 6px 10px;
+      background: var(--bg-panel-alt); border-radius: 6px; font-size: 0.86rem;
     }
-    .chakra-orb.empty { background: transparent; box-shadow: none; opacity: 0.45; }
+    .skill-left { display: flex; align-items: center; gap: 8px; }
+    .skill-ability { color: var(--text-muted); font-size: 0.72rem; }
+    .prof-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; flex: none; }
+    .prof-dot.proficient { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
+    .prof-dot.expertise { background: var(--sympathy-amber); border-color: #fde68a; box-shadow: 0 0 6px var(--sympathy-amber); }
+    .skill-bonus { font-weight: 700; color: #fff; }
+    .legend { display: flex; gap: 12px; font-size: 0.72rem; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+    .legend span { display: inline-flex; align-items: center; gap: 4px; }
 
-    .dice-roller-box {
-      background: linear-gradient(135deg, #1b1622 0%, #12151f 100%);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .roll-total { font-size: 1.5rem; font-weight: 800; color: var(--sympathy-amber); }
-
-    .encounter-card {
-      background: rgba(185, 28, 28, 0.08);
-      border: 1px solid rgba(185, 28, 28, 0.4);
-      border-radius: 10px;
-      padding: 14px;
-    }
-    .enemy-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); font-size: 0.85rem; }
+    /* GEAR TAB */
     .currency-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .coin-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; text-align: center; font-size: 0.82rem; }
-    .coin-box strong { display: block; font-size: 1.15rem; color: #fff; }
+    .coin-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; text-align: center; font-size: 0.78rem; color: var(--text-muted); }
+    .coin-box strong { display: block; font-size: 1.3rem; color: #fff; }
+    .item-list { list-style: none; display: flex; flex-direction: column; }
+    .item-list li { display: grid; grid-template-columns: 2.5em 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.88rem; color: var(--text-soft); }
+    .item-list li:last-child { border-bottom: none; }
+    .item-list .qty { color: #fff; font-weight: 700; text-align: right; }
+    .item-list .notes { color: var(--text-muted); font-size: 0.78rem; }
+    .keepsake { font-size: 0.88rem; color: var(--text-soft); font-style: italic; }
+
+    @keyframes flash { from { color: var(--sympathy-amber); text-shadow: 0 0 12px var(--sympathy-amber); } to { text-shadow: none; } }
+    .flash { animation: flash 2.5s ease-out; }
+
+    @media (max-width: 900px) {
+      .vitals-grid { grid-template-columns: repeat(3, 1fr); }
+      .panel-grid, .panel-grid.now-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      body { padding: 12px 16px; }
+      .identity-block h1 { font-size: 1.5rem; }
+      .vitals-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .vitals-grid .vital-card:first-child { grid-column: 1 / -1; }
+      .vital-card { padding: 8px 10px; }
+      .vital-value { font-size: 1.25rem; }
+      .vital-sub { display: none; }
+      .ability-grid { grid-template-columns: repeat(2, 1fr); }
+      .panel { padding: 14px; }
+      .tab { padding: 8px 10px 10px; font-size: 0.85rem; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- LIVE GOOGLE DOC BACKEND SYNC BAR -->
-    <div class="sync-bar">
-      <div class="sync-status">
-        <span class="status-dot" id="sync-dot"></span>
-        <span id="sync-text">Live DM Backend ready - click Sync to load stats</span>
-      </div>
-      <div class="sync-controls">
-        <input type="text" id="doc-url-input" class="sync-input" placeholder="Google Doc share URL or Document ID" />
-        <button class="btn btn-sync" onclick="syncFromGoogleDoc()">🔄 Sync Live Stats</button>
-      </div>
-    </div>
-
-    <!-- TOP IDENTITY BANNER -->
     <header class="header-banner">
       <div class="identity-block">
-        <h1>
-          <span id="char-name">Sebak</span>
-          <span class="crow-badge" id="char-title">The Crow in the Wind</span>
-        </h1>
-        <p class="subtitle" id="char-lineage">Half-Uchiha (Son of Uchiha Itachi) &bull; Unknown Maternal Bloodline &bull; Shinobi Sympathist</p>
-        <div class="identity-tags">
-          <span class="tag" id="char-class"><strong>Class:</strong> Rogue (Shinobi Sympathist) - Level 1</span>
-          <span class="tag" id="char-location"><strong>Location:</strong> Road to Imre (Omethi River)</span>
-          <span class="tag" id="char-employer"><strong>Employer:</strong> Bram (Tinker)</span>
-        </div>
+        <h1><span id="char-name">Sebak</span> <span class="crow-badge" id="char-title"></span></h1>
+        <p class="subtitle" id="char-class"></p>
+      </div>
+      <div class="sync">
+        <span class="status-dot stale" id="sync-dot"></span>
+        <span id="sync-text">Loading game state...</span>
+        <button class="icon-btn" onclick="loadState()" title="Check for updates now">↻</button>
       </div>
     </header>
 
-    <!-- VITALS BAR -->
+    <!-- Always-visible vitals -->
     <section class="vitals-grid">
       <div class="vital-card">
         <div class="vital-label">Hit Points</div>
-        <div class="vital-value"><span id="hp-current">10</span> / <span id="hp-max">10</span></div>
-        <div class="counter-controls">
-          <span class="vital-sub">Hit Die: <span id="hit-die">1d8</span></span>
-        </div>
+        <div class="vital-value"><span id="hp-current">-</span> / <span id="hp-max">-</span></div>
+        <div class="hp-bar"><div id="hp-bar-fill" style="width:100%"></div></div>
+        <div class="chips" id="conditions"></div>
       </div>
-
       <div class="vital-card">
         <div class="vital-label">Armour Class</div>
-        <div class="vital-value" id="ac-val">14</div>
-        <div class="vital-sub" id="ac-notes">Dark Shinobi Vest (11 + 3 DEX)</div>
+        <div class="vital-value" id="ac-val">-</div>
+        <div class="vital-sub" id="ac-notes"></div>
       </div>
-
-      <div class="vital-card">
-        <div class="vital-label">Initiative &amp; Speed</div>
-        <div class="vital-value"><span id="init-val">+3</span> / <span id="speed-val">30 ft.</span></div>
-        <div class="vital-sub">Proficiency Bonus: <span id="prof-val">+2</span></div>
-      </div>
-
       <div class="vital-card chakra">
-        <div class="vital-label">Internal Chakra Pool</div>
-        <div class="vital-value"><span id="chakra-count">3</span> / <span id="chakra-max">3</span></div>
-        <div class="orb-group" id="chakra-orbs">
-          <div class="chakra-orb"></div>
-          <div class="chakra-orb"></div>
-          <div class="chakra-orb"></div>
-        </div>
+        <div class="vital-label">Chakra</div>
+        <div class="vital-value"><span id="chakra-count">-</span> / <span id="chakra-max">-</span></div>
+        <div class="orb-group" id="chakra-orbs"></div>
       </div>
-
       <div class="vital-card sympathy">
-        <div class="vital-label">Alar &amp; Sympathy</div>
-        <div class="vital-value"><span id="alar-atk">+5</span> / DC <span id="alar-dc">13</span></div>
-        <div class="vital-sub">Active Mental Splits: <span id="alar-splits">1</span></div>
+        <div class="vital-label">Alar / Sympathy</div>
+        <div class="vital-value"><span id="alar-atk">-</span> / DC <span id="alar-dc">-</span></div>
+        <div class="vital-sub"><span id="alar-splits">-</span> mental split(s)</div>
+      </div>
+      <div class="vital-card neutral">
+        <div class="vital-label">Init / Speed</div>
+        <div class="vital-value"><span id="init-val">-</span> / <span id="speed-val">-</span></div>
+        <div class="vital-sub">Proficiency <span id="prof-val">-</span></div>
       </div>
     </section>
 
-    <!-- INTERACTIVE ROLL BANNER -->
-    <div class="dice-roller-box">
-      <div class="roll-result" id="roll-log">
-        <strong>DM Log:</strong> <span id="dm-last-log">Surprise round ready. Click any Ability, Save, Skill, or Weapon below to roll!</span>
-      </div>
-      <div class="roll-total" id="roll-total">--</div>
-    </div>
+    <nav class="tabs" role="tablist" aria-label="Sheet sections">
+      <button class="tab" role="tab" id="tab-now" aria-controls="panel-now" data-tab="now">Now<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-combat" aria-controls="panel-combat" data-tab="combat">Combat<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-character" aria-controls="panel-character" data-tab="character">Character<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-gear" aria-controls="panel-gear" data-tab="gear">Gear<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-story" aria-controls="panel-story" data-tab="story">Story<span class="dot"></span></button>
+    </nav>
 
-    <!-- THREE-COLUMN DASHBOARD -->
-    <main class="dashboard-grid">
-      <!-- LEFT COLUMN: ABILITIES, SAVES & SKILLS -->
+    <!-- NOW: where Sebak is and what he's facing -->
+    <section role="tabpanel" id="panel-now" aria-labelledby="tab-now">
+      <div class="panel-grid now-grid">
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-title">Situation</div>
+            <p class="dm-log" id="dm-last-log"></p>
+            <dl class="facts" id="world-facts"></dl>
+          </div>
+          <div class="panel" id="map-panel" hidden>
+            <div class="panel-title">Battle map</div>
+            <div class="stack" id="encounter-map"></div>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="panel encounter-panel" id="encounter-panel">
+            <div class="panel-title"><span>Encounter</span><span class="chips" id="encounter-round"></span></div>
+            <div class="encounter-title" id="encounter-title"></div>
+            <div class="stack" id="enemy-list"></div>
+            <div class="stack" id="env-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">
+              <span>Latest in the story</span>
+              <button class="link-btn" onclick="selectTab('story')">Full log →</button>
+            </div>
+            <div class="stack" id="recent-log"><p class="muted">No entries yet.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMBAT: what Sebak can do in a fight -->
+    <section role="tabpanel" id="panel-combat" aria-labelledby="tab-combat" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title">Weapons</div>
+          <div class="table-wrap">
+            <table class="weapons-table">
+              <thead><tr><th>Weapon</th><th>Hit</th><th>Damage</th><th>Ammo</th></tr></thead>
+              <tbody id="weapons-body"></tbody>
+            </table>
+          </div>
+          <div class="panel-title">Traits</div>
+          <div class="stack" id="features-traits"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Chakra techniques</div>
+          <div class="stack" id="features-chakra"></div>
+          <div class="panel-title">Alar &amp; Sympathy</div>
+          <div class="stat-row">
+            <div class="stat-box"><strong id="alar-atk-2">-</strong><span>Binding attack</span></div>
+            <div class="stat-box"><strong id="alar-dc-2">-</strong><span>Sympathy DC</span></div>
+            <div class="stat-box"><strong id="exhaustion">0</strong><span>Exhaustion</span></div>
+          </div>
+          <div class="stack" id="features-sympathy"></div>
+          <p class="muted" id="alar-notes"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTER: stats, skills, who he is -->
+    <section role="tabpanel" id="panel-character" aria-labelledby="tab-character" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title"><span>Abilities</span><span class="legend"><span><span class="prof-dot proficient"></span> save proficient</span></span></div>
+          <div class="ability-grid" id="ability-grid"></div>
+          <div class="panel-title">Identity</div>
+          <dl class="facts" id="identity-facts"></dl>
+        </div>
+        <div class="panel">
+          <div class="panel-title">
+            <span>Skills</span>
+            <span class="legend"><span><span class="prof-dot proficient"></span> proficient</span><span><span class="prof-dot expertise"></span> expertise</span></span>
+          </div>
+          <div class="skill-list" id="skill-list"></div>
+          <div class="panel-title">Bloodlines</div>
+          <div class="stack" id="features-bloodline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GEAR: money and belongings -->
+    <section role="tabpanel" id="panel-gear" aria-labelledby="tab-gear" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title">Inventory</div>
+          <ul class="item-list" id="item-list"></ul>
+        </div>
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-title">Purse</div>
+            <div class="currency-bar">
+              <div class="coin-box"><strong id="coin-talents">-</strong>Silver Talents</div>
+              <div class="coin-box"><strong id="coin-jots">-</strong>Iron Jots</div>
+              <div class="coin-box"><strong id="coin-drabs">-</strong>Copper Drabs</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Keepsakes</div>
+            <div class="stack" id="keepsake-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY: the full log, newest first -->
+    <section role="tabpanel" id="panel-story" aria-labelledby="tab-story" hidden>
       <div class="panel">
-        <div class="panel-title">
-          <span>Ability Scores</span>
-          <small style="color:var(--text-muted);font-size:0.75rem;">Click to Roll</small>
-        </div>
-        <div class="ability-grid">
-          <div class="ability-box" onclick="rollCheck('Strength Check', getMod('str'))">
-            <div class="ability-name">Strength</div>
-            <div class="ability-mod" id="str-mod">+0</div>
-            <div class="ability-score" id="str-score">10</div>
-          </div>
-          <div class="ability-box" onclick="rollCheck('Dexterity Check', getMod('dex'))">
-            <div class="ability-name">Dexterity</div>
-            <div class="ability-mod" id="dex-mod">+3</div>
-            <div class="ability-score" id="dex-score">16</div>
-          </div>
-          <div class="ability-box" onclick="rollCheck('Constitution Check', getMod('con'))">
-            <div class="ability-name">Constitution</div>
-            <div class="ability-mod" id="con-mod">+2</div>
-            <div class="ability-score" id="con-score">14</div>
-          </div>
-          <div class="ability-box" onclick="rollCheck('Intelligence Check', getMod('int'))">
-            <div class="ability-name">Intelligence</div>
-            <div class="ability-mod" id="int-mod">+3</div>
-            <div class="ability-score" id="int-score">16</div>
-          </div>
-          <div class="ability-box" onclick="rollCheck('Wisdom Check', getMod('wis'))">
-            <div class="ability-name">Wisdom</div>
-            <div class="ability-mod" id="wis-mod">+1</div>
-            <div class="ability-score" id="wis-score">12</div>
-          </div>
-          <div class="ability-box" onclick="rollCheck('Charisma Check', getMod('cha'))">
-            <div class="ability-name">Charisma</div>
-            <div class="ability-mod" id="cha-mod">-1</div>
-            <div class="ability-score" id="cha-score">8</div>
-          </div>
-        </div>
-
-        <div class="panel-title">Saving Throws</div>
-        <div class="skill-list">
-          <div class="skill-row" onclick="rollCheck('Dexterity Save', getSave('dex', 5))">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Dexterity Save</div>
-            <span class="skill-bonus" id="dex-save">+5</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Intelligence Save', getSave('int', 5))">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Intelligence Save</div>
-            <span class="skill-bonus" id="int-save">+5</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Constitution Save (Binder Chills)', getSave('con', 2))">
-            <div class="skill-left"><span class="prof-dot"></span> Constitution Save</div>
-            <span class="skill-bonus" id="con-save">+2</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Wisdom Save', getSave('wis', 1))">
-            <div class="skill-left"><span class="prof-dot"></span> Wisdom Save</div>
-            <span class="skill-bonus" id="wis-save">+1</span>
-          </div>
-        </div>
-
-        <div class="panel-title">Skills <small style="color:var(--sympathy-amber);font-size:0.72rem;">&#9679; Expertise</small></div>
-        <div class="skill-list">
-          <div class="skill-row" onclick="rollCheck('Stealth (Expertise)', 7)">
-            <div class="skill-left"><span class="prof-dot expertise"></span> Stealth (DEX)</div>
-            <span class="skill-bonus">+7</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Investigation (Expertise)', 7)">
-            <div class="skill-left"><span class="prof-dot expertise"></span> Investigation (INT)</div>
-            <span class="skill-bonus">+7</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Acrobatics', 5)">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Acrobatics (DEX)</div>
-            <span class="skill-bonus">+5</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Arcana / Sympathy & Sygaldry', 5)">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Arcana / Sympathy (INT)</div>
-            <span class="skill-bonus">+5</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Sleight of Hand', 5)">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Sleight of Hand (DEX)</div>
-            <span class="skill-bonus">+5</span>
-          </div>
-          <div class="skill-row" onclick="rollCheck('Perception', 3)">
-            <div class="skill-left"><span class="prof-dot proficient"></span> Perception (WIS)</div>
-            <span class="skill-bonus">+3</span>
-          </div>
-        </div>
+        <div class="panel-title">Story log</div>
+        <div class="stack" id="log-list"><p class="muted">No entries yet.</p></div>
       </div>
-
-      <!-- CENTER COLUMN: WEAPONS, SYMPATHY & CHAKRA MECHANICS -->
-      <div class="panel">
-        <div class="panel-title">Weapons &amp; Shinobi Arsenal <small style="color:var(--text-muted);font-size:0.75rem;">Click Row to Roll Attack</small></div>
-        <table class="weapons-table">
-          <thead>
-            <tr>
-              <th>Weapon</th>
-              <th>Atk</th>
-              <th>Damage</th>
-              <th>Ammo / Properties</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="rollWeapon('Wakizashi (Shortsword)', 5, 6, 3)">
-              <td><strong>Wakizashi</strong></td>
-              <td>+5</td>
-              <td>1d6 + 3</td>
-              <td>Finesse, Light (5 ft)</td>
-            </tr>
-            <tr onclick="rollWeapon('Kunai', 5, 4, 3)">
-              <td><strong>Kunai</strong></td>
-              <td>+5</td>
-              <td>1d4 + 3</td>
-              <td><strong id="kunai-count">6</strong> left &bull; Thrown (20/60)</td>
-            </tr>
-            <tr onclick="rollWeapon('Shuriken', 5, 4, 3)">
-              <td><strong>Shuriken</strong></td>
-              <td>+5</td>
-              <td>1d4 + 3</td>
-              <td><strong id="shuriken-count">10</strong> left &bull; Thrown (20/60)</td>
-            </tr>
-            <tr onclick="rollWeapon('Sympathetic Binding (Alar)', 5, 6, 0)">
-              <td><strong>Alar Binding</strong></td>
-              <td>+5</td>
-              <td>Variable / DC 13</td>
-              <td>1 Active Mental Split</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="panel-title">Internal Chakra Techniques</div>
-        <div class="mechanic-card chakra-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Body Flicker (Shunshin)</span>
-            <span class="badge-cost">1 Chakra &bull; Bonus Action</span>
-          </div>
-          <p class="mechanic-desc">Teleport/dash up to 30 ft. to an unoccupied space you can see without provoking opportunity attacks.</p>
-        </div>
-
-        <div class="mechanic-card chakra-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Chakra-Fuelled Sympathetic Link</span>
-            <span class="badge-cost">1 Chakra &bull; Free w/ Link</span>
-          </div>
-          <p class="mechanic-desc">Act as a pure, lossless thermal/kinetic source for a Sympathetic binding for 1 round, bypassing the need for an external flame or the risk of Binder's Chills.</p>
-        </div>
-
-        <div class="mechanic-card chakra-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Precision Throw (Uchiha Trajectory)</span>
-            <span class="badge-cost">1 Chakra &bull; Attack Mod</span>
-          </div>
-          <p class="mechanic-desc">Curve a thrown kunai or shuriken around half or three-quarters cover, granting <strong>Advantage</strong> on the attack roll (triggers Sneak Attack).</p>
-        </div>
-
-        <div class="panel-title">Alar &amp; Sympathy Mechanics</div>
-        <div class="mechanic-card sympathy-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Link Efficiency &amp; Binder's Chills</span>
-            <span class="badge-cost" style="color:var(--sympathy-amber);border-color:var(--sympathy-amber);">Alar +5 | DC 13</span>
-          </div>
-          <p class="mechanic-desc">
-            &bull; <strong>Perfect Link (Same piece):</strong> ~80–90% efficiency<br/>
-            &bull; <strong>Good Link (Similar + blood/hair):</strong> ~40–60% efficiency<br/>
-            &bull; <strong>Poor Link (Crude similarity):</strong> ~5–15% efficiency (High slippage)<br/>
-            &bull; <strong>Binder's Chills:</strong> Drawing heat from body requires CON Save (DC 10 + energy level) or take 1d4 Cold damage + 1 Exhaustion.
-          </p>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: BLOODLINES, INVENTORY & ACTIVE ENCOUNTER -->
-      <div class="panel">
-        <div class="panel-title">Bloodlines &amp; Class Traits</div>
-        <div class="mechanic-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Sneak Attack (1d6)</span>
-            <span class="badge-cost" style="color:#fff;">1 / Turn</span>
-          </div>
-          <p class="mechanic-desc">Deal +1d6 damage when hitting with Advantage, or when an ally/active Sympathetic kinetic binding is distracting the enemy within 5 ft.</p>
-        </div>
-
-        <div class="mechanic-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Uchiha Dormancy (Sharingan)</span>
-            <span class="badge-locked">LOCKED</span>
-          </div>
-          <p class="mechanic-desc">Inherited from Uchiha Itachi. Dormant until triggered by extreme emotional trauma or life-or-death catalysis.</p>
-        </div>
-
-        <div class="mechanic-card">
-          <div class="mechanic-header">
-            <span class="mechanic-title">Unknown Maternal Bloodline</span>
-            <span class="badge-locked">UNKNOWN</span>
-          </div>
-          <p class="mechanic-desc">Strange heavy resonance under extreme strain or sympathetic slippage causes surrounding matter to hum and vibrate.</p>
-        </div>
-
-        <div class="panel-title">Temerant Purse</div>
-        <div class="currency-bar">
-          <div class="coin-box"><strong id="coin-talents">2</strong>Silver Talents</div>
-          <div class="coin-box"><strong id="coin-jots">6</strong>Iron Jots</div>
-          <div class="coin-box"><strong id="coin-drabs">4</strong>Copper Drabs</div>
-        </div>
-
-        <div class="panel-title">Sympathy Pouch &amp; Gear</div>
-        <div class="mechanic-desc" style="background:var(--bg-panel-alt);padding:12px;border-radius:8px;border:1px solid var(--border-color);">
-          &bull; <strong>Sympathy Kit:</strong> <span id="sympathy-kit">3x pine pitch vials, wax-coated twine, 4x iron nails &amp; filings, lead &amp; copper chunk, 2x tallow candles, tinderbox</span><br/>
-          &bull; <strong>Keepsake:</strong> <span id="keepsake-item">Small wooden amulet containing a single black crow feather</span>
-        </div>
-
-        <div class="panel-title">Active Encounter Tracker</div>
-        <div class="encounter-card">
-          <div style="font-weight:700;color:#fca5a5;margin-bottom:6px;" id="encounter-title">Surprise Round — Felled Oak Ambush</div>
-          <div class="enemy-item">
-            <span id="enemy-1">1. Crossbowman in Ash Tree (30ft away, 15ft up)</span>
-          </div>
-          <div class="enemy-item">
-            <span id="enemy-2">2. Two Club Brigands in Left Ditch (20ft away)</span>
-          </div>
-          <div class="enemy-item" style="border:none;">
-            <span id="env-source" style="color:var(--sympathy-amber);">Source: Lit brass whale-oil lantern on Bram's wagon</span>
-          </div>
-        </div>
-      </div>
-    </main>
+    </section>
   </div>
 
   <script>
-    let liveState = {};
-    let orbs = [true, true, true];
+    // Game state is stored in data/state.json and data/log.json in this repo
+    // (see data/README.md). The page reads them through the GitHub API so a
+    // commit shows up within one poll, without waiting for Pages to redeploy.
+    // Polls send If-None-Match; GitHub doesn't count 304 replies against the
+    // 60/hour anonymous limit. If the API refuses, it falls back to the copy
+    // published alongside this page.
+    const POLL_MS = 15000;
+    const REPO = '4imble/SebakWind';
+    const BRANCH = 'main';
+    const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
+    const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+    const ABILITIES = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
+    const TABS = ['now', 'combat', 'character', 'gear', 'story'];
 
-    const DEFAULT_DOC_ID = '16aHQiCNiFb8uaoBTSKZ2pUO_OEPT9eq5FX7OUE6owho';
+    let state = null;
+    let source = '';
+    const cache = {}; // path -> { etag, body }
 
-    const savedDocUrl = localStorage.getItem('sebak_doc_url');
-    if (savedDocUrl) {
-      document.getElementById('doc-url-input').value = savedDocUrl;
-    }
+    const $ = (id) => document.getElementById(id);
+    const signed = (n) => (n >= 0 ? `+${n}` : `${n}`);
+    const modOf = (score) => Math.floor((score - 10) / 2);
 
-    function renderOrbs() {
-      const container = document.getElementById('chakra-orbs').children;
-      let count = 0;
-      for (let i = 0; i < orbs.length; i++) {
-        if (orbs[i]) {
-          container[i].classList.remove('empty');
-          count++;
-        } else {
-          container[i].classList.add('empty');
-        }
+    // Small element builder; all game text goes through textContent, never innerHTML.
+    function el(tag, attrs = {}, ...children) {
+      const node = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === 'class') node.className = v;
+        else node.setAttribute(k, v);
       }
-      document.getElementById('chakra-count').textContent = count;
+      for (const c of children) if (c != null && c !== '') node.append(c);
+      return node;
     }
+    const fill = (id, nodes) => $(id).replaceChildren(...nodes.filter((n) => n != null && n !== ''));
 
-    function setChakraCount(n) {
-      for (let i = 0; i < orbs.length; i++) {
-        orbs[i] = i < n;
+    // Sets text, and after the first load briefly highlights anything that changed.
+    let firstRender = true;
+    const text = (id, value) => {
+      const node = $(id);
+      const next = String(value ?? '');
+      if (node.textContent === next) return;
+      node.textContent = next;
+      if (!firstRender) { node.classList.remove('flash'); void node.offsetWidth; node.classList.add('flash'); }
+    };
+
+    // Tabs. The chosen tab is kept in the URL hash so a refresh or a shared link
+    // opens the same tab. A tab whose content changes while you're elsewhere gets a dot.
+    function selectTab(name) {
+      if (!TABS.includes(name)) name = 'now';
+      for (const t of TABS) {
+        const on = t === name;
+        $(`tab-${t}`).setAttribute('aria-selected', on);
+        $(`tab-${t}`).tabIndex = on ? 0 : -1;
+        $(`panel-${t}`).hidden = !on;
+        if (on) $(`tab-${t}`).classList.remove('changed');
       }
-      renderOrbs();
+      if (location.hash !== `#${name}`) history.replaceState(null, '', `#${name}`);
     }
+    document.querySelectorAll('.tab').forEach((tab) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.tab));
+      tab.addEventListener('keydown', (e) => {
+        const i = TABS.indexOf(tab.dataset.tab);
+        const next = e.key === 'ArrowRight' ? TABS[(i + 1) % TABS.length] : e.key === 'ArrowLeft' ? TABS[(i + TABS.length - 1) % TABS.length] : null;
+        if (next) { selectTab(next); $(`tab-${next}`).focus(); }
+      });
+    });
+    window.addEventListener('hashchange', () => selectTab(location.hash.slice(1)));
+    selectTab(location.hash.slice(1));
 
-    function getMod(stat) {
-      if (liveState.stats && liveState.stats[stat] && liveState.stats[stat].mod != null) {
-        return parseInt(liveState.stats[stat].mod, 10);
+    const panelSnapshot = {};
+    function markChangedTabs() {
+      for (const t of TABS) {
+        const now = $(`panel-${t}`).textContent;
+        if (!firstRender && panelSnapshot[t] !== now && $(`panel-${t}`).hidden) $(`tab-${t}`).classList.add('changed');
+        panelSnapshot[t] = now;
       }
-      const defaults = { str: 0, dex: 3, con: 2, int: 3, wis: 1, cha: -1 };
-      return defaults[stat] ?? 0;
     }
 
-    function getSave(stat, fallback) {
-      if (liveState.stats && liveState.stats[stat] && liveState.stats[stat].save != null) {
-        return parseInt(liveState.stats[stat].save, 10);
-      }
-      return fallback;
+    async function fetchFromApi(path) {
+      const headers = { Accept: 'application/vnd.github.raw+json' };
+      if (cache[path]) headers['If-None-Match'] = cache[path].etag;
+      const res = await fetch(`${API_BASE}${path}?ref=${BRANCH}`, { headers, cache: 'no-store' });
+      if (res.status === 304) return cache[path].body;
+      if (!res.ok) throw new Error(`GitHub API returned HTTP ${res.status}`);
+      const body = await res.text();
+      const etag = res.headers.get('ETag');
+      if (etag) cache[path] = { etag, body };
+      return body;
     }
 
-    function rollCheck(name, mod) {
-      const d20 = Math.floor(Math.random() * 20) + 1;
-      const total = d20 + mod;
-      const sign = mod >= 0 ? '+' : '';
-      const critText = d20 === 20 ? ' <span style="color:#10b981;font-weight:bold;">(CRITICAL!)</span>' : (d20 === 1 ? ' <span style="color:#ef4444;font-weight:bold;">(NAT 1!)</span>' : '');
-      document.getElementById('roll-log').innerHTML = `<strong>${name}:</strong> Rolled 1d20 (${d20}) ${sign}${mod}${critText}`;
-      document.getElementById('roll-total').textContent = total;
+    async function fetchFallback(path) {
+      const base = location.protocol === 'file:' ? RAW_BASE : '';
+      const res = await fetch(`${base}${path}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`${path} returned HTTP ${res.status}`);
+      return res.text();
     }
 
-    function rollWeapon(name, atkMod, dmgDie, dmgMod) {
-      const d20 = Math.floor(Math.random() * 20) + 1;
-      const atkTotal = d20 + atkMod;
-      const dmgRoll = Math.floor(Math.random() * dmgDie) + 1;
-      const sneak = Math.floor(Math.random() * 6) + 1;
-      const dmgTotal = dmgRoll + dmgMod;
-      document.getElementById('roll-log').innerHTML =
-        `<strong>${name}:</strong> To Hit: <strong>${atkTotal}</strong> (d20=${d20}+${atkMod}) | Base Dmg: <strong>${dmgTotal}</strong> (1d${dmgDie}=${dmgRoll}+${dmgMod}) | +Sneak Attack (1d6=${sneak}): <strong>${dmgTotal + sneak}</strong>`;
-      document.getElementById('roll-total').textContent = atkTotal + ' Hit';
-    }
-
-    function extractDocId(input) {
-      if (!input) return DEFAULT_DOC_ID;
-      const match = input.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
-      if (match) return match[1];
-      if (/^[a-zA-Z0-9-_]{25,}$/.test(input.trim())) return input.trim();
-      return DEFAULT_DOC_ID;
-    }
-
-    function cleanJsonString(rawText) {
-      // Remove UTF-8 Byte Order Mark if present
-      let cleaned = rawText.replace(/^\uFEFF/, '');
-      // Replace smart/curly quotes with standard ASCII double quotes
-      cleaned = cleaned.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
-      // Find JSON block boundary starting with { and ending with }
-      const start = cleaned.indexOf('{');
-      const end = cleaned.lastIndexOf('}');
-      if (start !== -1 && end !== -1 && end > start) {
-        cleaned = cleaned.substring(start, end + 1);
-      }
-      return cleaned;
-    }
-
-    async function syncFromGoogleDoc() {
-      const inputEl = document.getElementById('doc-url-input');
-      const rawInput = inputEl.value.trim();
-      if (rawInput) {
-        localStorage.setItem('sebak_doc_url', rawInput);
-      }
-
-      const docId = extractDocId(rawInput || localStorage.getItem('sebak_doc_url'));
-      const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`;
-
+    async function fetchText(path) {
       try {
-        document.getElementById('sync-text').textContent = 'Syncing with Google Doc Backend...';
-        const res = await fetch(exportUrl);
-        if (!res.ok) {
-          throw new Error(`Export fetch failed (HTTP ${res.status}). Verify sharing is set to "Anyone with the link can view".`);
-        }
-
-        const rawText = await res.text();
-        const cleaned = cleanJsonString(rawText);
-        const data = JSON.parse(cleaned);
-        liveState = data;
-
-        // Identity & Lineage
-        if (data.name) document.getElementById('char-name').textContent = data.name;
-        if (data.title) document.getElementById('char-title').textContent = data.title;
-        if (data.lineage) {
-          document.getElementById('char-lineage').innerHTML = `${data.lineage} &bull; ${data.lineage_notes || ''} &bull; ${data.background || ''}`;
-        }
-        if (data.class_level) document.getElementById('char-class').innerHTML = `<strong>Class:</strong> ${data.class_level}`;
-        if (data.world_state) {
-          if (data.world_state.location) document.getElementById('char-location').innerHTML = `<strong>Location:</strong> ${data.world_state.location}`;
-          if (data.world_state.employer) document.getElementById('char-employer').innerHTML = `<strong>Employer:</strong> ${data.world_state.employer}`;
-        }
-
-        // Vitals
-        if (data.hp_current != null) document.getElementById('hp-current').textContent = data.hp_current;
-        if (data.hp_max != null) document.getElementById('hp-max').textContent = data.hp_max;
-        if (data.hit_die) document.getElementById('hit-die').textContent = data.hit_die;
-        if (data.ac != null) document.getElementById('ac-val').textContent = data.ac;
-        if (data.ac_notes) document.getElementById('ac-notes').textContent = data.ac_notes;
-        if (data.initiative) document.getElementById('init-val').textContent = data.initiative;
-        if (data.speed) document.getElementById('speed-val').textContent = data.speed;
-        if (data.proficiency) document.getElementById('prof-val').textContent = data.proficiency;
-        if (data.chakra_current != null) setChakraCount(parseInt(data.chakra_current, 10));
-        if (data.chakra_max != null) document.getElementById('chakra-max').textContent = data.chakra_max;
-        if (data.alar_attack) document.getElementById('alar-atk').textContent = data.alar_attack;
-        if (data.sympathy_dc != null) document.getElementById('alar-dc').textContent = data.sympathy_dc;
-        if (data.mental_splits != null) document.getElementById('alar-splits').textContent = data.mental_splits;
-
-        // Ability Scores & Saves
-        if (data.stats) {
-          const stats = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-          stats.forEach(st => {
-            if (data.stats[st]) {
-              const elScore = document.getElementById(`${st}-score`);
-              const elMod = document.getElementById(`${st}-mod`);
-              const elSave = document.getElementById(`${st}-save`);
-              if (elScore && data.stats[st].score != null) elScore.textContent = data.stats[st].score;
-              if (elMod && data.stats[st].mod != null) elMod.textContent = data.stats[st].mod;
-              if (elSave && data.stats[st].save != null) elSave.textContent = data.stats[st].save;
-            }
-          });
-        }
-
-        // Inventory & Ammo
-        if (data.inventory) {
-          if (data.inventory.kunai_count != null) document.getElementById('kunai-count').textContent = data.inventory.kunai_count;
-          if (data.inventory.shuriken_count != null) document.getElementById('shuriken-count').textContent = data.inventory.shuriken_count;
-          if (data.inventory.currency) {
-            if (data.inventory.currency.silver_talents != null) document.getElementById('coin-talents').textContent = data.inventory.currency.silver_talents;
-            if (data.inventory.currency.iron_jots != null) document.getElementById('coin-jots').textContent = data.inventory.currency.iron_jots;
-            if (data.inventory.currency.copper_drabs != null) document.getElementById('coin-drabs').textContent = data.inventory.currency.copper_drabs;
-          }
-          if (data.inventory.sympathy_kit) document.getElementById('sympathy-kit').textContent = data.inventory.sympathy_kit;
-          if (data.inventory.keepsakes) document.getElementById('keepsake-item').textContent = data.inventory.keepsakes;
-        }
-
-        // Encounter Tracker
-        if (data.encounter) {
-          if (data.encounter.title) document.getElementById('encounter-title').textContent = data.encounter.title;
-          if (Array.isArray(data.encounter.enemies)) {
-            if (data.encounter.enemies[0]) {
-              document.getElementById('enemy-1').textContent = `1. ${data.encounter.enemies[0].description} (${data.encounter.enemies[0].distance})`;
-            }
-            if (data.encounter.enemies[1]) {
-              document.getElementById('enemy-2').textContent = `2. ${data.encounter.enemies[1].description} (${data.encounter.enemies[1].distance})`;
-            }
-          }
-          if (data.encounter.environment_source) {
-            document.getElementById('env-source').textContent = `Source: ${data.encounter.environment_source}`;
-          }
-          if (data.encounter.last_log) {
-            document.getElementById('dm-last-log').textContent = data.encounter.last_log;
-          }
-        }
-
-        const now = new Date().toLocaleTimeString();
-        document.getElementById('sync-text').textContent = `Synced with Google Doc Backend at ${now}`;
+        const body = await fetchFromApi(path);
+        source = 'live';
+        return body;
       } catch (err) {
-        document.getElementById('sync-text').textContent = `Sync notice: ${err.message}`;
+        source = 'published copy';
+        return fetchFallback(path);
       }
     }
+
+    let lastRendered = '';
+    async function loadState() {
+      try {
+        const [s, log] = await Promise.all([fetchText('data/state.json'), fetchText('data/log.json').catch(() => '[]')]);
+        if (s + log !== lastRendered) {
+          state = JSON.parse(s);
+          render(state);
+          renderLog(JSON.parse(log));
+          markChangedTabs();
+          lastRendered = s + log;
+          firstRender = false;
+        }
+        $('sync-dot').className = source === 'live' ? 'status-dot' : 'status-dot stale';
+        const updated = state.updated_at ? new Date(state.updated_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'unknown';
+        text('sync-text', source === 'live' ? `Live · updated ${updated}` : `Updated ${updated} · from the published copy, may lag a minute`);
+      } catch (err) {
+        $('sync-dot').className = 'status-dot error';
+        text('sync-text', `Could not load game state: ${err.message}`);
+      }
+    }
+
+    function abilityMod(key) { return modOf(state.abilities[key].score); }
+    function saveBonus(key) {
+      const a = state.abilities[key];
+      return modOf(a.score) + (a.save_proficient ? state.vitals.proficiency_bonus : 0);
+    }
+    function skillBonus(skill) {
+      if (skill.bonus_override != null) return skill.bonus_override;
+      const mult = { none: 0, proficient: 1, expertise: 2 }[skill.proficiency] ?? 0;
+      return abilityMod(skill.ability) + mult * state.vitals.proficiency_bonus;
+    }
+    const facts = (pairs) => pairs.filter(([, v]) => v).flatMap(([k, v]) => [el('dt', {}, k), el('dd', {}, v)]);
+
+    function featureCard(f) {
+      const cls = { chakra: 'mechanic-card chakra-card', sympathy: 'mechanic-card sympathy-card' }[f.category] ?? 'mechanic-card';
+      const hidden = f.status === 'locked' || f.status === 'unknown';
+      const badge = hidden ? el('span', { class: 'chip' }, f.status.toUpperCase())
+        : f.cost ? el('span', { class: f.category === 'sympathy' ? 'chip amber' : 'chip blue' }, f.cost) : null;
+      return el('div', { class: hidden ? `${cls} locked` : cls },
+        el('div', { class: 'mechanic-header' }, el('span', { class: 'mechanic-title' }, f.name), badge),
+        el('p', { class: 'mechanic-desc' }, f.description));
+    }
+
+    function render(s) {
+      const c = s.character, v = s.vitals;
+
+      // Header and vitals
+      text('char-name', c.name);
+      text('char-title', c.title);
+      text('char-class', `${c.class} · Level ${c.level}`);
+      text('hp-current', v.hp_current);
+      text('hp-max', v.hp_max);
+      const pct = Math.max(0, Math.min(100, (v.hp_current / v.hp_max) * 100));
+      $('hp-bar-fill').style.width = `${pct}%`;
+      $('hp-bar-fill').style.background = pct > 50 ? 'var(--success)' : pct > 25 ? 'var(--sympathy-amber)' : 'var(--uchiha-glow)';
+      const chips = (v.conditions ?? []).map((x) => el('span', { class: 'chip' }, x));
+      if (v.hp_temp) chips.unshift(el('span', { class: 'chip blue' }, `+${v.hp_temp} temp`));
+      if (v.exhaustion) chips.push(el('span', { class: 'chip amber' }, `Exhaustion ${v.exhaustion}`));
+      fill('conditions', chips);
+      text('ac-val', v.ac);
+      text('ac-notes', v.ac_notes);
+      text('chakra-count', s.chakra.current);
+      text('chakra-max', s.chakra.max);
+      fill('chakra-orbs', Array.from({ length: s.chakra.max }, (_, i) => el('div', { class: i < s.chakra.current ? 'chakra-orb' : 'chakra-orb empty' })));
+      const alarAtk = s.alar?.attack_bonus ?? abilityMod('int') + v.proficiency_bonus;
+      const alarDc = s.alar?.save_dc ?? 8 + abilityMod('int') + v.proficiency_bonus;
+      text('alar-atk', signed(alarAtk));
+      text('alar-dc', alarDc);
+      text('alar-splits', s.alar?.mental_splits ?? '-');
+      text('init-val', signed(abilityMod('dex')));
+      text('speed-val', v.speed);
+      text('prof-val', signed(v.proficiency_bonus));
+
+      // Now
+      text('dm-last-log', s.last_log);
+      const w = s.world ?? {};
+      fill('world-facts', facts([
+        ['Location', w.location], ['Time', w.time], ['Weather', w.weather],
+        ...(w.companions ?? []).map((p) => [p.name, [p.role, p.notes].filter(Boolean).join(' · ')]),
+      ]));
+      const enc = s.encounter;
+      $('encounter-panel').classList.toggle('active', enc.active);
+      if (!enc.active) {
+        text('encounter-title', 'No active encounter');
+        fill('encounter-round', []);
+        fill('enemy-list', []);
+        fill('env-list', []);
+      } else {
+        text('encounter-title', enc.title ?? 'Encounter');
+        fill('encounter-round', [el('span', { class: 'chip' }, enc.round ? `Round ${enc.round}` : 'Surprise round')]);
+        fill('enemy-list', (enc.enemies ?? []).map((e) =>
+          el('div', { class: 'enemy' },
+            el('span', { class: 'enemy-name' }, e.name),
+            e.status ? el('span', { class: 'chip amber' }, e.status) : el('span'),
+            el('span', { class: 'enemy-meta' }, [e.position, e.notes].filter(Boolean).join(' · ')))));
+        fill('env-list', (enc.environment ?? []).map((x) => el('div', { class: 'env-item' }, x)));
+      }
+      $('map-panel').hidden = !(enc.active && enc.map);
+      fill('encounter-map', enc.active && enc.map ? renderMap(enc.map) : []);
+
+      // Combat
+      fill('weapons-body', s.weapons.map((wp) =>
+        el('tr', {},
+          el('td', {}, el('strong', {}, wp.name), el('div', { class: 'muted' }, wp.properties ?? '')),
+          el('td', {}, signed(wp.attack_bonus)),
+          el('td', {}, wp.damage, el('div', { class: 'muted' }, wp.damage_type ?? '')),
+          el('td', { class: wp.ammo != null && wp.ammo <= 2 ? 'ammo low' : 'ammo' }, wp.ammo != null ? String(wp.ammo) : '—'))));
+      text('alar-atk-2', signed(alarAtk));
+      text('alar-dc-2', alarDc);
+      text('exhaustion', v.exhaustion ?? 0);
+      text('alar-notes', s.alar?.notes);
+      const byCat = (cats) => s.features.filter((f) => cats.includes(f.category)).map(featureCard);
+      fill('features-chakra', byCat(['chakra']));
+      fill('features-sympathy', byCat(['sympathy']));
+      fill('features-traits', byCat(['trait', 'other']));
+
+      // Character
+      fill('ability-grid', Object.entries(ABILITIES).map(([key, label]) =>
+        el('div', { class: 'ability-box' },
+          el('div', { class: 'ability-name' }, label),
+          el('div', { class: 'ability-mod' }, signed(abilityMod(key))),
+          el('div', { class: 'ability-foot' },
+            el('span', {}, `Score ${s.abilities[key].score}`),
+            el('span', { class: s.abilities[key].save_proficient ? 'prof' : '' }, `Save ${signed(saveBonus(key))}`)))));
+      fill('skill-list', s.skills.map((sk) =>
+        el('div', { class: 'skill-row' },
+          el('div', { class: 'skill-left' }, el('span', { class: `prof-dot ${sk.proficiency === 'none' ? '' : sk.proficiency}` }), sk.name, el('span', { class: 'skill-ability' }, sk.ability.toUpperCase())),
+          el('span', { class: 'skill-bonus' }, signed(skillBonus(sk))))));
+      fill('identity-facts', facts([['Lineage', c.lineage], ['Background', c.background], ['Alignment', c.alignment]]));
+      fill('features-bloodline', byCat(['bloodline']));
+
+      // Gear
+      const cur = s.inventory.currency;
+      text('coin-talents', cur.talents);
+      text('coin-jots', cur.jots);
+      text('coin-drabs', cur.drabs);
+      fill('item-list', s.inventory.items.map((it) =>
+        el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
+      fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
+    }
+
+    // Battle map: encounter.map drawn as SVG, one 5 ft square per grid cell.
+    const CELL = 40;
+    const TOKEN_COLOURS = { pc: '#38bdf8', ally: '#10b981', enemy: '#ef4444', neutral: '#9ca3af' };
+    // Default emoji when a token or terrain area has no "icon" of its own.
+    const TOKEN_ICONS = { pc: '🥷', ally: '🧑', enemy: '⚔️', neutral: '🐾' };
+    const TERRAIN_ICONS = { road: '', difficult: '🌿', cover: '🪵', wall: '🧱', water: '🌊', tree: '🌳', object: '📦', light: '🏮' };
+    const TERRAIN_STYLE = {
+      road: { fill: '#3b3326' },
+      difficult: { fill: 'url(#hatch)' },
+      cover: { fill: '#5b4027', stroke: '#8b6a45' },
+      wall: { fill: '#4b5563', stroke: '#6b7280' },
+      water: { fill: '#1e3a5f', stroke: '#2b5a8a' },
+      tree: { fill: '#1f4d2b', stroke: '#2f7a43', round: true },
+      object: { fill: '#3f3f46', stroke: '#71717a' },
+      light: { fill: 'url(#glow)', round: true, big: true },
+    };
+
+    function svg(tag, attrs = {}, ...children) {
+      const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      for (const c of children) if (c != null) node.append(c);
+      return node;
+    }
+
+    // "Brigand 2" -> "2", so identical icons can be told apart.
+    const tokenNumber = (label) => label.match(/(\d+)\s*$/)?.[1] ?? '';
+
+    // Small text with a dark outline so it stays readable over terrain and tokens.
+    function mapText(x, y, content, attrs = {}) {
+      const t = svg('text', { x, y, 'font-size': 8, fill: 'rgba(255,255,255,0.8)', stroke: '#0b0c10', 'stroke-width': 2.5, 'paint-order': 'stroke', ...attrs });
+      t.textContent = content;
+      return t;
+    }
+
+    function renderMap(map) {
+      const W = map.width * CELL, H = map.height * CELL;
+      const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, class: 'battle-map', role: 'img', 'aria-label': 'Battle map' });
+      root.append(svg('defs', {},
+        svg('pattern', { id: 'hatch', width: 8, height: 8, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+          svg('rect', { width: 8, height: 8, fill: '#26331f' }), svg('line', { x1: 0, y1: 0, x2: 0, y2: 8, stroke: '#4d6b35', 'stroke-width': 3 })),
+        svg('radialGradient', { id: 'glow' },
+          svg('stop', { offset: '0%', 'stop-color': '#fbbf24', 'stop-opacity': 0.9 }),
+          svg('stop', { offset: '100%', 'stop-color': '#f59e0b', 'stop-opacity': 0 }))));
+
+      for (const t of map.terrain ?? []) {
+        const st = TERRAIN_STYLE[t.type] ?? TERRAIN_STYLE.object;
+        const x = t.x * CELL, y = t.y * CELL, w = (t.w ?? 1) * CELL, h = (t.h ?? 1) * CELL;
+        const shape = st.round
+          ? svg('ellipse', { cx: x + w / 2, cy: y + h / 2, rx: (st.big ? w : w / 2 - 2), ry: (st.big ? h : h / 2 - 2), fill: st.fill, stroke: st.stroke ?? 'none', 'stroke-width': 2 })
+          : svg('rect', { x: x + 1, y: y + 1, width: w - 2, height: h - 2, rx: 4, fill: st.fill, stroke: st.stroke ?? 'none', 'stroke-width': 2 });
+        shape.append(svg('title', {}, t.label ?? t.type));
+        root.append(shape);
+      }
+
+      // Grid lines above terrain, below labels and tokens.
+      const grid = svg('g', { stroke: 'rgba(255,255,255,0.07)', 'stroke-width': 1 });
+      for (let i = 1; i < map.width; i++) grid.append(svg('line', { x1: i * CELL, y1: 0, x2: i * CELL, y2: H }));
+      for (let j = 1; j < map.height; j++) grid.append(svg('line', { x1: 0, y1: j * CELL, x2: W, y2: j * CELL }));
+      root.append(grid);
+
+      // Light sources get their icon in the middle of the glow.
+      for (const t of map.terrain ?? []) {
+        if (t.type !== 'light') continue;
+        const cx = (t.x + (t.w ?? 1) / 2) * CELL, cy = (t.y + (t.h ?? 1) / 2) * CELL;
+        root.append(mapText(cx, cy + 5, t.icon ?? TERRAIN_ICONS.light, { 'font-size': 14, 'text-anchor': 'middle', stroke: 'none' }));
+      }
+
+      for (const t of map.tokens) {
+        const cx = t.x * CELL + CELL / 2, cy = t.y * CELL + CELL / 2, colour = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
+        const r = CELL * 0.32;
+        const g = svg('g', { opacity: t.down ? 0.45 : 1 });
+        g.append(svg('title', {}, `${t.label}${t.elevation ? ` (${t.elevation} ft up)` : ''}${t.down ? ' (down)' : ''}`));
+        g.append(svg('circle', { cx, cy, r, fill: 'rgba(11,12,16,0.85)', stroke: colour, 'stroke-width': t.kind === 'pc' ? 2.5 : 2 }));
+        g.append(mapText(cx, cy + 5, t.icon ?? TOKEN_ICONS[t.kind] ?? '•', { 'font-size': 14, 'text-anchor': 'middle', stroke: 'none' }));
+        const num = tokenNumber(t.label);
+        if (num) {
+          g.append(svg('circle', { cx: cx + r * 0.75, cy: cy + r * 0.75, r: 5.5, fill: colour }));
+          g.append(mapText(cx + r * 0.75, cy + r * 0.75 + 3, num, { 'font-size': 8, 'font-weight': 700, 'text-anchor': 'middle', fill: '#0b0c10', stroke: 'none' }));
+        }
+        if (t.down) g.append(svg('path', { d: `M${cx - 8} ${cy - 8}L${cx + 8} ${cy + 8}M${cx + 8} ${cy - 8}L${cx - 8} ${cy + 8}`, stroke: '#fff', 'stroke-width': 2 }));
+        if (t.elevation) {
+          // Bottom-left of the token, clear of terrain labels (top) and number badges (bottom-right).
+          g.append(svg('rect', { x: cx - r - 6, y: cy + r - 7, width: 20, height: 10, rx: 5, fill: '#f59e0b' }));
+          g.append(mapText(cx - r + 4, cy + r + 1, `${t.elevation}ft`, { 'font-size': 7, 'font-weight': 700, 'text-anchor': 'middle', fill: '#0b0c10', stroke: 'none' }));
+        }
+        root.append(g);
+      }
+
+      // Terrain labels go on top of everything so tokens never hide them.
+      for (const t of map.terrain ?? []) {
+        if (t.type === 'light' || !(t.label || t.icon || TERRAIN_ICONS[t.type])) continue;
+        const icon = t.icon ?? TERRAIN_ICONS[t.type] ?? '';
+        root.append(mapText(t.x * CELL + 3, t.y * CELL + 10, [icon, t.label].filter(Boolean).join(' ')));
+      }
+
+      const legend = el('div', { class: 'map-legend' }, ...map.tokens.map((t) => {
+        const dot = el('i');
+        dot.style.background = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
+        return el('span', {}, dot, `${t.icon ?? TOKEN_ICONS[t.kind] ?? ''} ${t.label}${t.elevation ? ` (${t.elevation} ft up)` : ''}${t.down ? ' (down)' : ''}`);
+      }), el('span', { class: 'muted' }, '1 square = 5 ft'));
+      return [root, legend];
+    }
+
+    function logEntry(e) {
+      return el('div', { class: 'log-entry' },
+        el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })),
+        el('h3', {}, e.title),
+        el('p', {}, e.text));
+    }
+
+    function renderLog(log) {
+      if (!Array.isArray(log) || log.length === 0) return;
+      const newestFirst = log.slice().reverse();
+      fill('recent-log', newestFirst.slice(0, 2).map(logEntry));
+      fill('log-list', newestFirst.map(logEntry));
+    }
+
+    loadState();
+    setInterval(() => { if (!document.hidden) loadState(); }, POLL_MS);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadState(); });
   </script>
 </body>
 </html>
