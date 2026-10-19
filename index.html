@@ -286,7 +286,7 @@
       .vital-sub { display: none; }
       .ability-grid { grid-template-columns: repeat(2, 1fr); }
       .panel { padding: 14px; }
-      .tab { padding: 8px 10px 10px; font-size: 0.85rem; }
+      .tab { padding: 8px 6px 10px; font-size: 0.82rem; }
     }
   </style>
 </head>
@@ -339,6 +339,7 @@
       <button class="tab" role="tab" id="tab-combat" aria-controls="panel-combat" data-tab="combat">Combat<span class="dot"></span></button>
       <button class="tab" role="tab" id="tab-character" aria-controls="panel-character" data-tab="character">Character<span class="dot"></span></button>
       <button class="tab" role="tab" id="tab-gear" aria-controls="panel-gear" data-tab="gear">Gear<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" data-tab="notes">Notes<span class="dot"></span></button>
       <button class="tab" role="tab" id="tab-story" aria-controls="panel-story" data-tab="story">Story<span class="dot"></span></button>
     </nav>
 
@@ -462,6 +463,14 @@
     </section>
 
     <!-- STORY: the full log, newest first -->
+    <!-- NOTES: things the player has asked to have written down -->
+    <section role="tabpanel" id="panel-notes" aria-labelledby="tab-notes" hidden>
+      <div class="panel">
+        <div class="panel-title">Notes</div>
+        <div class="stack" id="note-list"></div>
+      </div>
+    </section>
+
     <section role="tabpanel" id="panel-story" aria-labelledby="tab-story" hidden>
       <div class="panel">
         <div class="panel-title">Story log</div>
@@ -483,7 +492,7 @@
     const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
     const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
     const ABILITIES = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
-    const TABS = ['now', 'combat', 'character', 'gear', 'story'];
+    const TABS = ['now', 'combat', 'character', 'gear', 'notes', 'story'];
 
     let state = null;
     let source = '';
@@ -827,6 +836,8 @@
       text('coin-drabs', cur.drabs);
       fill('item-list', s.inventory.items.map((it) =>
         el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
+      const notes = s.player_notes ?? [];
+      fill('note-list', notes.length ? notes.map(logEntry) : [el('p', { class: 'muted' }, 'Nothing noted yet. Ask in the story to have something written down.')]);
       fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
     }
 
@@ -935,7 +946,7 @@
 
     function logEntry(e) {
       return el('div', { class: 'log-entry' },
-        el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })),
+        e.at ? el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })) : null,
         el('h3', {}, e.title),
         el('p', {}, e.text));
     }
