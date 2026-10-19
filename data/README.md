@@ -55,7 +55,7 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `encounter.environment` | string[] | Heat sources, cover, terrain. |
 | `encounter.combat_log[]` | `{ round, actor, action, target, roll, outcome, damage, note }`, optional | One entry per attack, spell, save or notable action in this encounter, appended in order. Only `round`, `actor` and `action` are required. `roll` is free text showing the maths (e.g. `"d20+5 = 17 vs AC 13"`). `outcome` is one of `hit`, `crit`, `miss`, `saved`, `failed` or `other`. `damage` is the total dealt. Shown on the Now tab, newest first. Clear it when the encounter ends. |
 | `encounter.map` | object, optional | Battle map drawn on the Now tab. Omit it for encounters that don't need one. See below. |
-| `player_notes[]` | `{ title, text, at }`, optional | Things the player asks to have written down (a notice, a name, a clue). Shown on the Notes tab in the order stored, so append new ones at the end. `at` is an optional UTC timestamp. Edit or remove a note only when the player asks. |
+| `player_notes[]` | `{ title, text, at }`, optional | Things the player asks to have written down (a notice, a name, a clue). Shown on the Notes tab in the order stored, so append new ones at the end. `at` is an optional UTC timestamp. Edit or remove a note only when the player asks. Each note has a button that copies `ooc: delete note #N "Title"` for the player to paste into the story. |
 | `last_log` | string | One line for the DM Log banner. |
 | `notes` | string | DM scratch text, not shown on the sheet. Player-facing notes go in `player_notes`. |
 
