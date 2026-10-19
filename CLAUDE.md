@@ -32,7 +32,7 @@ Standing rulings:
 - When a binding acts on a person (for example, heating their clothes), they make a save against Sebak's **Sympathy DC** (8 + INT + proficiency, 13 at level 1).
 - Backlash and Binder's Chills are resisted with a **CON save** (DC 10 + the energy level drawn).
 
-The full field reference is in [data/README.md](data/README.md). Background lore is in [campaign/backstory.md](campaign/backstory.md).
+The full field reference is in [data/README.md](data/README.md). Background lore is in [campaign/backstory.md](campaign/backstory.md), which the sheet shows on its Character tab.
 
 ## If you are changing the site or schema
 
