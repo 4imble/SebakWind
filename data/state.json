@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T18:10:48Z",
+  "updated_at": "2026-10-19T19:02:12Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -229,7 +229,11 @@
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson"
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson",
+        "icon": "🧔",
+        "hp_current": 6,
+        "hp_max": 11,
+        "ac": 10
       }
     ]
   },
@@ -365,8 +369,51 @@
           "icon": "🪓"
         }
       ]
-    }
+    },
+    "combat_log": [
+      {
+        "round": 0,
+        "actor": "Sebak",
+        "action": "Body Flicker (1 chakra)",
+        "note": "Teleports to the foot of the ash tree."
+      },
+      {
+        "round": 0,
+        "actor": "Sebak",
+        "action": "Climbs the ash tree",
+        "roll": "Stealth d20+7 = 19 vs passive 11",
+        "outcome": "other",
+        "note": "Reaches the crossbowman unseen."
+      },
+      {
+        "round": 0,
+        "actor": "Sebak",
+        "action": "Wakizashi sneak attack (nonlethal)",
+        "target": "Crossbowman",
+        "roll": "d20+5 = 20 (advantage: 15, 11) vs AC 12",
+        "outcome": "hit",
+        "damage": 11,
+        "note": "1d6+3 plus 1d6 sneak attack. Crossbowman knocked unconscious."
+      },
+      {
+        "round": 1,
+        "actor": "Brigand 2",
+        "action": "Club",
+        "target": "Bram",
+        "roll": "d20+4 = 8 vs AC 10",
+        "outcome": "miss"
+      },
+      {
+        "round": 1,
+        "actor": "Brigand 1",
+        "action": "Club",
+        "target": "Bram",
+        "roll": "d20+4 = 17 vs AC 10",
+        "outcome": "hit",
+        "damage": 5
+      }
+    ]
   },
-  "last_log": "Sebak dropped the crossbowman from behind; the brigands charged Bram and wounded him. It is Sebak's turn in round 1.",
+  "last_log": "Bram is wounded at the wagon and Sebak is 15 ft up the ash tree, his turn in round 1.",
   "notes": ""
 }
