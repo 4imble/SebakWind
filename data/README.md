@@ -53,7 +53,31 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `encounter.title`, `.round` | string, integer | Round 0 = surprise round. |
 | `encounter.enemies[]` | `{ name, position, status, notes }` | One entry per creature. Put HP/wounds in `status` (e.g. `"Bloodied"`, `"Down"`). |
 | `encounter.environment` | string[] | Heat sources, cover, terrain. |
+| `encounter.map` | object, optional | Battle map drawn on the Now tab. Omit it for encounters that don't need one. See below. |
 | `last_log` | string | One line for the DM Log banner. |
 | `notes` | string | Free text, not shown on the sheet. |
 
 Derived values on the sheet: ability modifiers, saving throws, skill bonuses, initiative (DEX mod), Alar attack (INT mod + proficiency) and Sympathy DC (8 + INT mod + proficiency).
+
+## Battle map (`encounter.map`)
+
+A grid of 5 ft squares. `x` counts columns from the left and `y` counts rows from the top, both starting at 0. So moving 30 ft is 6 squares, and distance is the larger of the x and y differences.
+
+```json
+"map": {
+  "width": 12, "height": 10,
+  "terrain": [
+    { "type": "road", "x": 0, "y": 4, "w": 12, "h": 2, "label": "Road to Imre" },
+    { "type": "tree", "x": 9, "y": 8, "label": "Ash tree" }
+  ],
+  "tokens": [
+    { "label": "Sebak", "kind": "pc", "x": 3, "y": 5 },
+    { "label": "Crossbowman", "kind": "enemy", "x": 9, "y": 8, "elevation": 15 }
+  ]
+}
+```
+
+- `terrain[].type` is one of `road`, `difficult`, `cover`, `wall`, `water`, `tree`, `object` or `light`. `light` draws a glow, so use it for heat sources Sebak can bind to. `w` and `h` default to 1 and the area must stay on the grid. `label` is shown on the map.
+- `tokens[].kind` is one of `pc`, `ally`, `enemy` or `neutral`, and sets the colour. `elevation` (ft) shows as a badge. Set `down: true` for a creature that is unconscious or dead, rather than deleting it.
+- After each move, update the token's `x`/`y`. Keep the token labels in step with `encounter.enemies[].name` where they refer to the same creature.
+- Remove `map` (or set `active: false`) when the encounter ends.

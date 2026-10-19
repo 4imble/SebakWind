@@ -196,7 +196,48 @@
             }
           }
         },
-        "environment": { "type": "array", "items": { "type": "string" } }
+        "environment": { "type": "array", "items": { "type": "string" } },
+        "map": {
+          "type": "object",
+          "required": ["width", "height", "tokens"],
+          "additionalProperties": false,
+          "properties": {
+            "width": { "type": "integer", "minimum": 1, "maximum": 40 },
+            "height": { "type": "integer", "minimum": 1, "maximum": 40 },
+            "terrain": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["type", "x", "y"],
+                "additionalProperties": false,
+                "properties": {
+                  "type": { "enum": ["road", "difficult", "cover", "wall", "water", "tree", "object", "light"] },
+                  "x": { "type": "integer", "minimum": 0 },
+                  "y": { "type": "integer", "minimum": 0 },
+                  "w": { "type": "integer", "minimum": 1 },
+                  "h": { "type": "integer", "minimum": 1 },
+                  "label": { "type": "string" }
+                }
+              }
+            },
+            "tokens": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["label", "kind", "x", "y"],
+                "additionalProperties": false,
+                "properties": {
+                  "label": { "type": "string" },
+                  "kind": { "enum": ["pc", "ally", "enemy", "neutral"] },
+                  "x": { "type": "integer", "minimum": 0 },
+                  "y": { "type": "integer", "minimum": 0 },
+                  "elevation": { "type": "integer" },
+                  "down": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "last_log": { "type": "string" },

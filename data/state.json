@@ -33,46 +33,189 @@
     "notes": "1 firm Alar binding in combat (scales with Intelligence and University training)"
   },
   "abilities": {
-    "str": { "score": 10, "save_proficient": false },
-    "dex": { "score": 16, "save_proficient": true },
-    "con": { "score": 14, "save_proficient": false },
-    "int": { "score": 16, "save_proficient": true },
-    "wis": { "score": 12, "save_proficient": false },
-    "cha": { "score": 8, "save_proficient": false }
+    "str": {
+      "score": 10,
+      "save_proficient": false
+    },
+    "dex": {
+      "score": 16,
+      "save_proficient": true
+    },
+    "con": {
+      "score": 14,
+      "save_proficient": false
+    },
+    "int": {
+      "score": 16,
+      "save_proficient": true
+    },
+    "wis": {
+      "score": 12,
+      "save_proficient": false
+    },
+    "cha": {
+      "score": 8,
+      "save_proficient": false
+    }
   },
   "skills": [
-    { "name": "Stealth", "ability": "dex", "proficiency": "expertise" },
-    { "name": "Investigation", "ability": "int", "proficiency": "expertise" },
-    { "name": "Acrobatics", "ability": "dex", "proficiency": "proficient" },
-    { "name": "Arcana (Sympathy/Sygaldry)", "ability": "int", "proficiency": "proficient" },
-    { "name": "Sleight of Hand", "ability": "dex", "proficiency": "proficient" },
-    { "name": "Perception", "ability": "wis", "proficiency": "proficient" }
+    {
+      "name": "Stealth",
+      "ability": "dex",
+      "proficiency": "expertise"
+    },
+    {
+      "name": "Investigation",
+      "ability": "int",
+      "proficiency": "expertise"
+    },
+    {
+      "name": "Acrobatics",
+      "ability": "dex",
+      "proficiency": "proficient"
+    },
+    {
+      "name": "Arcana (Sympathy/Sygaldry)",
+      "ability": "int",
+      "proficiency": "proficient"
+    },
+    {
+      "name": "Sleight of Hand",
+      "ability": "dex",
+      "proficiency": "proficient"
+    },
+    {
+      "name": "Perception",
+      "ability": "wis",
+      "proficiency": "proficient"
+    }
   ],
   "weapons": [
-    { "name": "Wakizashi", "attack_bonus": 5, "damage": "1d6+3", "damage_type": "piercing/slashing", "properties": "Finesse, Light, Reach 5 ft.", "ammo": null },
-    { "name": "Kunai", "attack_bonus": 5, "damage": "1d4+3", "damage_type": "piercing", "properties": "Finesse, Light, Thrown (20/60)", "ammo": 6 },
-    { "name": "Shuriken", "attack_bonus": 5, "damage": "1d4+3", "damage_type": "piercing", "properties": "Finesse, Thrown (20/60)", "ammo": 10 }
+    {
+      "name": "Wakizashi",
+      "attack_bonus": 5,
+      "damage": "1d6+3",
+      "damage_type": "piercing/slashing",
+      "properties": "Finesse, Light, Reach 5 ft.",
+      "ammo": null
+    },
+    {
+      "name": "Kunai",
+      "attack_bonus": 5,
+      "damage": "1d4+3",
+      "damage_type": "piercing",
+      "properties": "Finesse, Light, Thrown (20/60)",
+      "ammo": 6
+    },
+    {
+      "name": "Shuriken",
+      "attack_bonus": 5,
+      "damage": "1d4+3",
+      "damage_type": "piercing",
+      "properties": "Finesse, Thrown (20/60)",
+      "ammo": 10
+    }
   ],
   "features": [
-    { "name": "Body Flicker (Shunshin)", "category": "chakra", "cost": "1 Chakra, Bonus Action", "status": "active", "description": "Teleport/dash up to 30 ft. to an unoccupied space you can see without provoking opportunity attacks." },
-    { "name": "Chakra-Fuelled Link", "category": "chakra", "cost": "1 Chakra", "status": "active", "description": "Act as a pure, lossless thermal/kinetic source for a Sympathetic binding for 1 round, bypassing the need for a fire or the risk of Binder's Chills." },
-    { "name": "Precision Throw", "category": "chakra", "cost": "1 Chakra", "status": "active", "description": "Curve a thrown kunai/dagger around half or three-quarters cover, granting Advantage on the attack roll." },
-    { "name": "Link Efficiency", "category": "sympathy", "cost": "", "status": "active", "description": "Perfect Link (same piece of matter): ~80-90%. Good Link (similar material + blood/hair): ~40-60%. Poor Link (crude similarity): ~5-15%, high slippage." },
-    { "name": "Binder's Chills", "category": "sympathy", "cost": "", "status": "active", "description": "Drawing heat from your own body requires a CON save (DC 10 + energy level) or take 1d4 cold damage and 1 level of Exhaustion." },
-    { "name": "Sneak Attack (1d6)", "category": "trait", "cost": "1 / turn", "status": "active", "description": "Extra 1d6 damage when hitting with a Finesse/Ranged weapon with Advantage, or when an ally (or an active Sympathetic kinetic binding distracting the target) is within 5 ft. of the enemy." },
-    { "name": "Uchiha Dormancy (Sharingan)", "category": "bloodline", "cost": "", "status": "locked", "description": "The Sharingan is locked. Extreme emotional trauma or life-or-death catalysis may awaken it." },
-    { "name": "Unknown Maternal Bloodline", "category": "bloodline", "cost": "", "status": "unknown", "description": "Passive triggers observed by the DM during high-stress physical or sympathetic events. Surrounding matter hums and vibrates." }
+    {
+      "name": "Body Flicker (Shunshin)",
+      "category": "chakra",
+      "cost": "1 Chakra, Bonus Action",
+      "status": "active",
+      "description": "Teleport/dash up to 30 ft. to an unoccupied space you can see without provoking opportunity attacks."
+    },
+    {
+      "name": "Chakra-Fuelled Link",
+      "category": "chakra",
+      "cost": "1 Chakra",
+      "status": "active",
+      "description": "Act as a pure, lossless thermal/kinetic source for a Sympathetic binding for 1 round, bypassing the need for a fire or the risk of Binder's Chills."
+    },
+    {
+      "name": "Precision Throw",
+      "category": "chakra",
+      "cost": "1 Chakra",
+      "status": "active",
+      "description": "Curve a thrown kunai/dagger around half or three-quarters cover, granting Advantage on the attack roll."
+    },
+    {
+      "name": "Link Efficiency",
+      "category": "sympathy",
+      "cost": "",
+      "status": "active",
+      "description": "Perfect Link (same piece of matter): ~80-90%. Good Link (similar material + blood/hair): ~40-60%. Poor Link (crude similarity): ~5-15%, high slippage."
+    },
+    {
+      "name": "Binder's Chills",
+      "category": "sympathy",
+      "cost": "",
+      "status": "active",
+      "description": "Drawing heat from your own body requires a CON save (DC 10 + energy level) or take 1d4 cold damage and 1 level of Exhaustion."
+    },
+    {
+      "name": "Sneak Attack (1d6)",
+      "category": "trait",
+      "cost": "1 / turn",
+      "status": "active",
+      "description": "Extra 1d6 damage when hitting with a Finesse/Ranged weapon with Advantage, or when an ally (or an active Sympathetic kinetic binding distracting the target) is within 5 ft. of the enemy."
+    },
+    {
+      "name": "Uchiha Dormancy (Sharingan)",
+      "category": "bloodline",
+      "cost": "",
+      "status": "locked",
+      "description": "The Sharingan is locked. Extreme emotional trauma or life-or-death catalysis may awaken it."
+    },
+    {
+      "name": "Unknown Maternal Bloodline",
+      "category": "bloodline",
+      "cost": "",
+      "status": "unknown",
+      "description": "Passive triggers observed by the DM during high-stress physical or sympathetic events. Surrounding matter hums and vibrates."
+    }
   ],
   "inventory": {
-    "currency": { "talents": 2, "jots": 6, "drabs": 4 },
+    "currency": {
+      "talents": 2,
+      "jots": 6,
+      "drabs": 4
+    },
     "items": [
-      { "name": "Studded leather / dark shinobi attire", "qty": 1, "notes": "Worn" },
-      { "name": "Vial of pine pitch", "qty": 3, "notes": "Sympathy pouch" },
-      { "name": "Bundle of wax-coated twine", "qty": 1, "notes": "Sympathy pouch" },
-      { "name": "Iron nails & iron filings", "qty": 4, "notes": "Sympathy pouch" },
-      { "name": "Chunk of lead and copper", "qty": 1, "notes": "Sympathy pouch" },
-      { "name": "Tallow candle", "qty": 2, "notes": "Sympathy pouch" },
-      { "name": "Tinderbox", "qty": 1, "notes": "Sympathy pouch" }
+      {
+        "name": "Studded leather / dark shinobi attire",
+        "qty": 1,
+        "notes": "Worn"
+      },
+      {
+        "name": "Vial of pine pitch",
+        "qty": 3,
+        "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Bundle of wax-coated twine",
+        "qty": 1,
+        "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Iron nails & iron filings",
+        "qty": 4,
+        "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Chunk of lead and copper",
+        "qty": 1,
+        "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Tallow candle",
+        "qty": 2,
+        "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Tinderbox",
+        "qty": 1,
+        "notes": "Sympathy pouch"
+      }
     ],
     "keepsakes": [
       "Small wooden amulet containing a single black crow feather (mother's warning)"
@@ -83,7 +226,11 @@
     "time": "Late afternoon, Autumn (Fallow)",
     "weather": "Crisp wind, overcast sky threatening cold rain",
     "companions": [
-      { "name": "Bram", "role": "Employer", "notes": "Portly tinker driving a mule-drawn wagon from Crosson" }
+      {
+        "name": "Bram",
+        "role": "Employer",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson"
+      }
     ]
   },
   "encounter": {
@@ -91,14 +238,122 @@
     "title": "Surprise Round: Felled Oak Ambush",
     "round": 0,
     "enemies": [
-      { "name": "Crossbowman", "position": "In an ash tree, 30 ft away, 15 ft up", "status": "Aiming at Bram", "notes": "Three-quarters cover (+5 AC)" },
-      { "name": "Brigand (club)", "position": "Left hawthorn ditch, 20 ft away", "status": "Crouching", "notes": "Iron-shod club" },
-      { "name": "Brigand (club)", "position": "Left hawthorn ditch, 20 ft away", "status": "Crouching", "notes": "Iron-shod club" }
+      {
+        "name": "Crossbowman",
+        "position": "In an ash tree, 30 ft away, 15 ft up",
+        "status": "Aiming at Bram",
+        "notes": "Three-quarters cover (+5 AC)"
+      },
+      {
+        "name": "Brigand (club)",
+        "position": "Left hawthorn ditch, 20 ft away",
+        "status": "Crouching",
+        "notes": "Iron-shod club"
+      },
+      {
+        "name": "Brigand (club)",
+        "position": "Left hawthorn ditch, 20 ft away",
+        "status": "Crouching",
+        "notes": "Iron-shod club"
+      }
     ],
     "environment": [
       "Lit brass whale-oil lantern hanging on Bram's wagon next to Sebak (steady thermal source)",
       "Felled oak blocking the road"
-    ]
+    ],
+    "map": {
+      "width": 12,
+      "height": 10,
+      "terrain": [
+        {
+          "type": "road",
+          "x": 0,
+          "y": 4,
+          "w": 12,
+          "h": 2,
+          "label": "Road to Imre"
+        },
+        {
+          "type": "difficult",
+          "x": 4,
+          "y": 0,
+          "w": 5,
+          "h": 2,
+          "label": "Hawthorn ditch"
+        },
+        {
+          "type": "cover",
+          "x": 7,
+          "y": 3,
+          "w": 1,
+          "h": 4,
+          "label": "Felled oak"
+        },
+        {
+          "type": "object",
+          "x": 2,
+          "y": 4,
+          "w": 2,
+          "h": 1,
+          "label": "Wagon"
+        },
+        {
+          "type": "light",
+          "x": 3,
+          "y": 4,
+          "w": 1,
+          "h": 1,
+          "label": "Lantern"
+        },
+        {
+          "type": "tree",
+          "x": 9,
+          "y": 8,
+          "w": 1,
+          "h": 1,
+          "label": "Ash tree"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Sebak",
+          "kind": "pc",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "label": "Bram",
+          "kind": "ally",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "label": "Mule",
+          "kind": "neutral",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "label": "Crossbowman",
+          "kind": "enemy",
+          "x": 9,
+          "y": 8,
+          "elevation": 15
+        },
+        {
+          "label": "Brigand 1",
+          "kind": "enemy",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "label": "Brigand 2",
+          "kind": "enemy",
+          "x": 6,
+          "y": 1
+        }
+      ]
+    }
   },
   "last_log": "Surprise round ready. Awaiting Sebak's opening action at the felled oak ambush.",
   "notes": ""

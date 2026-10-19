@@ -24,6 +24,15 @@ const log = check('data/log.json', 'data/log.schema.json');
 const rule = (ok, msg) => { if (!ok) { failed = true; console.error(`data/state.json: ${msg}`); } };
 rule(state.vitals.hp_current <= state.vitals.hp_max, 'vitals.hp_current is above hp_max');
 rule(state.chakra.current <= state.chakra.max, 'chakra.current is above chakra.max');
+const map = state.encounter?.map;
+if (map) {
+  for (const t of map.terrain ?? []) {
+    rule(t.x + (t.w ?? 1) <= map.width && t.y + (t.h ?? 1) <= map.height, `encounter.map terrain "${t.label ?? t.type}" runs off the ${map.width}x${map.height} grid`);
+  }
+  for (const t of map.tokens) {
+    rule(t.x < map.width && t.y < map.height, `encounter.map token "${t.label}" at (${t.x},${t.y}) is off the ${map.width}x${map.height} grid`);
+  }
+}
 if (Array.isArray(log) && log.length > 1) {
   for (let i = 1; i < log.length; i++) rule(log[i - 1].at <= log[i].at, `data/log.json entry ${i} is older than the one before it (append new entries at the end)`);
 }

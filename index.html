@@ -122,9 +122,10 @@
 
     /* PANELS */
     .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
-    /* Now tab: situation and story on the left, encounter on the right; stacked
-       situation → encounter → story on narrow screens. */
-    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; grid-template-areas: "sit enc" "log enc"; }
+    /* Now tab: situation, map and story on the left, encounter on the right;
+       stacked situation → map → encounter → story on narrow screens. */
+    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto 1fr; grid-template-areas: "sit enc" "map enc" "log enc"; }
+    .panel[hidden] { display: none; }
     .panel-grid > * { min-width: 0; }
     .panel {
       background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px;
@@ -155,6 +156,11 @@
     }
     .enemy-name { font-weight: 700; color: #fff; }
     .enemy-meta { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.8rem; }
+    .battle-map { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--border-color); background: #1a1d16; }
+    .battle-map text { font-family: inherit; pointer-events: none; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.78rem; color: var(--text-soft); }
+    .map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .map-legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .env-item { font-size: 0.85rem; color: #fcd34d; }
     .env-item::before { content: "◆ "; color: var(--sympathy-amber); }
 
@@ -226,7 +232,7 @@
     @media (max-width: 900px) {
       .vitals-grid { grid-template-columns: repeat(3, 1fr); }
       .panel-grid, .panel-grid.now-grid { grid-template-columns: 1fr; }
-      .panel-grid.now-grid { grid-template-areas: "sit" "enc" "log"; }
+      .panel-grid.now-grid { grid-template-rows: none; grid-template-areas: "sit" "map" "enc" "log"; }
     }
     @media (max-width: 560px) {
       body { padding: 12px 16px; }
@@ -301,6 +307,10 @@
             <div class="panel-title">Situation</div>
             <p class="dm-log" id="dm-last-log"></p>
             <dl class="facts" id="world-facts"></dl>
+          </div>
+          <div class="panel" style="grid-area: map" id="map-panel" hidden>
+            <div class="panel-title">Battle map</div>
+            <div class="stack" id="encounter-map"></div>
           </div>
           <div class="panel" style="grid-area: log">
             <div class="panel-title">
@@ -606,6 +616,8 @@
             el('span', { class: 'enemy-meta' }, [e.position, e.notes].filter(Boolean).join(' · ')))));
         fill('env-list', (enc.environment ?? []).map((x) => el('div', { class: 'env-item' }, x)));
       }
+      $('map-panel').hidden = !(enc.active && enc.map);
+      fill('encounter-map', enc.active && enc.map ? renderMap(enc.map) : []);
 
       // Combat
       fill('weapons-body', s.weapons.map((wp) =>
@@ -646,6 +658,91 @@
       fill('item-list', s.inventory.items.map((it) =>
         el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
       fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
+    }
+
+    // Battle map: encounter.map drawn as SVG, one 5 ft square per grid cell.
+    const CELL = 40;
+    const TOKEN_COLOURS = { pc: '#38bdf8', ally: '#10b981', enemy: '#ef4444', neutral: '#9ca3af' };
+    const TERRAIN_STYLE = {
+      road: { fill: '#3b3326' },
+      difficult: { fill: 'url(#hatch)' },
+      cover: { fill: '#5b4027', stroke: '#8b6a45' },
+      wall: { fill: '#4b5563', stroke: '#6b7280' },
+      water: { fill: '#1e3a5f', stroke: '#2b5a8a' },
+      tree: { fill: '#1f4d2b', stroke: '#2f7a43', round: true },
+      object: { fill: '#3f3f46', stroke: '#71717a' },
+      light: { fill: 'url(#glow)', round: true, big: true },
+    };
+
+    function svg(tag, attrs = {}, ...children) {
+      const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      for (const c of children) if (c != null) node.append(c);
+      return node;
+    }
+
+    function tokenTag(label) {
+      const num = label.match(/(\d+)\s*$/);
+      return (label.trim()[0] ?? '?').toUpperCase() + (num ? num[1] : '');
+    }
+
+    function renderMap(map) {
+      const W = map.width * CELL, H = map.height * CELL;
+      const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, class: 'battle-map', role: 'img', 'aria-label': 'Battle map' });
+      root.append(svg('defs', {},
+        svg('pattern', { id: 'hatch', width: 8, height: 8, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+          svg('rect', { width: 8, height: 8, fill: '#26331f' }), svg('line', { x1: 0, y1: 0, x2: 0, y2: 8, stroke: '#4d6b35', 'stroke-width': 3 })),
+        svg('radialGradient', { id: 'glow' },
+          svg('stop', { offset: '0%', 'stop-color': '#fbbf24', 'stop-opacity': 0.9 }),
+          svg('stop', { offset: '100%', 'stop-color': '#f59e0b', 'stop-opacity': 0 }))));
+
+      for (const t of map.terrain ?? []) {
+        const st = TERRAIN_STYLE[t.type] ?? TERRAIN_STYLE.object;
+        const x = t.x * CELL, y = t.y * CELL, w = (t.w ?? 1) * CELL, h = (t.h ?? 1) * CELL;
+        const shape = st.round
+          ? svg('ellipse', { cx: x + w / 2, cy: y + h / 2, rx: (st.big ? w : w / 2 - 2), ry: (st.big ? h : h / 2 - 2), fill: st.fill, stroke: st.stroke ?? 'none', 'stroke-width': 2 })
+          : svg('rect', { x: x + 1, y: y + 1, width: w - 2, height: h - 2, rx: 4, fill: st.fill, stroke: st.stroke ?? 'none', 'stroke-width': 2 });
+        shape.append(svg('title', {}, t.label ?? t.type));
+        root.append(shape);
+      }
+
+      // Grid lines above terrain, below labels and tokens.
+      const grid = svg('g', { stroke: 'rgba(255,255,255,0.07)', 'stroke-width': 1 });
+      for (let i = 1; i < map.width; i++) grid.append(svg('line', { x1: i * CELL, y1: 0, x2: i * CELL, y2: H }));
+      for (let j = 1; j < map.height; j++) grid.append(svg('line', { x1: 0, y1: j * CELL, x2: W, y2: j * CELL }));
+      root.append(grid);
+
+      for (const t of map.terrain ?? []) {
+        if (!t.label || t.type === 'light') continue;
+        const label = svg('text', { x: t.x * CELL + 4, y: t.y * CELL + 11, 'font-size': 9, fill: 'rgba(255,255,255,0.55)' });
+        label.textContent = t.label;
+        root.append(label);
+      }
+
+      for (const t of map.tokens) {
+        const cx = t.x * CELL + CELL / 2, cy = t.y * CELL + CELL / 2, colour = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
+        const g = svg('g', { opacity: t.down ? 0.45 : 1 });
+        g.append(svg('title', {}, `${t.label}${t.elevation ? ` (${t.elevation} ft up)` : ''}${t.down ? ' (down)' : ''}`));
+        g.append(svg('circle', { cx, cy, r: CELL * 0.38, fill: '#0b0c10', stroke: colour, 'stroke-width': t.kind === 'pc' ? 4 : 3 }));
+        const tag = svg('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: colour });
+        tag.textContent = tokenTag(t.label);
+        g.append(tag);
+        if (t.down) g.append(svg('path', { d: `M${cx - 10} ${cy - 10}L${cx + 10} ${cy + 10}M${cx + 10} ${cy - 10}L${cx - 10} ${cy + 10}`, stroke: '#fff', 'stroke-width': 2 }));
+        if (t.elevation) {
+          g.append(svg('rect', { x: cx + 6, y: cy - CELL / 2 + 1, width: 26, height: 12, rx: 6, fill: '#f59e0b' }));
+          const e = svg('text', { x: cx + 19, y: cy - CELL / 2 + 10, 'text-anchor': 'middle', 'font-size': 8, 'font-weight': 700, fill: '#0b0c10' });
+          e.textContent = `${t.elevation}ft`;
+          g.append(e);
+        }
+        root.append(g);
+      }
+
+      const legend = el('div', { class: 'map-legend' }, ...map.tokens.map((t) => {
+        const dot = el('i');
+        dot.style.background = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
+        return el('span', {}, dot, `${tokenTag(t.label)} ${t.label}${t.down ? ' (down)' : ''}`);
+      }), el('span', { class: 'muted' }, '1 square = 5 ft'));
+      return [root, legend];
     }
 
     function logEntry(e) {
