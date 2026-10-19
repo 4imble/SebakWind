@@ -168,7 +168,13 @@
             "properties": {
               "name": { "type": "string" },
               "role": { "type": "string" },
-              "notes": { "type": "string" }
+              "notes": { "type": "string" },
+              "icon": { "type": "string", "maxLength": 8 },
+              "hp_current": { "type": "integer" },
+              "hp_max": { "type": "integer", "minimum": 1 },
+              "ac": { "type": "integer" },
+              "conditions": { "type": "array", "items": { "type": "string" } },
+              "down": { "type": "boolean" }
             }
           }
         }
@@ -197,6 +203,24 @@
           }
         },
         "environment": { "type": "array", "items": { "type": "string" } },
+        "combat_log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["round", "actor", "action"],
+            "additionalProperties": false,
+            "properties": {
+              "round": { "type": "integer", "minimum": 0 },
+              "actor": { "type": "string" },
+              "action": { "type": "string" },
+              "target": { "type": "string" },
+              "roll": { "type": "string" },
+              "outcome": { "enum": ["hit", "crit", "miss", "saved", "failed", "other"] },
+              "damage": { "type": "integer", "minimum": 0 },
+              "note": { "type": "string" }
+            }
+          }
+        },
         "map": {
           "type": "object",
           "required": ["width", "height", "tokens"],
