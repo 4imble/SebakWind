@@ -26,6 +26,7 @@ As in *The Name of the Wind*, sympathetic bindings follow three principles. Appl
 Standing rulings:
 - Iron to iron (for example, Sebak's iron nails to an iron-shod club) is a **Good** link under Correspondence and Consanguinity.
 - The blood/hair clause in the Good link tier applies only to organic targets.
+- Setting up a binding is always a **bonus action**, whatever the link quality. A weak link is less efficient, not slower, and there is no "complex binding" that costs more. Maintaining an established binding costs no action but occupies Sebak's one mental split. Body Flicker is also a bonus action, so it's one or the other each turn.
 
 The full field reference is in [data/README.md](data/README.md). Background lore is in [campaign/backstory.md](campaign/backstory.md).
 
