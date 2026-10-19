@@ -84,7 +84,7 @@
       padding: 6px 10px;
       border-radius: 6px;
       font-size: 0.8rem;
-      width: 280px;
+      width: 320px;
     }
 
     /* HEADER */
@@ -148,7 +148,6 @@
     }
 
     .btn:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.2); }
-    .btn-primary { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
     .btn-sync { background: rgba(56, 189, 248, 0.15); border-color: var(--chakra-blue); color: var(--chakra-blue); }
 
     /* VITALS BAR */
@@ -183,11 +182,6 @@
     .vital-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 4px; }
 
     .counter-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; }
-    .counter-btn {
-      width: 26px; height: 26px; border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-panel-alt); color: #fff; cursor: pointer; font-weight: bold;
-    }
 
     /* MAIN GRID */
     .dashboard-grid {
@@ -302,15 +296,15 @@
 </head>
 <body>
   <div class="container">
-    <!-- LIVE GOOGLE SHEETS BACKEND SYNC BAR -->
+    <!-- LIVE GOOGLE DOC BACKEND SYNC BAR -->
     <div class="sync-bar">
       <div class="sync-status">
         <span class="status-dot" id="sync-dot"></span>
         <span id="sync-text">Live DM Backend ready - click Sync to load stats</span>
       </div>
       <div class="sync-controls">
-        <input type="text" id="sheet-url-input" class="sync-input" placeholder="Paste Google Sheet URL or CSV link (optional override)" />
-        <button class="btn btn-sync" onclick="syncFromGoogleSheet()">🔄 Sync Live Stats</button>
+        <input type="text" id="doc-url-input" class="sync-input" placeholder="Google Doc share URL or Document ID" />
+        <button class="btn btn-sync" onclick="syncFromGoogleDoc()">🔄 Sync Live Stats</button>
       </div>
     </div>
 
@@ -319,7 +313,7 @@
       <div class="identity-block">
         <h1>
           <span id="char-name">Sebak</span>
-          <span class="crow-badge">The Crow in the Wind</span>
+          <span class="crow-badge" id="char-title">The Crow in the Wind</span>
         </h1>
         <p class="subtitle" id="char-lineage">Half-Uchiha (Son of Uchiha Itachi) &bull; Unknown Maternal Bloodline &bull; Shinobi Sympathist</p>
         <div class="identity-tags">
@@ -336,14 +330,14 @@
         <div class="vital-label">Hit Points</div>
         <div class="vital-value"><span id="hp-current">10</span> / <span id="hp-max">10</span></div>
         <div class="counter-controls">
-          <span class="vital-sub">Hit Die: 1d8</span>
+          <span class="vital-sub">Hit Die: <span id="hit-die">1d8</span></span>
         </div>
       </div>
 
       <div class="vital-card">
         <div class="vital-label">Armour Class</div>
         <div class="vital-value" id="ac-val">14</div>
-        <div class="vital-sub">Dark Shinobi Vest (11 + 3 DEX)</div>
+        <div class="vital-sub" id="ac-notes">Dark Shinobi Vest (11 + 3 DEX)</div>
       </div>
 
       <div class="vital-card">
@@ -386,55 +380,55 @@
           <small style="color:var(--text-muted);font-size:0.75rem;">Click to Roll</small>
         </div>
         <div class="ability-grid">
-          <div class="ability-box" onclick="rollCheck('Strength Check', 0)">
+          <div class="ability-box" onclick="rollCheck('Strength Check', getMod('str'))">
             <div class="ability-name">Strength</div>
-            <div class="ability-mod">+0</div>
+            <div class="ability-mod" id="str-mod">+0</div>
             <div class="ability-score" id="str-score">10</div>
           </div>
-          <div class="ability-box" onclick="rollCheck('Dexterity Check', 3)">
+          <div class="ability-box" onclick="rollCheck('Dexterity Check', getMod('dex'))">
             <div class="ability-name">Dexterity</div>
-            <div class="ability-mod">+3</div>
+            <div class="ability-mod" id="dex-mod">+3</div>
             <div class="ability-score" id="dex-score">16</div>
           </div>
-          <div class="ability-box" onclick="rollCheck('Constitution Check', 2)">
+          <div class="ability-box" onclick="rollCheck('Constitution Check', getMod('con'))">
             <div class="ability-name">Constitution</div>
-            <div class="ability-mod">+2</div>
+            <div class="ability-mod" id="con-mod">+2</div>
             <div class="ability-score" id="con-score">14</div>
           </div>
-          <div class="ability-box" onclick="rollCheck('Intelligence Check', 3)">
+          <div class="ability-box" onclick="rollCheck('Intelligence Check', getMod('int'))">
             <div class="ability-name">Intelligence</div>
-            <div class="ability-mod">+3</div>
+            <div class="ability-mod" id="int-mod">+3</div>
             <div class="ability-score" id="int-score">16</div>
           </div>
-          <div class="ability-box" onclick="rollCheck('Wisdom Check', 1)">
+          <div class="ability-box" onclick="rollCheck('Wisdom Check', getMod('wis'))">
             <div class="ability-name">Wisdom</div>
-            <div class="ability-mod">+1</div>
+            <div class="ability-mod" id="wis-mod">+1</div>
             <div class="ability-score" id="wis-score">12</div>
           </div>
-          <div class="ability-box" onclick="rollCheck('Charisma Check', -1)">
+          <div class="ability-box" onclick="rollCheck('Charisma Check', getMod('cha'))">
             <div class="ability-name">Charisma</div>
-            <div class="ability-mod">-1</div>
+            <div class="ability-mod" id="cha-mod">-1</div>
             <div class="ability-score" id="cha-score">8</div>
           </div>
         </div>
 
         <div class="panel-title">Saving Throws</div>
         <div class="skill-list">
-          <div class="skill-row" onclick="rollCheck('Dexterity Save', 5)">
+          <div class="skill-row" onclick="rollCheck('Dexterity Save', getSave('dex', 5))">
             <div class="skill-left"><span class="prof-dot proficient"></span> Dexterity Save</div>
-            <span class="skill-bonus">+5</span>
+            <span class="skill-bonus" id="dex-save">+5</span>
           </div>
-          <div class="skill-row" onclick="rollCheck('Intelligence Save', 5)">
+          <div class="skill-row" onclick="rollCheck('Intelligence Save', getSave('int', 5))">
             <div class="skill-left"><span class="prof-dot proficient"></span> Intelligence Save</div>
-            <span class="skill-bonus">+5</span>
+            <span class="skill-bonus" id="int-save">+5</span>
           </div>
-          <div class="skill-row" onclick="rollCheck('Constitution Save (Binder Chills)', 2)">
+          <div class="skill-row" onclick="rollCheck('Constitution Save (Binder Chills)', getSave('con', 2))">
             <div class="skill-left"><span class="prof-dot"></span> Constitution Save</div>
-            <span class="skill-bonus">+2</span>
+            <span class="skill-bonus" id="con-save">+2</span>
           </div>
-          <div class="skill-row" onclick="rollCheck('Wisdom Save', 1)">
+          <div class="skill-row" onclick="rollCheck('Wisdom Save', getSave('wis', 1))">
             <div class="skill-left"><span class="prof-dot"></span> Wisdom Save</div>
-            <span class="skill-bonus">+1</span>
+            <span class="skill-bonus" id="wis-save">+1</span>
           </div>
         </div>
 
@@ -605,14 +599,14 @@
   </div>
 
   <script>
-    let hp = 10;
-    let maxHp = 10;
+    let liveState = {};
     let orbs = [true, true, true];
 
-    // Load saved Google Sheet URL override if user pasted one
-    const savedUrl = localStorage.getItem('sebak_sheet_url');
-    if (savedUrl) {
-      document.getElementById('sheet-url-input').value = savedUrl;
+    const DEFAULT_DOC_ID = '16aHQiCNiFb8uaoBTSKZ2pUO_OEPT9eq5FX7OUE6owho';
+
+    const savedDocUrl = localStorage.getItem('sebak_doc_url');
+    if (savedDocUrl) {
+      document.getElementById('doc-url-input').value = savedDocUrl;
     }
 
     function renderOrbs() {
@@ -636,6 +630,21 @@
       renderOrbs();
     }
 
+    function getMod(stat) {
+      if (liveState.stats && liveState.stats[stat] && liveState.stats[stat].mod != null) {
+        return parseInt(liveState.stats[stat].mod, 10);
+      }
+      const defaults = { str: 0, dex: 3, con: 2, int: 3, wis: 1, cha: -1 };
+      return defaults[stat] ?? 0;
+    }
+
+    function getSave(stat, fallback) {
+      if (liveState.stats && liveState.stats[stat] && liveState.stats[stat].save != null) {
+        return parseInt(liveState.stats[stat].save, 10);
+      }
+      return fallback;
+    }
+
     function rollCheck(name, mod) {
       const d20 = Math.floor(Math.random() * 20) + 1;
       const total = d20 + mod;
@@ -656,126 +665,126 @@
       document.getElementById('roll-total').textContent = atkTotal + ' Hit';
     }
 
-    // Parse CSV text into key-value map (handles quotes, commas, newlines, CRLF)
-    function parseCSV(csvText) {
-      const rows = [];
-      let row = [], field = '', inQuotes = false;
-      for (let i = 0; i < csvText.length; i++) {
-        const c = csvText[i];
-        if (inQuotes) {
-          if (c === '"' && csvText[i + 1] === '"') { field += '"'; i++; }
-          else if (c === '"') inQuotes = false;
-          else field += c;
-        } else if (c === '"') inQuotes = true;
-        else if (c === ',') { row.push(field); field = ''; }
-        else if (c === '\n' || c === '\r') {
-          if (c === '\r' && csvText[i + 1] === '\n') i++;
-          row.push(field); field = ''; rows.push(row); row = [];
-        } else field += c;
-      }
-      if (field !== '' || row.length) { row.push(field); rows.push(row); }
-      const map = {};
-      for (let i = 1; i < rows.length; i++) { // row 0 = header
-        if (rows[i].length < 2) continue;
-        const key = rows[i][0].trim();
-        if (key) map[key] = rows[i][1].trim();
-      }
-      return map;
+    function extractDocId(input) {
+      if (!input) return DEFAULT_DOC_ID;
+      const match = input.match(/\/document\/d\/([a-zA-Z0-9-_]+)/);
+      if (match) return match[1];
+      if (/^[a-zA-Z0-9-_]{25,}$/.test(input.trim())) return input.trim();
+      return DEFAULT_DOC_ID;
     }
 
-    // Turn any Google Sheet link into a CORS-friendly CSV URL
-    function toCsvUrl(rawUrl) {
-      // Published-to-web link: /spreadsheets/d/e/<id>/pubhtml or /pub?output=csv
-      if (/\/spreadsheets\/d\/e\//.test(rawUrl)) {
-        if (/output=csv/.test(rawUrl)) return rawUrl;
-        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
-        return rawUrl.replace(/\/pub(html)?.*$/, '/pub') + '?output=csv' + (gid ? '&gid=' + gid : '');
+    function cleanJsonString(rawText) {
+      // Remove UTF-8 Byte Order Mark if present
+      let cleaned = rawText.replace(/^\uFEFF/, '');
+      // Replace smart/curly quotes with standard ASCII double quotes
+      cleaned = cleaned.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
+      // Find JSON block boundary starting with { and ending with }
+      const start = cleaned.indexOf('{');
+      const end = cleaned.lastIndexOf('}');
+      if (start !== -1 && end !== -1 && end > start) {
+        cleaned = cleaned.substring(start, end + 1);
       }
-      // Normal share/edit link: use gviz endpoint (sends CORS headers)
-      const m = rawUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-      if (m) {
-        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
-        return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv${gid ? '&gid=' + gid : ''}`;
-      }
-      return rawUrl;
+      return cleaned;
     }
 
-    // Load sheet via <script> tag (JSONP) - not subject to CORS, works from file://
-    function loadSheetJsonp(rawUrl) {
-      return new Promise((resolve, reject) => {
-        const m = rawUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-        if (!m) return reject(new Error('Not a Google Sheet link'));
-        const gid = (rawUrl.match(/[#&?]gid=(\d+)/) || [])[1];
-        const cb = '__sheetCb' + Date.now();
-        const script = document.createElement('script');
-        const cleanup = () => { delete window[cb]; script.remove(); };
-        const timer = setTimeout(() => { cleanup(); reject(new Error('Timed out. Check the sheet is shared as "Anyone with the link -> Viewer".')); }, 15000);
-        window[cb] = (resp) => {
-          clearTimeout(timer); cleanup();
-          if (resp.status !== 'ok' || !resp.table) return reject(new Error('Sheet error: ' + ((resp.errors && resp.errors[0] && resp.errors[0].detailed_message) || 'unknown')));
-          const map = {};
-          resp.table.rows.forEach(r => {
-            const c = r.c || [];
-            const k = c[0] && (c[0].v ?? c[0].f);
-            const v = c[1] && (c[1].f ?? c[1].v);
-            if (k != null && v != null) map[String(k).trim()] = String(v).trim();
-          });
-          resolve(map);
-        };
-        script.onerror = () => { clearTimeout(timer); cleanup(); reject(new Error('Could not load sheet. Set sharing to "Anyone with the link -> Viewer".')); };
-        script.src = `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?headers=0&tqx=responseHandler:${cb}${gid ? '&gid=' + gid : ''}`;
-        document.head.appendChild(script);
-      });
-    }
-
-    async function syncFromGoogleSheet() {
-      const inputEl = document.getElementById('sheet-url-input');
-      let rawUrl = inputEl.value.trim();
-      if (rawUrl) {
-        localStorage.setItem('sebak_sheet_url', rawUrl);
-      } else {
-        // Default to the Sebak_Live_State_Backend sheet link if shared
-        rawUrl = document.querySelector('meta[name="backend-sheet"]')?.content || localStorage.getItem('sebak_sheet_url') || 'https://docs.google.com/spreadsheets/d/1h5DhRqH9YN86ekNuVut8XaX-32_XqunLM43wAR1MTHM/edit?usp=sharing';
+    async function syncFromGoogleDoc() {
+      const inputEl = document.getElementById('doc-url-input');
+      const rawInput = inputEl.value.trim();
+      if (rawInput) {
+        localStorage.setItem('sebak_doc_url', rawInput);
       }
 
-      if (!rawUrl) {
-        document.getElementById('sync-text').textContent = 'Paste your Sebak_Live_State_Backend Share Link in the box to sync!';
-        return;
-      }
-
-      const csvUrl = toCsvUrl(rawUrl);
+      const docId = extractDocId(rawInput || localStorage.getItem('sebak_doc_url'));
+      const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`;
 
       try {
-        document.getElementById('sync-text').textContent = 'Syncing with DM Backend...';
-        let data;
-        if (/\/spreadsheets\/d\/e\//.test(rawUrl) || /output=csv/.test(rawUrl)) {
-          const res = await fetch(csvUrl); // published-to-web CSV supports CORS
-          if (!res.ok) throw new Error('Could not fetch published CSV (HTTP ' + res.status + ')');
-          data = parseCSV(await res.text());
-        } else {
-          data = await loadSheetJsonp(rawUrl);
+        document.getElementById('sync-text').textContent = 'Syncing with Google Doc Backend...';
+        const res = await fetch(exportUrl);
+        if (!res.ok) {
+          throw new Error(`Export fetch failed (HTTP ${res.status}). Verify sharing is set to "Anyone with the link can view".`);
         }
-        if (!Object.keys(data).length) throw new Error('Sheet loaded but no key/value rows found (need keys in column A, values in column B).');
 
-        if (data.hp_current) { hp = parseInt(data.hp_current, 10); document.getElementById('hp-current').textContent = hp; }
-        if (data.hp_max) { maxHp = parseInt(data.hp_max, 10); document.getElementById('hp-max').textContent = maxHp; }
-        if (data.ac) document.getElementById('ac-val').textContent = data.ac;
-        if (data.chakra_current) setChakraCount(parseInt(data.chakra_current, 10));
-        if (data.kunai_count) document.getElementById('kunai-count').textContent = data.kunai_count;
-        if (data.shuriken_count) document.getElementById('shuriken-count').textContent = data.shuriken_count;
-        if (data.silver_talents) document.getElementById('coin-talents').textContent = data.silver_talents;
-        if (data.iron_jots) document.getElementById('coin-jots').textContent = data.iron_jots;
-        if (data.copper_drabs) document.getElementById('coin-drabs').textContent = data.copper_drabs;
-        if (data.sympathy_kit) document.getElementById('sympathy-kit').textContent = data.sympathy_kit;
-        if (data.location) document.getElementById('char-location').innerHTML = `<strong>Location:</strong> ${data.location}`;
-        if (data.encounter_title) document.getElementById('encounter-title').textContent = data.encounter_title;
-        if (data.enemy_1) document.getElementById('enemy-1').textContent = `1. ${data.enemy_1}`;
-        if (data.enemy_2) document.getElementById('enemy-2').textContent = `2. ${data.enemy_2}`;
-        if (data.environment_source) document.getElementById('env-source').textContent = `Source: ${data.environment_source}`;
-        if (data.last_log) document.getElementById('dm-last-log').textContent = data.last_log;
+        const rawText = await res.text();
+        const cleaned = cleanJsonString(rawText);
+        const data = JSON.parse(cleaned);
+        liveState = data;
+
+        // Identity & Lineage
+        if (data.name) document.getElementById('char-name').textContent = data.name;
+        if (data.title) document.getElementById('char-title').textContent = data.title;
+        if (data.lineage) {
+          document.getElementById('char-lineage').innerHTML = `${data.lineage} &bull; ${data.lineage_notes || ''} &bull; ${data.background || ''}`;
+        }
+        if (data.class_level) document.getElementById('char-class').innerHTML = `<strong>Class:</strong> ${data.class_level}`;
+        if (data.world_state) {
+          if (data.world_state.location) document.getElementById('char-location').innerHTML = `<strong>Location:</strong> ${data.world_state.location}`;
+          if (data.world_state.employer) document.getElementById('char-employer').innerHTML = `<strong>Employer:</strong> ${data.world_state.employer}`;
+        }
+
+        // Vitals
+        if (data.hp_current != null) document.getElementById('hp-current').textContent = data.hp_current;
+        if (data.hp_max != null) document.getElementById('hp-max').textContent = data.hp_max;
+        if (data.hit_die) document.getElementById('hit-die').textContent = data.hit_die;
+        if (data.ac != null) document.getElementById('ac-val').textContent = data.ac;
+        if (data.ac_notes) document.getElementById('ac-notes').textContent = data.ac_notes;
+        if (data.initiative) document.getElementById('init-val').textContent = data.initiative;
+        if (data.speed) document.getElementById('speed-val').textContent = data.speed;
+        if (data.proficiency) document.getElementById('prof-val').textContent = data.proficiency;
+        if (data.chakra_current != null) setChakraCount(parseInt(data.chakra_current, 10));
+        if (data.chakra_max != null) document.getElementById('chakra-max').textContent = data.chakra_max;
+        if (data.alar_attack) document.getElementById('alar-atk').textContent = data.alar_attack;
+        if (data.sympathy_dc != null) document.getElementById('alar-dc').textContent = data.sympathy_dc;
+        if (data.mental_splits != null) document.getElementById('alar-splits').textContent = data.mental_splits;
+
+        // Ability Scores & Saves
+        if (data.stats) {
+          const stats = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+          stats.forEach(st => {
+            if (data.stats[st]) {
+              const elScore = document.getElementById(`${st}-score`);
+              const elMod = document.getElementById(`${st}-mod`);
+              const elSave = document.getElementById(`${st}-save`);
+              if (elScore && data.stats[st].score != null) elScore.textContent = data.stats[st].score;
+              if (elMod && data.stats[st].mod != null) elMod.textContent = data.stats[st].mod;
+              if (elSave && data.stats[st].save != null) elSave.textContent = data.stats[st].save;
+            }
+          });
+        }
+
+        // Inventory & Ammo
+        if (data.inventory) {
+          if (data.inventory.kunai_count != null) document.getElementById('kunai-count').textContent = data.inventory.kunai_count;
+          if (data.inventory.shuriken_count != null) document.getElementById('shuriken-count').textContent = data.inventory.shuriken_count;
+          if (data.inventory.currency) {
+            if (data.inventory.currency.silver_talents != null) document.getElementById('coin-talents').textContent = data.inventory.currency.silver_talents;
+            if (data.inventory.currency.iron_jots != null) document.getElementById('coin-jots').textContent = data.inventory.currency.iron_jots;
+            if (data.inventory.currency.copper_drabs != null) document.getElementById('coin-drabs').textContent = data.inventory.currency.copper_drabs;
+          }
+          if (data.inventory.sympathy_kit) document.getElementById('sympathy-kit').textContent = data.inventory.sympathy_kit;
+          if (data.inventory.keepsakes) document.getElementById('keepsake-item').textContent = data.inventory.keepsakes;
+        }
+
+        // Encounter Tracker
+        if (data.encounter) {
+          if (data.encounter.title) document.getElementById('encounter-title').textContent = data.encounter.title;
+          if (Array.isArray(data.encounter.enemies)) {
+            if (data.encounter.enemies[0]) {
+              document.getElementById('enemy-1').textContent = `1. ${data.encounter.enemies[0].description} (${data.encounter.enemies[0].distance})`;
+            }
+            if (data.encounter.enemies[1]) {
+              document.getElementById('enemy-2').textContent = `2. ${data.encounter.enemies[1].description} (${data.encounter.enemies[1].distance})`;
+            }
+          }
+          if (data.encounter.environment_source) {
+            document.getElementById('env-source').textContent = `Source: ${data.encounter.environment_source}`;
+          }
+          if (data.encounter.last_log) {
+            document.getElementById('dm-last-log').textContent = data.encounter.last_log;
+          }
+        }
 
         const now = new Date().toLocaleTimeString();
-        document.getElementById('sync-text').textContent = `Synced with DM Backend at ${now}`;
+        document.getElementById('sync-text').textContent = `Synced with Google Doc Backend at ${now}`;
       } catch (err) {
         document.getElementById('sync-text').textContent = `Sync notice: ${err.message}`;
       }
