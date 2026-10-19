@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T18:02:38Z",
+  "updated_at": "2026-10-19T18:10:48Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -236,24 +236,24 @@
   "encounter": {
     "active": true,
     "title": "Surprise Round: Felled Oak Ambush",
-    "round": 0,
+    "round": 1,
     "enemies": [
       {
         "name": "Crossbowman",
-        "position": "In an ash tree, 30 ft away, 15 ft up",
-        "status": "Aiming at Bram",
-        "notes": "Three-quarters cover (+5 AC)"
+        "position": "Slumped on an ash branch, 15 ft up",
+        "status": "Unconscious (nonlethal)",
+        "notes": "Knocked out by Sebak; crossbow caught in the branch fork"
       },
       {
         "name": "Brigand (club)",
-        "position": "Left hawthorn ditch, 20 ft away",
-        "status": "Crouching",
+        "position": "Beside Bram's wagon",
+        "status": "Attacking Bram (missed)",
         "notes": "Iron-shod club"
       },
       {
         "name": "Brigand (club)",
-        "position": "Left hawthorn ditch, 20 ft away",
-        "status": "Crouching",
+        "position": "Beside Bram's wagon",
+        "status": "Attacking Bram (hit, 5 damage)",
         "notes": "Iron-shod club"
       }
     ],
@@ -323,8 +323,9 @@
           "label": "Sebak",
           "kind": "pc",
           "x": 8,
-          "y": 7,
-          "icon": "🥷"
+          "y": 8,
+          "icon": "🥷",
+          "elevation": 15
         },
         {
           "label": "Bram",
@@ -346,25 +347,26 @@
           "x": 9,
           "y": 8,
           "elevation": 15,
-          "icon": "🏹"
+          "icon": "🏹",
+          "down": true
         },
         {
           "label": "Brigand 1",
           "kind": "enemy",
-          "x": 5,
-          "y": 1,
+          "x": 2,
+          "y": 3,
           "icon": "🪓"
         },
         {
           "label": "Brigand 2",
           "kind": "enemy",
-          "x": 6,
-          "y": 1,
+          "x": 3,
+          "y": 3,
           "icon": "🪓"
         }
       ]
     }
   },
-  "last_log": "Sebak Body Flickers to the foot of the ash tree (1 chakra spent); the crossbowman is 15 ft above him and still aiming at Bram.",
+  "last_log": "Sebak dropped the crossbowman from behind; the brigands charged Bram and wounded him. It is Sebak's turn in round 1.",
   "notes": ""
 }
