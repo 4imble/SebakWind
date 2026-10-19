@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:46:04Z",
+  "updated_at": "2026-10-19T20:48:25Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -11,16 +11,16 @@
     "alignment": "Neutral (Pragmatic, observant, guarded)"
   },
   "vitals": {
-    "hp_current": 8,
+    "hp_current": 10,
     "hp_max": 10,
     "hp_temp": 0,
     "hit_die": "1d8",
-    "hit_dice_remaining": 0,
+    "hit_dice_remaining": 1,
     "ac": 14,
     "ac_notes": "Dark Shinobi Vest (11 + 3 DEX)",
     "speed": "30 ft.",
     "proficiency_bonus": 2,
-    "exhaustion": 1,
+    "exhaustion": 0,
     "conditions": []
   },
   "chakra": {
@@ -248,20 +248,20 @@
   },
   "world": {
     "location": "Imre, in the apothecary's shop off the south road",
-    "time": "Before dawn, Autumn (Fallow)",
-    "weather": "Cold drizzle easing",
+    "time": "Midday, Autumn (Fallow)",
+    "weather": "Overcast, the rain has stopped",
     "companions": [
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Laid on a cot in the apothecary's shop in Imre, feverish, treated for a few days (Sebak paid the first talent).",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. On a cot in the apothecary's shop; fever hanging on but under treatment.",
         "icon": "🧔",
-        "hp_current": 1,
+        "hp_current": 2,
         "hp_max": 11,
         "ac": 10,
         "down": false,
         "conditions": [
-          "Exhausted and weak"
+          "Feverish"
         ]
       }
     ]
@@ -295,6 +295,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "The apothecary took Bram in for treatment and gave Sebak a roof and a stall for the mule; Sebak paid a talent.",
+  "last_log": "Sebak woke at midday in the apothecary's loft fully rested; Bram is awake at 2 HP and still feverish, and the next step is yours.",
   "notes": ""
 }
