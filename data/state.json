@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T21:04:21Z",
+  "updated_at": "2026-10-19T21:04:52Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -296,7 +296,7 @@
     ]
   },
   "last_log": "Sebak noted the barge-guard notice by the apothecary's door.",
-  "notes": "",
+  "notes": "COSTINGS (GM reference). Working assumption: 1 talent ~ 10 jots, 1 jot ~ 10 drabs. A talent is serious money (University tuition is several talents); everyday wages and meals are jots and drabs. Prices set so far: barge-guard day job = 4 jots + board (notice by the apothecary's door). Apothecary in Imre = 1 talent first treatment (paid) + 2 jots/day for bed and physic, hay 2 drabs/day (high, but the player accepted it). Bram's promised pay for the road to Imre = 2 talents (also high, accepted). Sebak started with 2 talents, 6 jots, 4 drabs, which was generous; tuition will be hard to afford, and that is intended. Price new things in jots and drabs by default.",
   "player_notes": [
     {
       "title": "Notice by the apothecary's door",
