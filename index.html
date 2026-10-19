@@ -253,8 +253,18 @@
     .item-list .notes { color: var(--text-muted); font-size: 0.78rem; }
     .keepsake { font-size: 0.88rem; color: var(--text-soft); font-style: italic; }
 
-    @keyframes flash { from { color: var(--sympathy-amber); text-shadow: 0 0 12px var(--sympathy-amber); } to { text-shadow: none; } }
-    .flash { animation: flash 2.5s ease-out; }
+    /* Changed values: a solid amber highlight that holds, then fades over 8s, with a "was" tag for short values. */
+    @keyframes flash {
+      0%, 30% { background-color: rgba(245, 158, 11, 0.35); box-shadow: 0 0 0 2px var(--sympathy-amber), 0 0 14px rgba(245, 158, 11, 0.6); }
+      100% { background-color: transparent; box-shadow: 0 0 0 2px transparent, 0 0 14px transparent; }
+    }
+    @keyframes was-fade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+    .flash { animation: flash 8s ease-in; border-radius: 4px; }
+    .flash[data-was]::after {
+      content: 'was ' attr(data-was); margin-left: 6px; padding: 1px 6px; border-radius: 999px;
+      background: var(--sympathy-amber); color: #111; font-size: 0.65rem; font-weight: 700; letter-spacing: 0;
+      text-transform: none; vertical-align: middle; white-space: nowrap; animation: was-fade 8s ease-in forwards;
+    }
 
     @media (max-width: 900px) {
       .vitals-grid { grid-template-columns: repeat(3, 1fr); }
@@ -493,16 +503,39 @@
       for (const c of children) if (c != null && c !== '') node.append(c);
       return node;
     }
-    const fill = (id, nodes) => $(id).replaceChildren(...nodes.filter((n) => n != null && n !== ''));
-
-    // Sets text, and after the first load briefly highlights anything that changed.
+    // After the first load, anything that changed is highlighted. A highlight on a
+    // hidden tab waits there and plays when the tab is opened.
     let firstRender = true;
+    function flash(node, was) {
+      node.classList.remove('flash');
+      void node.offsetWidth;
+      if (was) node.dataset.was = was; else delete node.dataset.was;
+      node.classList.add('flash');
+    }
+    document.addEventListener('animationend', (e) => {
+      if (e.animationName === 'flash' && !e.pseudoElement) { e.target.classList.remove('flash'); delete e.target.dataset.was; }
+    });
+
+    // Replaces a list's contents, highlighting only entries whose text is new.
+    const fill = (id, nodes) => {
+      const box = $(id);
+      const before = new Set([...box.children].map((c) => c.textContent));
+      const next = nodes.filter((n) => n != null && n !== '');
+      box.replaceChildren(...next);
+      if (firstRender || before.size === 0) return;
+      for (const n of next) {
+        if (n instanceof Element && n.tagName !== 'svg' && n.textContent && !before.has(n.textContent)) flash(n);
+      }
+    };
+
+    // Sets text and highlights it if it changed; short values also show what they were.
     const text = (id, value) => {
       const node = $(id);
+      const prev = node.textContent;
       const next = String(value ?? '');
-      if (node.textContent === next) return;
+      if (prev === next) return;
       node.textContent = next;
-      if (!firstRender) { node.classList.remove('flash'); void node.offsetWidth; node.classList.add('flash'); }
+      if (!firstRender) flash(node, prev && prev !== '-' && prev.length <= 12 && next.length <= 12 ? prev : '');
     };
 
     // Tabs. The chosen tab is kept in the URL hash so a refresh or a shared link
@@ -593,7 +626,7 @@
         list = null;
         nodes.push(el('p', {}, ...inlineMd(line)));
       }
-      fill('backstory', nodes);
+      $('backstory').replaceChildren(...nodes);
     }
     let lastBackstory = '';
     async function loadBackstory() {
@@ -601,7 +634,7 @@
         const md = await fetchFromApi('campaign/backstory.md').catch(() => fetchFallback('campaign/backstory.md'));
         if (md !== lastBackstory) { renderBackstory(md); lastBackstory = md; }
       } catch {
-        if (!lastBackstory) fill('backstory', [el('p', { class: 'muted' }, 'Backstory unavailable right now.')]);
+        if (!lastBackstory) $('backstory').replaceChildren(el('p', { class: 'muted' }, 'Backstory unavailable right now.'));
       }
     }
 
@@ -619,10 +652,10 @@
         }
         $('sync-dot').className = source === 'live' ? 'status-dot' : 'status-dot stale';
         const updated = state.updated_at ? new Date(state.updated_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'unknown';
-        text('sync-text', source === 'live' ? `Live · updated ${updated}` : `Updated ${updated} · from the published copy, may lag a minute`);
+        $('sync-text').textContent = source === 'live' ? `Live · updated ${updated}` : `Updated ${updated} · from the published copy, may lag a minute`;
       } catch (err) {
         $('sync-dot').className = 'status-dot error';
-        text('sync-text', `Could not load game state: ${err.message}`);
+        $('sync-text').textContent = `Could not load game state: ${err.message}`;
       }
     }
 
