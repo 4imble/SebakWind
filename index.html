@@ -195,6 +195,9 @@
     .log-entry { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; }
     .log-entry time { font-size: 0.72rem; color: var(--text-muted); }
     .log-entry h3 { font-size: 0.92rem; color: #fff; margin: 2px 0 4px; }
+    .note-actions { margin-top: 8px; }
+    .copy-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 6px; padding: 3px 8px; font: inherit; font-size: 0.72rem; cursor: pointer; }
+    .copy-btn:hover { border-color: var(--chakra-blue); color: var(--text-soft); }
     .log-entry p { font-size: 0.86rem; color: var(--text-soft); white-space: pre-wrap; }
     .link-btn { background: none; border: none; color: var(--chakra-blue); font: inherit; font-size: 0.8rem; cursor: pointer; text-transform: none; letter-spacing: 0; }
 
@@ -837,7 +840,7 @@
       fill('item-list', s.inventory.items.map((it) =>
         el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
       const notes = s.player_notes ?? [];
-      fill('note-list', notes.length ? notes.map(logEntry) : [el('p', { class: 'muted' }, 'Nothing noted yet. Ask in the story to have something written down.')]);
+      fill('note-list', notes.length ? notes.map(noteEntry) : [el('p', { class: 'muted' }, 'Nothing noted yet. Ask in the story to have something written down.')]);
       fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
     }
 
@@ -949,6 +952,31 @@
         e.at ? el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })) : null,
         el('h3', {}, e.title),
         el('p', {}, e.text));
+    }
+
+    // A note card with a button that copies an out-of-character request to delete it,
+    // naming the note by number and title so the DM can match it exactly.
+    function noteEntry(note, i) {
+      const request = `ooc: delete note #${i + 1} "${note.title}"`;
+      const btn = el('button', { class: 'copy-btn', type: 'button', title: request }, 'Copy delete request');
+      btn.addEventListener('click', async () => {
+        btn.textContent = (await copyText(request)) ? 'Copied, paste it in the story' : request;
+        setTimeout(() => { btn.textContent = 'Copy delete request'; }, 2500);
+      });
+      const card = logEntry(note);
+      card.append(el('div', { class: 'note-actions' }, btn));
+      return card;
+    }
+    async function copyText(value) {
+      try { await navigator.clipboard.writeText(value); return true; } catch {}
+      const area = el('textarea', { readonly: '', style: 'position:fixed;opacity:0' });
+      area.value = value;
+      document.body.append(area);
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch {}
+      area.remove();
+      return ok;
     }
 
     function renderLog(log) {
