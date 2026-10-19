@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T22:05:17Z",
+  "updated_at": "2026-10-19T22:06:52Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -244,8 +244,8 @@
     ]
   },
   "world": {
-    "location": "Imre, at the south gate",
-    "time": "Tuesday, early afternoon, Autumn (Fallow)",
+    "location": "Imre, the market square after a day scouting the town",
+    "time": "Tuesday, late afternoon, Autumn (Fallow)",
     "weather": "Overcast, the rain has stopped",
     "companions": [
       {
@@ -292,7 +292,7 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "It is Tuesday afternoon in Imre; the barge job is Thursday.",
+  "last_log": "Sebak finishes scouting Imre: the wharf, the craft lanes, the market and the taverns.",
   "notes": "COSTINGS (GM reference, using the player's table of the Cealdish system). 10 drabs = 1 jot, 10 jots = 1 talent (100 drabs), 10 talents = 1 mark. Below the drab is the shim (an iron scrap by weight, ~11-14 to a drab). Compound prices like 'two and four' mean talents and jots. Benchmarks: 1 drab = casual stake, 3-4 drabs = a big meal, 5 drabs = road provisions at an Imre inn. 1 jot = Eolian cover or work aprons; 1-2 jots = a student's weekly wage; 2 jots = wagon passage; 3 jots = a sturdy second-hand cloak. 1 talent = a University term's room and board, or good shoes. 2-3 talents = average tuition. 8-10 talents = a quality steel crossbow or a master lute. Price new things in drabs and jots by default. PRICES RESET (the player agreed to a fair readjustment): barge-guard day job = 2 jots + board. Apothecary in Imre = 3 jots for the first treatment (she returned 7 jots of the talent Sebak paid, saying Sebak's field stitching saved her work), then 5 drabs/day for bed and physic, hay 2 drabs/day. Bram's promised pay for the road to Imre = a few jots wage plus about a talent as a thank-you bonus if he recovers. Sebak's looted light crossbow is ordinary, not 'quality steel': about 2-3 talents to a buyer. The player wants tuition to stay hard to afford.\n\nSTORY THREADS: Bram's strongbox (small, iron-bound, locked, heavy, under the wagon bench) and the crossbowman's iron key (scar down left cheek, aimed at Bram, patient, likely hired). Whether the key fits the strongbox is undecided; do not confirm until the player asks Bram. Voss (south gate sergeant) is sending men for the bodies; the dead brigand may be Garrick Finch (missing front tooth, left forearm tattoo) with a bounty on the roll; the fled one is heavy-set, brown patched coat, broken nose, stubble, headed east, lost his club. Crossbow and 7 bolts held by Voss for a month on a receipt.",
   "player_notes": [
     {
