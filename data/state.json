@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:38:31Z",
+  "updated_at": "2026-10-19T19:45:58Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -11,7 +11,7 @@
     "alignment": "Neutral (Pragmatic, observant, guarded)"
   },
   "vitals": {
-    "hp_current": 0,
+    "hp_current": 1,
     "hp_max": 10,
     "hp_temp": 0,
     "hit_die": "1d8",
@@ -20,14 +20,11 @@
     "ac_notes": "Dark Shinobi Vest (11 + 3 DEX)",
     "speed": "30 ft.",
     "proficiency_bonus": 2,
-    "exhaustion": 0,
-    "conditions": [
-      "Unconscious",
-      "Dying (death saves: 1 success, 0 failures)"
-    ]
+    "exhaustion": 1,
+    "conditions": []
   },
   "chakra": {
-    "current": 1,
+    "current": 0,
     "max": 3,
     "recovery": "Short or Long Rest"
   },
@@ -181,7 +178,7 @@
       "category": "bloodline",
       "cost": "",
       "status": "unknown",
-      "description": "Passive triggers observed by the DM during high-stress physical or sympathetic events. Surrounding matter hums and vibrates."
+      "description": "Passive triggers observed by the DM during high-stress physical or sympathetic events. Surrounding matter hums and vibrates. Stirred at the brink of death at the felled oak: iron and wood within reach rang and the nearest club shattered. It drained his chakra and left him exhausted. Its nature is still unknown."
     }
   ],
   "inventory": {
@@ -239,7 +236,7 @@
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Unconscious and bleeding at 0 HP.",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Unconscious at 0 HP, clinging on (2 death save successes).",
         "icon": "🧔",
         "hp_current": 0,
         "hp_max": 11,
@@ -252,7 +249,7 @@
     ]
   },
   "encounter": {
-    "active": true,
+    "active": false,
     "title": "Surprise Round: Felled Oak Ambush",
     "round": 3,
     "enemies": [
@@ -260,7 +257,7 @@
         "name": "Crossbowman",
         "position": "Slumped on an ash branch, 15 ft up",
         "status": "Unconscious (nonlethal)",
-        "notes": "Knocked out by Sebak; crossbow caught in the branch fork"
+        "notes": "Still unconscious in the ash tree; crossbow caught in the branch fork"
       },
       {
         "name": "Brigand (club)",
@@ -270,236 +267,16 @@
       },
       {
         "name": "Brigand (club)",
-        "position": "Beside Bram's wagon",
-        "status": "Standing over Sebak and Bram",
+        "position": "Gone",
+        "status": "Fled into the hawthorn",
         "notes": "Iron-shod club"
       }
     ],
     "environment": [
       "Lit brass whale-oil lantern hanging on Bram's wagon next to Sebak (steady thermal source)",
       "Felled oak blocking the road"
-    ],
-    "map": {
-      "width": 12,
-      "height": 10,
-      "terrain": [
-        {
-          "type": "road",
-          "x": 0,
-          "y": 4,
-          "w": 12,
-          "h": 2,
-          "label": "Road to Imre"
-        },
-        {
-          "type": "difficult",
-          "x": 4,
-          "y": 0,
-          "w": 5,
-          "h": 2,
-          "label": "Hawthorn ditch",
-          "icon": "🌿"
-        },
-        {
-          "type": "cover",
-          "x": 7,
-          "y": 3,
-          "w": 1,
-          "h": 4,
-          "label": "Felled oak",
-          "icon": "🪵"
-        },
-        {
-          "type": "object",
-          "x": 2,
-          "y": 4,
-          "w": 2,
-          "h": 1,
-          "label": "Wagon",
-          "icon": "🛒"
-        },
-        {
-          "type": "light",
-          "x": 3,
-          "y": 4,
-          "w": 1,
-          "h": 1,
-          "label": "Lantern"
-        },
-        {
-          "type": "tree",
-          "x": 9,
-          "y": 8,
-          "w": 1,
-          "h": 1,
-          "label": "Ash tree",
-          "icon": "🌳"
-        }
-      ],
-      "tokens": [
-        {
-          "label": "Sebak",
-          "kind": "pc",
-          "x": 3,
-          "y": 4,
-          "icon": "🥷",
-          "down": true
-        },
-        {
-          "label": "Bram",
-          "kind": "ally",
-          "x": 2,
-          "y": 4,
-          "icon": "🧔"
-        },
-        {
-          "label": "Mule",
-          "kind": "neutral",
-          "x": 4,
-          "y": 4,
-          "icon": "🫏"
-        },
-        {
-          "label": "Crossbowman",
-          "kind": "enemy",
-          "x": 9,
-          "y": 8,
-          "elevation": 15,
-          "icon": "🏹",
-          "down": true
-        },
-        {
-          "label": "Brigand 1",
-          "kind": "enemy",
-          "x": 2,
-          "y": 3,
-          "icon": "🪓"
-        },
-        {
-          "label": "Brigand 2",
-          "kind": "enemy",
-          "x": 3,
-          "y": 3,
-          "icon": "🪓",
-          "down": true
-        }
-      ]
-    },
-    "combat_log": [
-      {
-        "round": 0,
-        "actor": "Sebak",
-        "action": "Body Flicker (1 chakra)",
-        "note": "Teleports to the foot of the ash tree."
-      },
-      {
-        "round": 0,
-        "actor": "Sebak",
-        "action": "Climbs the ash tree",
-        "roll": "Stealth d20+7 = 19 vs passive 11",
-        "outcome": "other",
-        "note": "Reaches the crossbowman unseen."
-      },
-      {
-        "round": 0,
-        "actor": "Sebak",
-        "action": "Wakizashi sneak attack (nonlethal)",
-        "target": "Crossbowman",
-        "roll": "d20+5 = 20 (advantage: 15, 11) vs AC 12",
-        "outcome": "hit",
-        "damage": 11,
-        "note": "1d6+3 plus 1d6 sneak attack. Crossbowman knocked unconscious."
-      },
-      {
-        "round": 1,
-        "actor": "Brigand 2",
-        "action": "Club",
-        "target": "Bram",
-        "roll": "d20+4 = 8 vs AC 10",
-        "outcome": "miss"
-      },
-      {
-        "round": 1,
-        "actor": "Brigand 1",
-        "action": "Club",
-        "target": "Bram",
-        "roll": "d20+4 = 17 vs AC 10",
-        "outcome": "hit",
-        "damage": 5
-      },
-      {
-        "round": 1,
-        "actor": "Sebak",
-        "action": "Body Flicker (1 chakra)",
-        "note": "Drops from the ash tree to the wagon, beside Bram and next to both brigands."
-      },
-      {
-        "round": 1,
-        "actor": "Sebak",
-        "action": "Wakizashi sneak attack",
-        "target": "Brigand 2",
-        "roll": "d20+5 = 17 vs AC 12",
-        "outcome": "hit",
-        "damage": 8,
-        "note": "1d6+3 plus 1d6 sneak attack (Bram adjacent)."
-      },
-      {
-        "round": 2,
-        "actor": "Brigand 2",
-        "action": "Club",
-        "target": "Sebak",
-        "roll": "d20+4 = 20 vs AC 14",
-        "outcome": "hit",
-        "damage": 5
-      },
-      {
-        "round": 2,
-        "actor": "Brigand 1",
-        "action": "Club",
-        "target": "Bram",
-        "roll": "d20+4 = 11 vs AC 10",
-        "outcome": "hit",
-        "damage": 7,
-        "note": "Bram drops to 0 HP."
-      },
-      {
-        "round": 2,
-        "actor": "Sebak",
-        "action": "Binds the two clubs together (bonus action)",
-        "roll": "Alar d20+5 = 10 vs AC 12",
-        "outcome": "failed",
-        "note": "The binding slips and fizzles. Lantern is the source, no chakra spent."
-      },
-      {
-        "round": 2,
-        "actor": "Sebak",
-        "action": "Wakizashi",
-        "target": "Brigand 2",
-        "roll": "d20+5 = 24 vs AC 12",
-        "outcome": "hit",
-        "damage": 5,
-        "note": "No sneak attack: the binding failed and Bram is incapacitated. Brigand 2 dies."
-      },
-      {
-        "round": 3,
-        "actor": "Brigand 1",
-        "action": "Club",
-        "target": "Sebak",
-        "roll": "d20+4 = 14 vs AC 14",
-        "outcome": "hit",
-        "damage": 7,
-        "note": "Sebak drops to 0 HP."
-      },
-      {
-        "round": 3,
-        "actor": "Sebak",
-        "action": "Death saving throw",
-        "roll": "d20 = 12",
-        "outcome": "saved",
-        "note": "1 success, 0 failures."
-      }
     ]
   },
-  "last_log": "Sebak and Bram are both down and dying at the wagon; one brigand stands over them, the other is dead.",
+  "last_log": "The last brigand fled when Sebak's bloodline stirred; Sebak wakes at 1 HP, drained and exhausted, and Bram is dying at the wagon.",
   "notes": ""
 }
