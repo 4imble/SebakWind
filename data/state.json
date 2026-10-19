@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:48:25Z",
+  "updated_at": "2026-10-19T21:04:21Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -295,6 +295,13 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak woke at midday in the apothecary's loft fully rested; Bram is awake at 2 HP and still feverish, and the next step is yours.",
-  "notes": ""
+  "last_log": "Sebak noted the barge-guard notice by the apothecary's door.",
+  "notes": "",
+  "player_notes": [
+    {
+      "title": "Notice by the apothecary's door",
+      "text": "Chalked on slate by the door of the apothecary's shop in Imre: \"Guards wanted for river barge, Thursday. Ask at the wharf. Four jots and board.\"",
+      "at": "2026-10-19T21:04:21Z"
+    }
+  ]
 }
