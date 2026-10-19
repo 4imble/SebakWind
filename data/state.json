@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:17:48Z",
+  "updated_at": "2026-10-19T19:29:11Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -137,6 +137,13 @@
       "cost": "1 Chakra",
       "status": "active",
       "description": "Curve a thrown kunai/dagger around half or three-quarters cover, granting Advantage on the attack roll."
+    },
+    {
+      "name": "Setting a Binding",
+      "category": "sympathy",
+      "cost": "Bonus Action",
+      "status": "active",
+      "description": "Setting up any binding takes a bonus action, whatever the link quality; a weaker link only lowers efficiency. Maintaining it costs no action but occupies your one mental split. Shares your bonus action with Body Flicker, so it's one or the other each turn."
     },
     {
       "name": "Link Efficiency",
