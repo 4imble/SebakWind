@@ -79,5 +79,6 @@ A grid of 5 ft squares. `x` counts columns from the left and `y` counts rows fro
 
 - `terrain[].type` is one of `road`, `difficult`, `cover`, `wall`, `water`, `tree`, `object` or `light`. `light` draws a glow, so use it for heat sources Sebak can bind to. `w` and `h` default to 1 and the area must stay on the grid. `label` is shown on the map.
 - `tokens[].kind` is one of `pc`, `ally`, `enemy` or `neutral`, and sets the colour. `elevation` (ft) shows as a badge. Set `down: true` for a creature that is unconscious or dead, rather than deleting it.
+- `icon` (optional, on tokens and terrain) is a single emoji, e.g. `"🏹"` for an archer or `"🛒"` for a wagon. Without one, a default for the `kind` or `type` is used. A trailing number in a token's label ("Brigand 2") is shown as a small badge so identical icons can be told apart.
 - After each move, update the token's `x`/`y`. Keep the token labels in step with `encounter.enemies[].name` where they refer to the same creature.
 - Remove `map` (or set `active: false`) when the encounter ends.

@@ -663,6 +663,9 @@
     // Battle map: encounter.map drawn as SVG, one 5 ft square per grid cell.
     const CELL = 40;
     const TOKEN_COLOURS = { pc: '#38bdf8', ally: '#10b981', enemy: '#ef4444', neutral: '#9ca3af' };
+    // Default emoji when a token or terrain area has no "icon" of its own.
+    const TOKEN_ICONS = { pc: '🥷', ally: '🧑', enemy: '⚔️', neutral: '🐾' };
+    const TERRAIN_ICONS = { road: '', difficult: '🌿', cover: '🪵', wall: '🧱', water: '🌊', tree: '🌳', object: '📦', light: '🏮' };
     const TERRAIN_STYLE = {
       road: { fill: '#3b3326' },
       difficult: { fill: 'url(#hatch)' },
@@ -681,9 +684,14 @@
       return node;
     }
 
-    function tokenTag(label) {
-      const num = label.match(/(\d+)\s*$/);
-      return (label.trim()[0] ?? '?').toUpperCase() + (num ? num[1] : '');
+    // "Brigand 2" -> "2", so identical icons can be told apart.
+    const tokenNumber = (label) => label.match(/(\d+)\s*$/)?.[1] ?? '';
+
+    // Small text with a dark outline so it stays readable over terrain and tokens.
+    function mapText(x, y, content, attrs = {}) {
+      const t = svg('text', { x, y, 'font-size': 8, fill: 'rgba(255,255,255,0.8)', stroke: '#0b0c10', 'stroke-width': 2.5, 'paint-order': 'stroke', ...attrs });
+      t.textContent = content;
+      return t;
     }
 
     function renderMap(map) {
@@ -712,35 +720,45 @@
       for (let j = 1; j < map.height; j++) grid.append(svg('line', { x1: 0, y1: j * CELL, x2: W, y2: j * CELL }));
       root.append(grid);
 
+      // Light sources get their icon in the middle of the glow.
       for (const t of map.terrain ?? []) {
-        if (!t.label || t.type === 'light') continue;
-        const label = svg('text', { x: t.x * CELL + 4, y: t.y * CELL + 11, 'font-size': 9, fill: 'rgba(255,255,255,0.55)' });
-        label.textContent = t.label;
-        root.append(label);
+        if (t.type !== 'light') continue;
+        const cx = (t.x + (t.w ?? 1) / 2) * CELL, cy = (t.y + (t.h ?? 1) / 2) * CELL;
+        root.append(mapText(cx, cy + 5, t.icon ?? TERRAIN_ICONS.light, { 'font-size': 14, 'text-anchor': 'middle', stroke: 'none' }));
       }
 
       for (const t of map.tokens) {
         const cx = t.x * CELL + CELL / 2, cy = t.y * CELL + CELL / 2, colour = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
+        const r = CELL * 0.32;
         const g = svg('g', { opacity: t.down ? 0.45 : 1 });
         g.append(svg('title', {}, `${t.label}${t.elevation ? ` (${t.elevation} ft up)` : ''}${t.down ? ' (down)' : ''}`));
-        g.append(svg('circle', { cx, cy, r: CELL * 0.38, fill: '#0b0c10', stroke: colour, 'stroke-width': t.kind === 'pc' ? 4 : 3 }));
-        const tag = svg('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: colour });
-        tag.textContent = tokenTag(t.label);
-        g.append(tag);
-        if (t.down) g.append(svg('path', { d: `M${cx - 10} ${cy - 10}L${cx + 10} ${cy + 10}M${cx + 10} ${cy - 10}L${cx - 10} ${cy + 10}`, stroke: '#fff', 'stroke-width': 2 }));
+        g.append(svg('circle', { cx, cy, r, fill: 'rgba(11,12,16,0.85)', stroke: colour, 'stroke-width': t.kind === 'pc' ? 2.5 : 2 }));
+        g.append(mapText(cx, cy + 5, t.icon ?? TOKEN_ICONS[t.kind] ?? '•', { 'font-size': 14, 'text-anchor': 'middle', stroke: 'none' }));
+        const num = tokenNumber(t.label);
+        if (num) {
+          g.append(svg('circle', { cx: cx + r * 0.75, cy: cy + r * 0.75, r: 5.5, fill: colour }));
+          g.append(mapText(cx + r * 0.75, cy + r * 0.75 + 3, num, { 'font-size': 8, 'font-weight': 700, 'text-anchor': 'middle', fill: '#0b0c10', stroke: 'none' }));
+        }
+        if (t.down) g.append(svg('path', { d: `M${cx - 8} ${cy - 8}L${cx + 8} ${cy + 8}M${cx + 8} ${cy - 8}L${cx - 8} ${cy + 8}`, stroke: '#fff', 'stroke-width': 2 }));
         if (t.elevation) {
-          g.append(svg('rect', { x: cx + 6, y: cy - CELL / 2 + 1, width: 26, height: 12, rx: 6, fill: '#f59e0b' }));
-          const e = svg('text', { x: cx + 19, y: cy - CELL / 2 + 10, 'text-anchor': 'middle', 'font-size': 8, 'font-weight': 700, fill: '#0b0c10' });
-          e.textContent = `${t.elevation}ft`;
-          g.append(e);
+          // Bottom-left of the token, clear of terrain labels (top) and number badges (bottom-right).
+          g.append(svg('rect', { x: cx - r - 6, y: cy + r - 7, width: 20, height: 10, rx: 5, fill: '#f59e0b' }));
+          g.append(mapText(cx - r + 4, cy + r + 1, `${t.elevation}ft`, { 'font-size': 7, 'font-weight': 700, 'text-anchor': 'middle', fill: '#0b0c10', stroke: 'none' }));
         }
         root.append(g);
+      }
+
+      // Terrain labels go on top of everything so tokens never hide them.
+      for (const t of map.terrain ?? []) {
+        if (t.type === 'light' || !(t.label || t.icon || TERRAIN_ICONS[t.type])) continue;
+        const icon = t.icon ?? TERRAIN_ICONS[t.type] ?? '';
+        root.append(mapText(t.x * CELL + 3, t.y * CELL + 10, [icon, t.label].filter(Boolean).join(' ')));
       }
 
       const legend = el('div', { class: 'map-legend' }, ...map.tokens.map((t) => {
         const dot = el('i');
         dot.style.background = TOKEN_COLOURS[t.kind] ?? TOKEN_COLOURS.neutral;
-        return el('span', {}, dot, `${tokenTag(t.label)} ${t.label}${t.down ? ' (down)' : ''}`);
+        return el('span', {}, dot, `${t.icon ?? TOKEN_ICONS[t.kind] ?? ''} ${t.label}${t.elevation ? ` (${t.elevation} ft up)` : ''}${t.down ? ' (down)' : ''}`);
       }), el('span', { class: 'muted' }, '1 square = 5 ft'));
       return [root, legend];
     }

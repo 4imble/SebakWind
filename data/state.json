@@ -279,7 +279,8 @@
           "y": 0,
           "w": 5,
           "h": 2,
-          "label": "Hawthorn ditch"
+          "label": "Hawthorn ditch",
+          "icon": "🌿"
         },
         {
           "type": "cover",
@@ -287,7 +288,8 @@
           "y": 3,
           "w": 1,
           "h": 4,
-          "label": "Felled oak"
+          "label": "Felled oak",
+          "icon": "🪵"
         },
         {
           "type": "object",
@@ -295,7 +297,8 @@
           "y": 4,
           "w": 2,
           "h": 1,
-          "label": "Wagon"
+          "label": "Wagon",
+          "icon": "🛒"
         },
         {
           "type": "light",
@@ -311,7 +314,8 @@
           "y": 8,
           "w": 1,
           "h": 1,
-          "label": "Ash tree"
+          "label": "Ash tree",
+          "icon": "🌳"
         }
       ],
       "tokens": [
@@ -319,38 +323,44 @@
           "label": "Sebak",
           "kind": "pc",
           "x": 3,
-          "y": 5
+          "y": 5,
+          "icon": "🥷"
         },
         {
           "label": "Bram",
           "kind": "ally",
           "x": 2,
-          "y": 4
+          "y": 4,
+          "icon": "🧔"
         },
         {
           "label": "Mule",
           "kind": "neutral",
           "x": 4,
-          "y": 4
+          "y": 4,
+          "icon": "🫏"
         },
         {
           "label": "Crossbowman",
           "kind": "enemy",
           "x": 9,
           "y": 8,
-          "elevation": 15
+          "elevation": 15,
+          "icon": "🏹"
         },
         {
           "label": "Brigand 1",
           "kind": "enemy",
           "x": 5,
-          "y": 1
+          "y": 1,
+          "icon": "🪓"
         },
         {
           "label": "Brigand 2",
           "kind": "enemy",
           "x": 6,
-          "y": 1
+          "y": 1,
+          "icon": "🪓"
         }
       ]
     }

@@ -216,7 +216,8 @@
                   "y": { "type": "integer", "minimum": 0 },
                   "w": { "type": "integer", "minimum": 1 },
                   "h": { "type": "integer", "minimum": 1 },
-                  "label": { "type": "string" }
+                  "label": { "type": "string" },
+                  "icon": { "type": "string", "maxLength": 8 }
                 }
               }
             },
@@ -229,6 +230,7 @@
                 "properties": {
                   "label": { "type": "string" },
                   "kind": { "enum": ["pc", "ally", "enemy", "neutral"] },
+                  "icon": { "type": "string", "maxLength": 8 },
                   "x": { "type": "integer", "minimum": 0 },
                   "y": { "type": "integer", "minimum": 0 },
                   "elevation": { "type": "integer" },
