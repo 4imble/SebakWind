@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:06:53Z",
+  "updated_at": "2026-10-19T20:08:49Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -247,9 +247,9 @@
     ]
   },
   "world": {
-    "location": "The Commonwealth, three miles south of the Omethi River, on the road between Imre and the University",
-    "time": "Late afternoon, Autumn (Fallow)",
-    "weather": "Crisp wind, overcast sky threatening cold rain",
+    "location": "The Commonwealth, on the road to Imre, just past the felled oak",
+    "time": "Early evening, Autumn (Fallow)",
+    "weather": "Cold steady rain",
     "companions": [
       {
         "name": "Bram",
@@ -296,6 +296,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak left the unconscious crossbowman a jot; the road to Imre is still blocked by the felled oak.",
+  "last_log": "Sebak drove Bram's wagon around the felled oak and is heading for Imre in the rain with Bram stable in the back.",
   "notes": ""
 }
