@@ -122,9 +122,10 @@
 
     /* PANELS */
     .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
-    /* Now tab: situation, map and story on the left, encounter on the right;
-       stacked situation → map → encounter → story on narrow screens. */
-    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto 1fr; grid-template-areas: "sit enc" "map enc" "log enc"; }
+    /* Now tab: situation and map on the left, encounter and latest story on the
+       right; stacked situation → map → encounter → story on narrow screens. */
+    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; }
+    .now-grid > .stack { gap: 14px; }
     .panel[hidden] { display: none; }
     .panel-grid > * { min-width: 0; }
     .panel {
@@ -232,7 +233,6 @@
     @media (max-width: 900px) {
       .vitals-grid { grid-template-columns: repeat(3, 1fr); }
       .panel-grid, .panel-grid.now-grid { grid-template-columns: 1fr; }
-      .panel-grid.now-grid { grid-template-rows: none; grid-template-areas: "sit" "map" "enc" "log"; }
     }
     @media (max-width: 560px) {
       body { padding: 12px 16px; }
@@ -303,27 +303,31 @@
     <!-- NOW: where Sebak is and what he's facing -->
     <section role="tabpanel" id="panel-now" aria-labelledby="tab-now">
       <div class="panel-grid now-grid">
-          <div class="panel" style="grid-area: sit">
+        <div class="stack">
+          <div class="panel">
             <div class="panel-title">Situation</div>
             <p class="dm-log" id="dm-last-log"></p>
             <dl class="facts" id="world-facts"></dl>
           </div>
-          <div class="panel" style="grid-area: map" id="map-panel" hidden>
+          <div class="panel" id="map-panel" hidden>
             <div class="panel-title">Battle map</div>
             <div class="stack" id="encounter-map"></div>
           </div>
-          <div class="panel" style="grid-area: log">
+        </div>
+        <div class="stack">
+          <div class="panel encounter-panel" id="encounter-panel">
+            <div class="panel-title"><span>Encounter</span><span class="chips" id="encounter-round"></span></div>
+            <div class="encounter-title" id="encounter-title"></div>
+            <div class="stack" id="enemy-list"></div>
+            <div class="stack" id="env-list"></div>
+          </div>
+          <div class="panel">
             <div class="panel-title">
               <span>Latest in the story</span>
               <button class="link-btn" onclick="selectTab('story')">Full log →</button>
             </div>
             <div class="stack" id="recent-log"><p class="muted">No entries yet.</p></div>
           </div>
-        <div class="panel encounter-panel" id="encounter-panel" style="grid-area: enc">
-          <div class="panel-title"><span>Encounter</span><span class="chips" id="encounter-round"></span></div>
-          <div class="encounter-title" id="encounter-title"></div>
-          <div class="stack" id="enemy-list"></div>
-          <div class="stack" id="env-list"></div>
         </div>
       </div>
     </section>
@@ -773,7 +777,7 @@
     function renderLog(log) {
       if (!Array.isArray(log) || log.length === 0) return;
       const newestFirst = log.slice().reverse();
-      fill('recent-log', newestFirst.slice(0, 3).map(logEntry));
+      fill('recent-log', newestFirst.slice(0, 2).map(logEntry));
       fill('log-list', newestFirst.map(logEntry));
     }
 
