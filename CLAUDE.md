@@ -15,6 +15,18 @@ Keep the state files in step with play. This is part of running the game, not an
 - Run `npm install && npm run validate` before committing. Commit `data/` changes on their own with a short message naming the beat (e.g. `State: Sebak takes 4 damage from the crossbow bolt`).
 - Commit straight to `main`; a branch or PR won't show on the sheet. Only do this once the user has said the story thread may push state updates to `main`.
 
+### Rules of Sympathy
+
+As in *The Name of the Wind*, sympathetic bindings follow three principles. Apply them when ruling on any binding:
+
+1. **The Doctrine of Correspondence:** similarity increases sympathy.
+2. **The Principle of Consanguinity:** a piece of a thing can represent the whole of the thing.
+3. **The Law of Conservation:** energy is neither created nor destroyed. Every binding needs a source (fire, motion, body heat or chakra), and what isn't transferred is lost as slippage.
+
+Standing rulings:
+- Iron to iron (for example, Sebak's iron nails to an iron-shod club) is a **Good** link under Correspondence and Consanguinity.
+- The blood/hair clause in the Good link tier applies only to organic targets.
+
 The full field reference is in [data/README.md](data/README.md). Background lore is in [campaign/backstory.md](campaign/backstory.md).
 
 ## If you are changing the site or schema
