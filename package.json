@@ -1,0 +1,11 @@
+{
+  "name": "sebakwind",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate-state.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}
