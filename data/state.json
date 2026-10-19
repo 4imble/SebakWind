@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:45:58Z",
+  "updated_at": "2026-10-19T19:51:20Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -236,7 +236,7 @@
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Unconscious at 0 HP, clinging on (2 death save successes).",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Unconscious at 0 HP and still dying (2 death save successes, 1 failure).",
         "icon": "🧔",
         "hp_current": 0,
         "hp_max": 11,
@@ -277,6 +277,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "The last brigand fled when Sebak's bloodline stirred; Sebak wakes at 1 HP, drained and exhausted, and Bram is dying at the wagon.",
+  "last_log": "Sebak failed to staunch Bram's wounds at first and Bram is slipping; Sebak is at 1 HP, exhausted and out of chakra.",
   "notes": ""
 }
