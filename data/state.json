@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T17:30:00Z",
+  "updated_at": "2026-10-19T18:02:38Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -24,7 +24,7 @@
     "conditions": []
   },
   "chakra": {
-    "current": 3,
+    "current": 2,
     "max": 3,
     "recovery": "Short or Long Rest"
   },
@@ -322,8 +322,8 @@
         {
           "label": "Sebak",
           "kind": "pc",
-          "x": 3,
-          "y": 5,
+          "x": 8,
+          "y": 7,
           "icon": "🥷"
         },
         {
@@ -365,6 +365,6 @@
       ]
     }
   },
-  "last_log": "Surprise round ready. Awaiting Sebak's opening action at the felled oak ambush.",
+  "last_log": "Sebak Body Flickers to the foot of the ash tree (1 chakra spent); the crossbowman is 15 ft above him and still aiming at Bram.",
   "notes": ""
 }
