@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:03:33Z",
+  "updated_at": "2026-10-19T20:06:53Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -192,7 +192,7 @@
   "inventory": {
     "currency": {
       "talents": 2,
-      "jots": 13,
+      "jots": 12,
       "drabs": 17
     },
     "items": [
@@ -276,7 +276,7 @@
         "name": "Crossbowman",
         "position": "At the foot of the ash tree",
         "status": "Unconscious (nonlethal)",
-        "notes": "Still unconscious; stripped of his crossbow and purse"
+        "notes": "Still unconscious; stripped of his crossbow and purse, but left one jot"
       },
       {
         "name": "Brigand (club)",
@@ -296,6 +296,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak used a sympathetic see-saw to lift Bram into the wagon; the road to Imre is still blocked by the felled oak.",
+  "last_log": "Sebak left the unconscious crossbowman a jot; the road to Imre is still blocked by the felled oak.",
   "notes": ""
 }
