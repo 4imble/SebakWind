@@ -24,6 +24,13 @@ const log = check('data/log.json', 'data/log.schema.json');
 const rule = (ok, msg) => { if (!ok) { failed = true; console.error(`data/state.json: ${msg}`); } };
 rule(state.vitals.hp_current <= state.vitals.hp_max, 'vitals.hp_current is above hp_max');
 rule(state.chakra.current <= state.chakra.max, 'chakra.current is above chakra.max');
+for (const c of state.world?.companions ?? []) {
+  if (c.hp_current != null && c.hp_max != null) rule(c.hp_current <= c.hp_max, `world.companions "${c.name}" hp_current is above hp_max`);
+}
+const combatLog = state.encounter?.combat_log ?? [];
+for (let i = 1; i < combatLog.length; i++) {
+  rule(combatLog[i - 1].round <= combatLog[i].round, `encounter.combat_log entry ${i} is from an earlier round than the one before it (append new entries at the end)`);
+}
 const map = state.encounter?.map;
 if (map) {
   for (const t of map.terrain ?? []) {

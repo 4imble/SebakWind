@@ -126,6 +126,25 @@
        right; stacked situation → map → encounter → story on narrow screens. */
     .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; }
     .now-grid > .stack { gap: 14px; }
+    .member { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 4px 10px; padding: 10px 12px; background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; }
+    .member.down { opacity: 0.55; }
+    .member-icon { font-size: 1.3rem; grid-row: span 2; }
+    .member-name { font-weight: 700; color: #fff; }
+    .member-role { color: var(--text-muted); font-size: 0.78rem; font-weight: 400; margin-left: 6px; }
+    .member-hp { font-weight: 700; color: #fff; text-align: right; white-space: nowrap; }
+    .member-hp small { color: var(--text-muted); font-weight: 400; }
+    .member .hp-bar { grid-column: 2 / -1; margin-top: 0; }
+    .member .chips { grid-column: 2 / -1; justify-content: flex-start; margin-top: 0; }
+    .member .enemy-meta { grid-column: 2 / -1; }
+    .combat-log { max-height: 360px; overflow-y: auto; gap: 6px; }
+    .round-head { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+    .round-head:first-child { margin-top: 0; }
+    .attack { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 7px 10px; background: var(--bg-panel-alt); border-radius: 6px; font-size: 0.85rem; }
+    .attack-who { color: var(--text-soft); }
+    .attack-who strong { color: #fff; }
+    .attack-meta { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.76rem; }
+    .chip.grey { background: var(--bg-panel); color: var(--text-muted); border-color: var(--border-color); }
+    .chip.green { background: rgba(16, 185, 129, 0.12); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.45); }
     .panel[hidden] { display: none; }
     .panel-grid > * { min-width: 0; }
     .panel {
@@ -233,6 +252,12 @@
     @media (max-width: 900px) {
       .vitals-grid { grid-template-columns: repeat(3, 1fr); }
       .panel-grid, .panel-grid.now-grid { grid-template-columns: 1fr; }
+      /* One column: flatten the Now tab's two stacks so the party sits near the top. */
+      .now-grid > .stack { display: contents; }
+      #party-panel { order: -1; }
+      #map-panel, #encounter-panel, #combat-log-panel { order: 0; }
+      #story-panel { order: 1; }
+      #situation-panel { order: -2; }
     }
     @media (max-width: 560px) {
       body { padding: 12px 16px; }
@@ -304,7 +329,7 @@
     <section role="tabpanel" id="panel-now" aria-labelledby="tab-now">
       <div class="panel-grid now-grid">
         <div class="stack">
-          <div class="panel">
+          <div class="panel" id="situation-panel">
             <div class="panel-title">Situation</div>
             <p class="dm-log" id="dm-last-log"></p>
             <dl class="facts" id="world-facts"></dl>
@@ -315,13 +340,21 @@
           </div>
         </div>
         <div class="stack">
+          <div class="panel" id="party-panel" hidden>
+            <div class="panel-title">Party</div>
+            <div class="stack" id="party-list"></div>
+          </div>
           <div class="panel encounter-panel" id="encounter-panel">
             <div class="panel-title"><span>Encounter</span><span class="chips" id="encounter-round"></span></div>
             <div class="encounter-title" id="encounter-title"></div>
             <div class="stack" id="enemy-list"></div>
             <div class="stack" id="env-list"></div>
           </div>
-          <div class="panel">
+          <div class="panel" id="combat-log-panel" hidden>
+            <div class="panel-title">Combat log</div>
+            <div class="stack combat-log" id="combat-log"></div>
+          </div>
+          <div class="panel" id="story-panel">
             <div class="panel-title">
               <span>Latest in the story</span>
               <button class="link-btn" onclick="selectTab('story')">Full log →</button>
@@ -556,6 +589,53 @@
     }
     const facts = (pairs) => pairs.filter(([, v]) => v).flatMap(([k, v]) => [el('dt', {}, k), el('dd', {}, v)]);
 
+    // Party: everyone travelling with Sebak, with health where the story tracks it.
+    function hpColour(pct) { return pct > 50 ? 'var(--success)' : pct > 25 ? 'var(--sympathy-amber)' : 'var(--uchiha-glow)'; }
+    function renderParty(companions) {
+      $('party-panel').hidden = companions.length === 0;
+      fill('party-list', companions.map((p) => {
+        const tracked = p.hp_current != null && p.hp_max != null;
+        const chips = (p.conditions ?? []).map((x) => el('span', { class: 'chip' }, x));
+        if (p.down) chips.unshift(el('span', { class: 'chip' }, 'Down'));
+        if (p.ac != null) chips.push(el('span', { class: 'chip blue' }, `AC ${p.ac}`));
+        let bar = null;
+        if (tracked) {
+          const pct = Math.max(0, Math.min(100, (p.hp_current / p.hp_max) * 100));
+          const fillEl = el('div');
+          fillEl.style.width = `${pct}%`;
+          fillEl.style.background = hpColour(pct);
+          bar = el('div', { class: 'hp-bar' }, fillEl);
+        }
+        return el('div', { class: p.down ? 'member down' : 'member' },
+          el('span', { class: 'member-icon' }, p.icon ?? '🧑'),
+          el('span', { class: 'member-name' }, p.name, p.role ? el('span', { class: 'member-role' }, p.role) : null),
+          el('span', { class: 'member-hp' }, tracked ? `${p.hp_current} / ${p.hp_max}` : el('small', {}, 'HP not tracked'), tracked ? el('small', {}, ' HP') : null),
+          bar,
+          chips.length ? el('div', { class: 'chips' }, ...chips) : null,
+          p.notes ? el('span', { class: 'enemy-meta' }, p.notes) : null);
+      }));
+    }
+
+    // Combat log: newest round first, entries within a round newest first.
+    const OUTCOME_CHIP = { hit: 'chip amber', crit: 'chip', miss: 'chip grey', saved: 'chip green', failed: 'chip', other: 'chip blue' };
+    function renderCombatLog(entries) {
+      $('combat-log-panel').hidden = entries.length === 0;
+      const nodes = [];
+      let round = null;
+      for (const a of entries.slice().reverse()) {
+        if (a.round !== round) {
+          round = a.round;
+          nodes.push(el('div', { class: 'round-head' }, round === 0 ? 'Surprise round' : `Round ${round}`));
+        }
+        const result = [a.outcome && a.outcome !== 'other' ? a.outcome.toUpperCase() : null, a.damage != null ? `${a.damage} dmg` : null].filter(Boolean).join(' · ');
+        nodes.push(el('div', { class: 'attack' },
+          el('span', { class: 'attack-who' }, el('strong', {}, a.actor), ` ${a.action}`, a.target ? ' → ' : null, a.target ? el('strong', {}, a.target) : null),
+          result ? el('span', { class: OUTCOME_CHIP[a.outcome] ?? 'chip blue' }, result) : el('span'),
+          a.roll || a.note ? el('span', { class: 'attack-meta' }, [a.roll, a.note].filter(Boolean).join(' · ')) : null));
+      }
+      fill('combat-log', nodes);
+    }
+
     function featureCard(f) {
       const cls = { chakra: 'mechanic-card chakra-card', sympathy: 'mechanic-card sympathy-card' }[f.category] ?? 'mechanic-card';
       const hidden = f.status === 'locked' || f.status === 'unknown';
@@ -577,7 +657,7 @@
       text('hp-max', v.hp_max);
       const pct = Math.max(0, Math.min(100, (v.hp_current / v.hp_max) * 100));
       $('hp-bar-fill').style.width = `${pct}%`;
-      $('hp-bar-fill').style.background = pct > 50 ? 'var(--success)' : pct > 25 ? 'var(--sympathy-amber)' : 'var(--uchiha-glow)';
+      $('hp-bar-fill').style.background = hpColour(pct);
       const chips = (v.conditions ?? []).map((x) => el('span', { class: 'chip' }, x));
       if (v.hp_temp) chips.unshift(el('span', { class: 'chip blue' }, `+${v.hp_temp} temp`));
       if (v.exhaustion) chips.push(el('span', { class: 'chip amber' }, `Exhaustion ${v.exhaustion}`));
@@ -601,8 +681,8 @@
       const w = s.world ?? {};
       fill('world-facts', facts([
         ['Location', w.location], ['Time', w.time], ['Weather', w.weather],
-        ...(w.companions ?? []).map((p) => [p.name, [p.role, p.notes].filter(Boolean).join(' · ')]),
       ]));
+      renderParty(w.companions ?? []);
       const enc = s.encounter;
       $('encounter-panel').classList.toggle('active', enc.active);
       if (!enc.active) {
@@ -622,6 +702,7 @@
       }
       $('map-panel').hidden = !(enc.active && enc.map);
       fill('encounter-map', enc.active && enc.map ? renderMap(enc.map) : []);
+      renderCombatLog(enc.active ? enc.combat_log ?? [] : []);
 
       // Combat
       fill('weapons-body', s.weapons.map((wp) =>

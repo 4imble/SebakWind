@@ -48,11 +48,12 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `inventory.items[]` | `{ name, qty, notes }` | Remove an item when `qty` hits 0. |
 | `inventory.keepsakes` | string[] | |
 | `world.location`, `.time`, `.weather` | string | |
-| `world.companions[]` | `{ name, role, notes }` | NPCs travelling with Sebak (employer, allies). |
+| `world.companions[]` | `{ name, role, notes, icon, hp_current, hp_max, ac, conditions, down }` | NPCs travelling with Sebak (employer, allies). Shown in the Party panel on the Now tab. Only `name` is required. Add `hp_current`/`hp_max` (and `ac`) for anyone whose health matters, and keep `hp_current` updated when they're hurt or healed, the same as Sebak's. `conditions` works like `vitals.conditions`. Set `down: true` when they drop to 0 HP. `icon` is an emoji, ideally the same one as their map token. |
 | `encounter.active` | boolean | `false` hides the enemy list and shows "No active encounter". |
 | `encounter.title`, `.round` | string, integer | Round 0 = surprise round. |
 | `encounter.enemies[]` | `{ name, position, status, notes }` | One entry per creature. Put HP/wounds in `status` (e.g. `"Bloodied"`, `"Down"`). |
 | `encounter.environment` | string[] | Heat sources, cover, terrain. |
+| `encounter.combat_log[]` | `{ round, actor, action, target, roll, outcome, damage, note }`, optional | One entry per attack, spell, save or notable action in this encounter, appended in order. Only `round`, `actor` and `action` are required. `roll` is free text showing the maths (e.g. `"d20+5 = 17 vs AC 13"`). `outcome` is one of `hit`, `crit`, `miss`, `saved`, `failed` or `other`. `damage` is the total dealt. Shown on the Now tab, newest first. Clear it when the encounter ends. |
 | `encounter.map` | object, optional | Battle map drawn on the Now tab. Omit it for encounters that don't need one. See below. |
 | `last_log` | string | One line for the DM Log banner. |
 | `notes` | string | Free text, not shown on the sheet. |
@@ -81,4 +82,4 @@ A grid of 5 ft squares. `x` counts columns from the left and `y` counts rows fro
 - `tokens[].kind` is one of `pc`, `ally`, `enemy` or `neutral`, and sets the colour. `elevation` (ft) shows as a badge. Set `down: true` for a creature that is unconscious or dead, rather than deleting it.
 - `icon` (optional, on tokens and terrain) is a single emoji, e.g. `"🏹"` for an archer or `"🛒"` for a wagon. Without one, a default for the `kind` or `type` is used. A trailing number in a token's label ("Brigand 2") is shown as a small badge so identical icons can be told apart.
 - After each move, update the token's `x`/`y`. Keep the token labels in step with `encounter.enemies[].name` where they refer to the same creature.
-- Remove `map` (or set `active: false`) when the encounter ends.
+- Remove `map` and `combat_log` (or set `active: false`) when the encounter ends.
