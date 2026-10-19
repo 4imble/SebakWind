@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:00:51Z",
+  "updated_at": "2026-10-19T20:03:33Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -254,7 +254,7 @@
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Stabilised by Sebak at 0 HP; still unconscious.",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Stabilised by Sebak at 0 HP; still unconscious, laid in the wagon bed under a blanket.",
         "icon": "🧔",
         "hp_current": 0,
         "hp_max": 11,
@@ -274,9 +274,9 @@
     "enemies": [
       {
         "name": "Crossbowman",
-        "position": "Slumped on an ash branch, 15 ft up",
+        "position": "At the foot of the ash tree",
         "status": "Unconscious (nonlethal)",
-        "notes": "Still unconscious in the ash tree; stripped of his crossbow and purse"
+        "notes": "Still unconscious; stripped of his crossbow and purse"
       },
       {
         "name": "Brigand (club)",
@@ -296,6 +296,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak took the crossbowman's crossbow and bolts and looted both men; Bram is stable and the road to Imre is blocked by the felled oak.",
+  "last_log": "Sebak used a sympathetic see-saw to lift Bram into the wagon; the road to Imre is still blocked by the felled oak.",
   "notes": ""
 }
