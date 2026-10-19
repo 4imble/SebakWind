@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:31:21Z",
+  "updated_at": "2026-10-19T19:38:31Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -146,14 +146,14 @@
       "category": "sympathy",
       "cost": "Bonus Action",
       "status": "active",
-      "description": "Setting up any binding takes a bonus action, whatever the link quality; a weaker link only lowers efficiency. Maintaining it costs no action but occupies your one mental split. Shares your bonus action with Body Flicker, so it's one or the other each turn."
+      "description": "Bonus action to set up, whatever the link quality. Roll an Alar check: d20 + INT + proficiency, plus WIS when focused (lost if you took damage or were grappled since your last turn; advantage after a calm round of preparation). DC by link: Perfect 8, Good 11, Poor 15. A failure means slippage and a partial effect, not a miss. A binding acting on a person lets them save against your Sympathy DC. Maintaining it is free but occupies your one mental split. Shares your bonus action with Body Flicker."
     },
     {
       "name": "Link Efficiency",
       "category": "sympathy",
       "cost": "",
       "status": "active",
-      "description": "Perfect Link (same piece of matter): ~80-90%. Good Link (similar material + blood/hair): ~40-60%. Poor Link (crude similarity): ~5-15%, high slippage."
+      "description": "Perfect Link (same piece of matter): DC 8, ~80-90%. Good Link (similar material, or blood/hair for organic targets): DC 11, ~40-60%. Poor Link (crude similarity): DC 15, ~5-15%, high slippage."
     },
     {
       "name": "Binder's Chills",

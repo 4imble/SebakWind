@@ -38,7 +38,7 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `vitals.exhaustion` | integer 0–6 | Binder's Chills adds levels here. |
 | `vitals.conditions` | string[] | e.g. `["Prone", "Poisoned"]`. Shown as badges. |
 | `chakra.current`, `.max`, `.recovery` | integer, integer, string | One orb is drawn per point of `max`. |
-| `alar.mental_splits`, `.notes` | integer, string | Optional `attack_bonus` / `save_dc` override the derived values. |
+| `alar.mental_splits`, `.notes` | integer, string | Optional `attack_bonus` (the Alar check bonus, kept under its old name) and `save_dc` override the derived values. |
 | `abilities.<str\|dex\|con\|int\|wis\|cha>.score` | integer | Modifier is *derived*. |
 | `abilities.<key>.save_proficient` | boolean | Save bonus is *derived* (mod + proficiency if true). |
 | `skills[]` | `{ name, ability, proficiency }` | `proficiency` is `none`, `proficient` or `expertise`. Bonus is *derived*; `bonus_override` forces a value. |
@@ -58,7 +58,7 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `last_log` | string | One line for the DM Log banner. |
 | `notes` | string | Free text, not shown on the sheet. |
 
-Derived values on the sheet: ability modifiers, saving throws, skill bonuses, initiative (DEX mod), Alar attack (INT mod + proficiency) and Sympathy DC (8 + INT mod + proficiency).
+Derived values on the sheet: ability modifiers, saving throws, skill bonuses, initiative (DEX mod), Alar check (INT mod + proficiency), focused Alar check (that plus WIS mod) and Sympathy DC (8 + INT mod + proficiency).
 
 ## Battle map (`encounter.map`)
 

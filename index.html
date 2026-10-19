@@ -198,7 +198,7 @@
     .weapons-table td { padding: 9px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: top; }
     .weapons-table .ammo { font-weight: 700; color: #fff; white-space: nowrap; }
     .weapons-table .ammo.low { color: var(--uchiha-glow); }
-    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 8px; }
     .stat-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center; }
     .stat-box strong { display: block; font-size: 1.2rem; color: #fff; }
     .stat-box span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -306,9 +306,9 @@
         <div class="orb-group" id="chakra-orbs"></div>
       </div>
       <div class="vital-card sympathy">
-        <div class="vital-label">Alar / Sympathy</div>
+        <div class="vital-label">Alar check / Sympathy</div>
         <div class="vital-value"><span id="alar-atk">-</span> / DC <span id="alar-dc">-</span></div>
-        <div class="vital-sub"><span id="alar-splits">-</span> mental split(s)</div>
+        <div class="vital-sub"><span id="alar-focused">-</span> focused · <span id="alar-splits">-</span> mental split(s)</div>
       </div>
       <div class="vital-card neutral">
         <div class="vital-label">Init / Speed</div>
@@ -384,7 +384,8 @@
           <div class="stack" id="features-chakra"></div>
           <div class="panel-title">Alar &amp; Sympathy</div>
           <div class="stat-row">
-            <div class="stat-box"><strong id="alar-atk-2">-</strong><span>Binding attack</span></div>
+            <div class="stat-box"><strong id="alar-atk-2">-</strong><span>Alar check</span></div>
+            <div class="stat-box"><strong id="alar-focused-2">-</strong><span>Focused (+WIS)</span></div>
             <div class="stat-box"><strong id="alar-dc-2">-</strong><span>Sympathy DC</span></div>
             <div class="stat-box"><strong id="exhaustion">0</strong><span>Exhaustion</span></div>
           </div>
@@ -669,7 +670,9 @@
       fill('chakra-orbs', Array.from({ length: s.chakra.max }, (_, i) => el('div', { class: i < s.chakra.current ? 'chakra-orb' : 'chakra-orb empty' })));
       const alarAtk = s.alar?.attack_bonus ?? abilityMod('int') + v.proficiency_bonus;
       const alarDc = s.alar?.save_dc ?? 8 + abilityMod('int') + v.proficiency_bonus;
+      const alarFocused = alarAtk + abilityMod('wis');
       text('alar-atk', signed(alarAtk));
+      text('alar-focused', signed(alarFocused));
       text('alar-dc', alarDc);
       text('alar-splits', s.alar?.mental_splits ?? '-');
       text('init-val', signed(abilityMod('dex')));
@@ -712,6 +715,7 @@
           el('td', {}, wp.damage, el('div', { class: 'muted' }, wp.damage_type ?? '')),
           el('td', { class: wp.ammo != null && wp.ammo <= 2 ? 'ammo low' : 'ammo' }, wp.ammo != null ? String(wp.ammo) : '—'))));
       text('alar-atk-2', signed(alarAtk));
+      text('alar-focused-2', signed(alarFocused));
       text('alar-dc-2', alarDc);
       text('exhaustion', v.exhaustion ?? 0);
       text('alar-notes', s.alar?.notes);
