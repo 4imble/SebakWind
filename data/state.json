@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:56:30Z",
+  "updated_at": "2026-10-19T20:00:51Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -114,6 +114,14 @@
       "damage_type": "piercing",
       "properties": "Finesse, Thrown (20/60)",
       "ammo": 10
+    },
+    {
+      "name": "Light crossbow",
+      "attack_bonus": 5,
+      "damage": "1d8+3",
+      "damage_type": "piercing",
+      "properties": "Ammunition (80/320), Loading, Two-handed",
+      "ammo": 7
     }
   ],
   "features": [
@@ -184,8 +192,8 @@
   "inventory": {
     "currency": {
       "talents": 2,
-      "jots": 6,
-      "drabs": 4
+      "jots": 13,
+      "drabs": 17
     },
     "items": [
       {
@@ -222,6 +230,16 @@
         "name": "Tinderbox",
         "qty": 1,
         "notes": "Sympathy pouch"
+      },
+      {
+        "name": "Hemp rope (20 ft)",
+        "qty": 1,
+        "notes": "Taken from the dead brigand"
+      },
+      {
+        "name": "Small iron key on a cord",
+        "qty": 1,
+        "notes": "Taken from the crossbowman; fits something unknown"
       }
     ],
     "keepsakes": [
@@ -258,7 +276,7 @@
         "name": "Crossbowman",
         "position": "Slumped on an ash branch, 15 ft up",
         "status": "Unconscious (nonlethal)",
-        "notes": "Still unconscious in the ash tree; crossbow caught in the branch fork"
+        "notes": "Still unconscious in the ash tree; stripped of his crossbow and purse"
       },
       {
         "name": "Brigand (club)",
@@ -278,6 +296,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak stabilised Bram with linen, thread and spirits from the wagon; the crossbowman is still senseless in the ash tree and the last brigand has fled.",
+  "last_log": "Sebak took the crossbowman's crossbow and bolts and looted both men; Bram is stable and the road to Imre is blocked by the felled oak.",
   "notes": ""
 }
