@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:03:36Z",
+  "updated_at": "2026-10-19T19:17:48Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -11,7 +11,7 @@
     "alignment": "Neutral (Pragmatic, observant, guarded)"
   },
   "vitals": {
-    "hp_current": 10,
+    "hp_current": 5,
     "hp_max": 10,
     "hp_temp": 0,
     "hit_die": "1d8",
@@ -231,16 +231,20 @@
         "role": "Employer",
         "notes": "Portly tinker driving a mule-drawn wagon from Crosson",
         "icon": "🧔",
-        "hp_current": 6,
+        "hp_current": 0,
         "hp_max": 11,
-        "ac": 10
+        "ac": 10,
+        "down": true,
+        "conditions": [
+          "Unconscious"
+        ]
       }
     ]
   },
   "encounter": {
     "active": true,
     "title": "Surprise Round: Felled Oak Ambush",
-    "round": 1,
+    "round": 2,
     "enemies": [
       {
         "name": "Crossbowman",
@@ -251,13 +255,13 @@
       {
         "name": "Brigand (club)",
         "position": "Beside Bram's wagon",
-        "status": "Attacking Bram (missed)",
+        "status": "Wounded, fighting Sebak",
         "notes": "Iron-shod club"
       },
       {
         "name": "Brigand (club)",
         "position": "Beside Bram's wagon",
-        "status": "Attacking Bram (hit, 5 damage)",
+        "status": "Clubbed Bram down",
         "notes": "Iron-shod club"
       }
     ],
@@ -416,9 +420,38 @@
         "actor": "Sebak",
         "action": "Body Flicker (1 chakra)",
         "note": "Drops from the ash tree to the wagon, beside Bram and next to both brigands."
+      },
+      {
+        "round": 1,
+        "actor": "Sebak",
+        "action": "Wakizashi sneak attack",
+        "target": "Brigand 2",
+        "roll": "d20+5 = 17 vs AC 12",
+        "outcome": "hit",
+        "damage": 8,
+        "note": "1d6+3 plus 1d6 sneak attack (Bram adjacent)."
+      },
+      {
+        "round": 2,
+        "actor": "Brigand 2",
+        "action": "Club",
+        "target": "Sebak",
+        "roll": "d20+4 = 20 vs AC 14",
+        "outcome": "hit",
+        "damage": 5
+      },
+      {
+        "round": 2,
+        "actor": "Brigand 1",
+        "action": "Club",
+        "target": "Bram",
+        "roll": "d20+4 = 11 vs AC 10",
+        "outcome": "hit",
+        "damage": 7,
+        "note": "Bram drops to 0 HP."
       }
     ]
   },
-  "last_log": "Sebak flickered down to the wagon beside Bram, with both brigands within reach of him.",
+  "last_log": "Bram is down and bleeding at the wagon and Sebak is wounded; both brigands are still standing and it is Sebak's turn in round 2.",
   "notes": ""
 }
