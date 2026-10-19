@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T21:15:19Z",
+  "updated_at": "2026-10-19T21:15:42Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -191,9 +191,9 @@
   ],
   "inventory": {
     "currency": {
-      "talents": 1,
-      "jots": 19,
-      "drabs": 17
+      "talents": 3,
+      "jots": 0,
+      "drabs": 7
     },
     "items": [
       {
