@@ -11,6 +11,7 @@ Keep the state files in step with play. This is part of running the game, not an
 - **At the end of each scene or significant moment**, append an entry to `data/log.json` (`{ at, title, text }`, oldest first, never edit old entries).
 - **Party members** live in `world.companions`. Track `hp_current`/`hp_max` (and `ac`, `conditions`, `down`) for anyone who can be hurt, and update them as they are hurt or healed, the same as Sebak's.
 - **During combat**, keep `encounter` current: `round`, each enemy's `status`, and every token's `x`/`y` on `encounter.map` after it moves. Append every attack, spell, save or notable action to `encounter.combat_log` (who, against whom, the roll, the outcome and damage) as it happens. Set `down: true` on tokens that drop. When the fight ends, set `encounter.active` to `false` and remove `map` and `combat_log`; the scene's `log.json` entry carries the summary.
+- **When the player asks to note something down**, append it to `player_notes` (`{ title, text, at }`) so it shows on the sheet's Notes tab.
 - Store only what `data/README.md` says to store. Ability modifiers, saves, skill bonuses, initiative and the Alar check/DC are derived by the page.
 - Run `npm install && npm run validate` before committing. Commit `data/` changes on their own with a short message naming the beat (e.g. `State: Sebak takes 4 damage from the crossbow bolt`).
 - Commit straight to `main`; a branch or PR won't show on the sheet. Only do this once the user has said the story thread may push state updates to `main`.
