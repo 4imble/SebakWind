@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:08:49Z",
+  "updated_at": "2026-10-19T20:12:34Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -247,7 +247,7 @@
     ]
   },
   "world": {
-    "location": "The Commonwealth, on the road to Imre, just past the felled oak",
+    "location": "The Commonwealth, an alder hollow by a drainage ditch off the road to Imre",
     "time": "Early evening, Autumn (Fallow)",
     "weather": "Cold steady rain",
     "companions": [
@@ -296,6 +296,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak drove Bram's wagon around the felled oak and is heading for Imre in the rain with Bram stable in the back.",
+  "last_log": "Sebak left the road and hid the wagon in a damp alder hollow to rest, with Bram stable and the rain still falling.",
   "notes": ""
 }
