@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T21:15:42Z",
+  "updated_at": "2026-10-19T21:16:11Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -302,6 +302,11 @@
       "title": "Notice by the apothecary's door",
       "text": "Chalked on slate by the door of the apothecary's shop in Imre: \"Guards wanted for river barge, Thursday. Ask at the wharf. Two jots and board.\"",
       "at": "2026-10-19T21:04:21Z"
+    },
+    {
+      "title": "Costs & currency",
+      "text": "Cealdish coinage: 10 drabs = 1 jot, 10 jots = 1 talent (100 drabs), 10 talents = 1 mark. Below the drab is the shim, an iron scrap sold by weight. Benchmarks: a big meal is 3-4 drabs, road provisions at an Imre inn 5 drabs, a student's weekly wage 1-2 jots, wagon passage 2 jots, a second-hand cloak 3 jots, a University term's room and board 1 talent, average tuition 2-3 talents, a quality steel crossbow 8-10 talents. Prices so far: barge-guard day job 2 jots and board; apothecary in Imre 3 jots for the first treatment, then 5 drabs a day for bed and physic, and 2 drabs a day for hay; Bram's thanks (a few jots and about a talent) is promised but not paid. Sebak's looted light crossbow is ordinary and worth about 2-3 talents to a buyer.",
+      "at": "2026-10-19T21:16:11Z"
     }
   ]
 }
