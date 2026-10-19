@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T19:29:11Z",
+  "updated_at": "2026-10-19T19:31:21Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -11,7 +11,7 @@
     "alignment": "Neutral (Pragmatic, observant, guarded)"
   },
   "vitals": {
-    "hp_current": 5,
+    "hp_current": 0,
     "hp_max": 10,
     "hp_temp": 0,
     "hit_die": "1d8",
@@ -21,7 +21,10 @@
     "speed": "30 ft.",
     "proficiency_bonus": 2,
     "exhaustion": 0,
-    "conditions": []
+    "conditions": [
+      "Unconscious",
+      "Dying (death saves: 1 success, 0 failures)"
+    ]
   },
   "chakra": {
     "current": 1,
@@ -236,7 +239,7 @@
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Unconscious and bleeding at 0 HP.",
         "icon": "🧔",
         "hp_current": 0,
         "hp_max": 11,
@@ -251,7 +254,7 @@
   "encounter": {
     "active": true,
     "title": "Surprise Round: Felled Oak Ambush",
-    "round": 2,
+    "round": 3,
     "enemies": [
       {
         "name": "Crossbowman",
@@ -262,13 +265,13 @@
       {
         "name": "Brigand (club)",
         "position": "Beside Bram's wagon",
-        "status": "Wounded, fighting Sebak",
+        "status": "Dead",
         "notes": "Iron-shod club"
       },
       {
         "name": "Brigand (club)",
         "position": "Beside Bram's wagon",
-        "status": "Clubbed Bram down",
+        "status": "Standing over Sebak and Bram",
         "notes": "Iron-shod club"
       }
     ],
@@ -339,7 +342,8 @@
           "kind": "pc",
           "x": 3,
           "y": 4,
-          "icon": "🥷"
+          "icon": "🥷",
+          "down": true
         },
         {
           "label": "Bram",
@@ -376,7 +380,8 @@
           "kind": "enemy",
           "x": 3,
           "y": 3,
-          "icon": "🪓"
+          "icon": "🪓",
+          "down": true
         }
       ]
     },
@@ -456,9 +461,45 @@
         "outcome": "hit",
         "damage": 7,
         "note": "Bram drops to 0 HP."
+      },
+      {
+        "round": 2,
+        "actor": "Sebak",
+        "action": "Binds the two clubs together (bonus action)",
+        "roll": "Alar d20+5 = 10 vs AC 12",
+        "outcome": "failed",
+        "note": "The binding slips and fizzles. Lantern is the source, no chakra spent."
+      },
+      {
+        "round": 2,
+        "actor": "Sebak",
+        "action": "Wakizashi",
+        "target": "Brigand 2",
+        "roll": "d20+5 = 24 vs AC 12",
+        "outcome": "hit",
+        "damage": 5,
+        "note": "No sneak attack: the binding failed and Bram is incapacitated. Brigand 2 dies."
+      },
+      {
+        "round": 3,
+        "actor": "Brigand 1",
+        "action": "Club",
+        "target": "Sebak",
+        "roll": "d20+4 = 14 vs AC 14",
+        "outcome": "hit",
+        "damage": 7,
+        "note": "Sebak drops to 0 HP."
+      },
+      {
+        "round": 3,
+        "actor": "Sebak",
+        "action": "Death saving throw",
+        "roll": "d20 = 12",
+        "outcome": "saved",
+        "note": "1 success, 0 failures."
       }
     ]
   },
-  "last_log": "Bram is down and bleeding at the wagon and Sebak is wounded; both brigands are still standing and it is Sebak's turn in round 2.",
+  "last_log": "Sebak and Bram are both down and dying at the wagon; one brigand stands over them, the other is dead.",
   "notes": ""
 }
