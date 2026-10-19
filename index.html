@@ -14,6 +14,7 @@
       --chakra-blue: #38bdf8;
       --sympathy-amber: #f59e0b;
       --text-main: #f3f4f6;
+      --text-soft: #d1d5db;
       --text-muted: #9ca3af;
       --border-color: #2a2e3d;
       --success: #10b981;
@@ -23,69 +24,19 @@
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
+      background-image:
         radial-gradient(circle at 15% 15%, rgba(185, 28, 28, 0.12) 0%, transparent 35%),
         radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
       color: var(--text-main);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.5;
-      padding: 24px;
+      padding: 20px;
       min-height: 100vh;
     }
 
-    .container {
-      max-width: 1320px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    /* LIVE SYNC BAR */
-    .sync-bar {
-      background: #11131a;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.85rem;
-    }
-
-    .sync-status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 8px var(--success);
-    }
-
-    .sync-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .sync-input {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      width: 320px;
-    }
+    .container { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .muted { color: var(--text-muted); font-size: 0.82rem; }
 
     /* HEADER */
     .header-banner {
@@ -93,377 +44,361 @@
       border: 1px solid var(--border-color);
       border-left: 5px solid var(--uchiha-red);
       border-radius: 12px;
-      padding: 24px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
-      gap: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      gap: 12px;
     }
-
     .identity-block h1 {
-      font-size: 2.2rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
+      font-size: 1.9rem; letter-spacing: 1px; text-transform: uppercase;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 12px; color: #fff; line-height: 1.2;
     }
-
     .crow-badge {
-      font-size: 0.85rem;
-      background: rgba(185, 28, 28, 0.25);
-      border: 1px solid var(--uchiha-red);
-      color: #fca5a5;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 600;
+      font-size: 0.8rem; background: rgba(185, 28, 28, 0.25); border: 1px solid var(--uchiha-red);
+      color: #fca5a5; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.5px;
     }
-
-    .subtitle { color: var(--text-muted); font-size: 0.98rem; margin-top: 4px; }
-
-    .identity-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-
-    .tag {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      color: #d1d5db;
-    }
-
-    .btn {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.84rem;
-      transition: all 0.15s ease;
-    }
-
-    .btn:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.2); }
-    .btn-sync { background: rgba(56, 189, 248, 0.15); border-color: var(--chakra-blue); color: var(--chakra-blue); }
-
-    /* VITALS BAR */
-    .vitals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 14px;
-    }
-
-    .vital-card {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .vital-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px;
-      background: var(--uchiha-red);
-    }
-
-    .vital-card.chakra::before { background: var(--chakra-blue); }
-    .vital-card.sympathy::before { background: var(--sympathy-amber); }
-
-    .vital-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
-    .vital-value { font-size: 1.75rem; font-weight: 700; color: #fff; }
-    .vital-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 4px; }
-
-    .counter-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; }
-
-    /* MAIN GRID */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 320px 1fr 380px;
-      gap: 20px;
-    }
-
-    @media (max-width: 1120px) { .dashboard-grid { grid-template-columns: 1fr; } }
-
-    .panel {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .panel-title {
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #fff;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .ability-box {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.12s ease;
-    }
-    .ability-box:hover { transform: translateY(-2px); border-color: var(--uchiha-glow); }
-    .ability-name { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
-    .ability-mod { font-size: 1.55rem; font-weight: 800; color: #fff; margin: 2px 0; }
-    .ability-score { font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 99px; }
-
-    .skill-list { display: flex; flex-direction: column; gap: 6px; }
-    .skill-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 7px 10px; background: var(--bg-panel-alt);
-      border: 1px solid transparent; border-radius: 6px; font-size: 0.88rem; cursor: pointer;
-    }
-    .skill-row:hover { border-color: var(--uchiha-glow); background: rgba(185, 28, 28, 0.12); }
-    .skill-left { display: flex; align-items: center; gap: 8px; }
-    .prof-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; }
-    .prof-dot.proficient { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
-    .prof-dot.expertise { background: var(--sympathy-amber); border-color: #fde68a; box-shadow: 0 0 6px var(--sympathy-amber); }
-    .skill-bonus { font-weight: 700; color: #fff; }
-
-    .mechanic-card {
-      background: var(--bg-panel-alt);
-      border: 1px solid var(--border-color);
-      border-left: 3px solid var(--uchiha-red);
-      border-radius: 8px;
-      padding: 14px;
-    }
-    .mechanic-card.chakra-card { border-left-color: var(--chakra-blue); }
-    .mechanic-card.sympathy-card { border-left-color: var(--sympathy-amber); }
-    .mechanic-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .mechanic-title { font-weight: 700; color: #fff; font-size: 0.95rem; }
-    .badge-cost { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(56, 189, 248, 0.15); color: var(--chakra-blue); border: 1px solid rgba(56, 189, 248, 0.35); }
-    .badge-locked { font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; background: rgba(185, 28, 28, 0.2); color: #fca5a5; border: 1px solid var(--uchiha-red); }
-    .mechanic-desc { font-size: 0.85rem; color: #d1d5db; }
-
-    .weapons-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
-    .weapons-table th { text-align: left; color: var(--text-muted); padding: 8px; border-bottom: 1px solid var(--border-color); }
-    .weapons-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-    .weapons-table tr:hover { background: rgba(255, 255, 255, 0.03); cursor: pointer; }
-
-    .orb-group { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
-    .chakra-orb {
-      width: 22px; height: 22px; border-radius: 50%;
-      border: 2px solid var(--chakra-blue); background: var(--chakra-blue);
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.6); transition: all 0.15s ease;
-    }
-    .chakra-orb.empty { background: transparent; box-shadow: none; opacity: 0.45; }
-
-    .dice-roller-box {
-      background: linear-gradient(135deg, #1b1622 0%, #12151f 100%);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .roll-total { font-size: 1.5rem; font-weight: 800; color: var(--sympathy-amber); }
-
-    .encounter-card {
-      background: rgba(185, 28, 28, 0.08);
-      border: 1px solid rgba(185, 28, 28, 0.4);
-      border-radius: 10px;
-      padding: 14px;
-    }
-    .enemy-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); font-size: 0.85rem; }
-    .currency-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .coin-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; text-align: center; font-size: 0.82rem; }
-    .coin-box strong { display: block; font-size: 1.15rem; color: #fff; }
-
+    .subtitle { color: var(--text-muted); font-size: 0.92rem; margin-top: 4px; }
+    .sync { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text-muted); max-width: 360px; }
+    .status-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
     .status-dot.stale { background: var(--sympathy-amber); box-shadow: 0 0 8px var(--sympathy-amber); }
     .status-dot.error { background: var(--uchiha-glow); box-shadow: 0 0 8px var(--uchiha-glow); }
-    .table-wrap { overflow-x: auto; }
-    .hp-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; margin-top: 8px; overflow: hidden; }
-    .hp-bar > div { height: 100%; background: var(--success); transition: width 0.3s ease; }
-    .condition { display: inline-block; font-size: 0.72rem; padding: 2px 8px; margin: 4px 2px 0; border-radius: 99px; background: rgba(185, 28, 28, 0.2); color: #fca5a5; border: 1px solid var(--uchiha-red); }
-    .item-list { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: #d1d5db; background: var(--bg-panel-alt); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); }
-    .item-list .qty { color: #fff; font-weight: 700; margin-right: 6px; }
-    .item-list .notes { color: var(--text-muted); font-size: 0.78rem; }
-    .enemy-item { flex-direction: column; }
-    .enemy-item .enemy-meta { color: var(--text-muted); font-size: 0.78rem; }
-    .log-list { display: flex; flex-direction: column; gap: 10px; }
+    .icon-btn {
+      flex: none; background: var(--bg-panel-alt); border: 1px solid var(--border-color); color: var(--chakra-blue);
+      border-radius: 6px; padding: 3px 8px; cursor: pointer; font-size: 0.8rem;
+    }
+    .icon-btn:hover { border-color: var(--chakra-blue); }
+
+    /* VITALS STRIP */
+    .vitals-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .vital-card {
+      background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 10px;
+      padding: 12px; text-align: center; position: relative; overflow: hidden;
+    }
+    .vital-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--uchiha-red); }
+    .vital-card.chakra::before { background: var(--chakra-blue); }
+    .vital-card.sympathy::before { background: var(--sympathy-amber); }
+    .vital-card.neutral::before { background: var(--border-color); }
+    .vital-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .vital-value { font-size: 1.55rem; font-weight: 700; color: #fff; line-height: 1.3; }
+    .vital-sub { font-size: 0.72rem; color: var(--text-muted); }
+    .hp-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; margin-top: 6px; overflow: hidden; }
+    .hp-bar > div { height: 100%; background: var(--success); transition: width 0.3s ease, background 0.3s ease; }
+    .orb-group { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+    .chakra-orb {
+      width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--chakra-blue); background: var(--chakra-blue);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    }
+    .chakra-orb.empty { background: transparent; box-shadow: none; opacity: 0.45; }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 4px; }
+    .chip {
+      font-size: 0.7rem; padding: 1px 8px; border-radius: 99px; background: rgba(185, 28, 28, 0.2);
+      color: #fca5a5; border: 1px solid var(--uchiha-red); white-space: nowrap;
+    }
+    .chip.amber { background: rgba(245, 158, 11, 0.12); color: #fcd34d; border-color: rgba(245, 158, 11, 0.5); }
+    .chip.blue { background: rgba(56, 189, 248, 0.12); color: var(--chakra-blue); border-color: rgba(56, 189, 248, 0.4); }
+
+    /* TABS */
+    .tabs {
+      position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; overflow-x: auto;
+      background: rgba(11, 12, 16, 0.92); backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border-color); padding: 6px 0 0; scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex: none; position: relative; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); font: inherit; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;
+      padding: 8px 14px 10px; cursor: pointer;
+    }
+    .tab:hover { color: #fff; }
+    .tab[aria-selected="true"] { color: #fff; border-bottom-color: var(--uchiha-glow); }
+    .tab .dot {
+      display: none; position: absolute; top: 8px; right: 4px; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--sympathy-amber); box-shadow: 0 0 6px var(--sympathy-amber);
+    }
+    .tab.changed .dot { display: block; }
+    [role="tabpanel"][hidden] { display: none; }
+
+    /* PANELS */
+    .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+    /* Now tab: situation and story on the left, encounter on the right; stacked
+       situation → encounter → story on narrow screens. */
+    .panel-grid.now-grid { grid-template-columns: 1.4fr 1fr; grid-template-areas: "sit enc" "log enc"; }
+    .panel-grid > * { min-width: 0; }
+    .panel {
+      background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px;
+      padding: 18px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .panel-title {
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);
+      display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    * + .panel-title { margin-top: 6px; }
+    .panel-title .chips { margin: 0; }
+    .stack { display: flex; flex-direction: column; gap: 8px; }
+
+    /* NOW TAB */
+    .dm-log {
+      font-size: 1.05rem; color: #fff; border-left: 3px solid var(--sympathy-amber);
+      padding: 4px 0 4px 12px; font-style: italic;
+    }
+    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; font-size: 0.88rem; }
+    .facts dt { color: var(--text-muted); }
+    .facts dd { color: var(--text-soft); }
+    .encounter-panel.active { border-color: rgba(185, 28, 28, 0.5); background: linear-gradient(180deg, rgba(185, 28, 28, 0.1), var(--bg-panel) 60%); }
+    .encounter-title { font-weight: 700; color: #fca5a5; font-size: 1.05rem; }
+    .encounter-panel:not(.active) .encounter-title { color: var(--text-muted); font-weight: 400; font-size: 0.9rem; }
+    .enemy {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; padding: 10px 12px;
+      background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .enemy-name { font-weight: 700; color: #fff; }
+    .enemy-meta { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.8rem; }
+    .env-item { font-size: 0.85rem; color: #fcd34d; }
+    .env-item::before { content: "◆ "; color: var(--sympathy-amber); }
+
+    /* STORY LOG */
     .log-entry { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; }
     .log-entry time { font-size: 0.72rem; color: var(--text-muted); }
     .log-entry h3 { font-size: 0.92rem; color: #fff; margin: 2px 0 4px; }
-    .log-entry p { font-size: 0.85rem; color: #d1d5db; white-space: pre-wrap; }
-    .muted { color: var(--text-muted); font-size: 0.82rem; }
-    .dashboard-grid > * { min-width: 0; }
-    .roll-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    .mode-btn { padding: 4px 10px; font-size: 0.75rem; }
-    .mode-btn.on { border-color: var(--sympathy-amber); color: var(--sympathy-amber); background: rgba(245, 158, 11, 0.12); }
-    .roll-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-    .roll-history { list-style: none; font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
-    @keyframes flash { from { color: var(--sympathy-amber); text-shadow: 0 0 12px var(--sympathy-amber); } to { color: inherit; text-shadow: none; } }
+    .log-entry p { font-size: 0.86rem; color: var(--text-soft); white-space: pre-wrap; }
+    .link-btn { background: none; border: none; color: var(--chakra-blue); font: inherit; font-size: 0.8rem; cursor: pointer; text-transform: none; letter-spacing: 0; }
+
+    /* COMBAT TAB */
+    .table-wrap { overflow-x: auto; }
+    .weapons-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .weapons-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--border-color); }
+    .weapons-table td { padding: 9px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: top; }
+    .weapons-table .ammo { font-weight: 700; color: #fff; white-space: nowrap; }
+    .weapons-table .ammo.low { color: var(--uchiha-glow); }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center; }
+    .stat-box strong { display: block; font-size: 1.2rem; color: #fff; }
+    .stat-box span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .mechanic-card {
+      background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-left: 3px solid var(--uchiha-red);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .mechanic-card.chakra-card { border-left-color: var(--chakra-blue); }
+    .mechanic-card.sympathy-card { border-left-color: var(--sympathy-amber); }
+    .mechanic-card.locked { border-left-style: dashed; }
+    .mechanic-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .mechanic-title { font-weight: 700; color: #fff; font-size: 0.92rem; }
+    .mechanic-desc { font-size: 0.84rem; color: var(--text-soft); }
+
+    /* CHARACTER TAB */
+    .ability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .ability-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; text-align: center; }
+    .ability-name { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .ability-mod { font-size: 1.5rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .ability-foot { display: flex; justify-content: space-between; gap: 4px; font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+    .ability-foot .prof { color: #fca5a5; font-weight: 700; }
+    .skill-list { display: flex; flex-direction: column; gap: 4px; }
+    .skill-row {
+      display: flex; justify-content: space-between; align-items: center; padding: 6px 10px;
+      background: var(--bg-panel-alt); border-radius: 6px; font-size: 0.86rem;
+    }
+    .skill-left { display: flex; align-items: center; gap: 8px; }
+    .skill-ability { color: var(--text-muted); font-size: 0.72rem; }
+    .prof-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; flex: none; }
+    .prof-dot.proficient { background: var(--uchiha-red); border-color: var(--uchiha-glow); }
+    .prof-dot.expertise { background: var(--sympathy-amber); border-color: #fde68a; box-shadow: 0 0 6px var(--sympathy-amber); }
+    .skill-bonus { font-weight: 700; color: #fff; }
+    .legend { display: flex; gap: 12px; font-size: 0.72rem; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+    .legend span { display: inline-flex; align-items: center; gap: 4px; }
+
+    /* GEAR TAB */
+    .currency-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .coin-box { background: var(--bg-panel-alt); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; text-align: center; font-size: 0.78rem; color: var(--text-muted); }
+    .coin-box strong { display: block; font-size: 1.3rem; color: #fff; }
+    .item-list { list-style: none; display: flex; flex-direction: column; }
+    .item-list li { display: grid; grid-template-columns: 2.5em 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.88rem; color: var(--text-soft); }
+    .item-list li:last-child { border-bottom: none; }
+    .item-list .qty { color: #fff; font-weight: 700; text-align: right; }
+    .item-list .notes { color: var(--text-muted); font-size: 0.78rem; }
+    .keepsake { font-size: 0.88rem; color: var(--text-soft); font-style: italic; }
+
+    @keyframes flash { from { color: var(--sympathy-amber); text-shadow: 0 0 12px var(--sympathy-amber); } to { text-shadow: none; } }
     .flash { animation: flash 2.5s ease-out; }
-    @media (max-width: 600px) {
-      body { padding: 16px; }
-      .identity-block h1 { font-size: 1.6rem; flex-wrap: wrap; }
-      .dice-roller-box { flex-direction: column; align-items: flex-start; }
+
+    @media (max-width: 900px) {
+      .vitals-grid { grid-template-columns: repeat(3, 1fr); }
+      .panel-grid, .panel-grid.now-grid { grid-template-columns: 1fr; }
+      .panel-grid.now-grid { grid-template-areas: "sit" "enc" "log"; }
+    }
+    @media (max-width: 560px) {
+      body { padding: 12px 16px; }
+      .identity-block h1 { font-size: 1.5rem; }
+      .vitals-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .vitals-grid .vital-card:first-child { grid-column: 1 / -1; }
+      .vital-card { padding: 8px 10px; }
+      .vital-value { font-size: 1.25rem; }
+      .vital-sub { display: none; }
+      .ability-grid { grid-template-columns: repeat(2, 1fr); }
+      .panel { padding: 14px; }
+      .tab { padding: 8px 10px 10px; font-size: 0.85rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- STATE SYNC BAR: reads data/state.json from this site -->
-    <div class="sync-bar">
-      <div class="sync-status">
-        <span class="status-dot stale" id="sync-dot"></span>
-        <span id="sync-text">Loading game state...</span>
-      </div>
-      <div class="sync-controls">
-        <button class="btn btn-sync" onclick="loadState()">🔄 Refresh</button>
-      </div>
-    </div>
-
     <header class="header-banner">
       <div class="identity-block">
-        <h1>
-          <span id="char-name">Sebak</span>
-          <span class="crow-badge" id="char-title"></span>
-        </h1>
-        <p class="subtitle" id="char-lineage"></p>
-        <div class="identity-tags" id="identity-tags"></div>
+        <h1><span id="char-name">Sebak</span> <span class="crow-badge" id="char-title"></span></h1>
+        <p class="subtitle" id="char-class"></p>
+      </div>
+      <div class="sync">
+        <span class="status-dot stale" id="sync-dot"></span>
+        <span id="sync-text">Loading game state...</span>
+        <button class="icon-btn" onclick="loadState()" title="Check for updates now">↻</button>
       </div>
     </header>
 
+    <!-- Always-visible vitals -->
     <section class="vitals-grid">
       <div class="vital-card">
         <div class="vital-label">Hit Points</div>
         <div class="vital-value"><span id="hp-current">-</span> / <span id="hp-max">-</span></div>
-        <div class="vital-sub">Hit Dice: <span id="hit-dice"></span><span id="hp-temp"></span></div>
         <div class="hp-bar"><div id="hp-bar-fill" style="width:100%"></div></div>
-        <div id="conditions"></div>
+        <div class="chips" id="conditions"></div>
       </div>
-
       <div class="vital-card">
         <div class="vital-label">Armour Class</div>
         <div class="vital-value" id="ac-val">-</div>
         <div class="vital-sub" id="ac-notes"></div>
       </div>
-
-      <div class="vital-card">
-        <div class="vital-label">Initiative &amp; Speed</div>
-        <div class="vital-value"><span id="init-val">-</span> / <span id="speed-val">-</span></div>
-        <div class="vital-sub">Proficiency Bonus: <span id="prof-val">-</span></div>
-      </div>
-
       <div class="vital-card chakra">
-        <div class="vital-label">Internal Chakra Pool</div>
+        <div class="vital-label">Chakra</div>
         <div class="vital-value"><span id="chakra-count">-</span> / <span id="chakra-max">-</span></div>
         <div class="orb-group" id="chakra-orbs"></div>
-        <div class="vital-sub" id="chakra-recovery"></div>
       </div>
-
       <div class="vital-card sympathy">
-        <div class="vital-label">Alar &amp; Sympathy</div>
+        <div class="vital-label">Alar / Sympathy</div>
         <div class="vital-value"><span id="alar-atk">-</span> / DC <span id="alar-dc">-</span></div>
-        <div class="vital-sub">Mental Splits: <span id="alar-splits">-</span> &bull; Exhaustion: <span id="exhaustion">0</span></div>
+        <div class="vital-sub"><span id="alar-splits">-</span> mental split(s)</div>
+      </div>
+      <div class="vital-card neutral">
+        <div class="vital-label">Init / Speed</div>
+        <div class="vital-value"><span id="init-val">-</span> / <span id="speed-val">-</span></div>
+        <div class="vital-sub">Proficiency <span id="prof-val">-</span></div>
       </div>
     </section>
 
-    <div class="dice-roller-box">
-      <div>
-        <div class="roll-result"><strong>DM Log:</strong> <span id="dm-last-log"></span></div>
-        <div class="roll-result muted" id="roll-log">Click any ability, save, skill or weapon to roll.</div>
-        <div class="roll-controls">
-          <button class="btn mode-btn" data-mode="dis" onclick="setRollMode('dis')">Disadvantage</button>
-          <button class="btn mode-btn on" data-mode="normal" onclick="setRollMode('normal')">Normal</button>
-          <button class="btn mode-btn" data-mode="adv" onclick="setRollMode('adv')">Advantage</button>
-          <button class="btn mode-btn" id="copy-btn" onclick="copyLastRoll()" title="Copy the last roll to paste into the story thread">📋 Copy roll</button>
-        </div>
-        <ul class="roll-history" id="roll-history"></ul>
-      </div>
-      <div class="roll-side">
-        <div class="roll-total" id="roll-total">--</div>
-      </div>
-    </div>
+    <nav class="tabs" role="tablist" aria-label="Sheet sections">
+      <button class="tab" role="tab" id="tab-now" aria-controls="panel-now" data-tab="now">Now<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-combat" aria-controls="panel-combat" data-tab="combat">Combat<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-character" aria-controls="panel-character" data-tab="character">Character<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-gear" aria-controls="panel-gear" data-tab="gear">Gear<span class="dot"></span></button>
+      <button class="tab" role="tab" id="tab-story" aria-controls="panel-story" data-tab="story">Story<span class="dot"></span></button>
+    </nav>
 
-    <main class="dashboard-grid">
+    <!-- NOW: where Sebak is and what he's facing -->
+    <section role="tabpanel" id="panel-now" aria-labelledby="tab-now">
+      <div class="panel-grid now-grid">
+          <div class="panel" style="grid-area: sit">
+            <div class="panel-title">Situation</div>
+            <p class="dm-log" id="dm-last-log"></p>
+            <dl class="facts" id="world-facts"></dl>
+          </div>
+          <div class="panel" style="grid-area: log">
+            <div class="panel-title">
+              <span>Latest in the story</span>
+              <button class="link-btn" onclick="selectTab('story')">Full log →</button>
+            </div>
+            <div class="stack" id="recent-log"><p class="muted">No entries yet.</p></div>
+          </div>
+        <div class="panel encounter-panel" id="encounter-panel" style="grid-area: enc">
+          <div class="panel-title"><span>Encounter</span><span class="chips" id="encounter-round"></span></div>
+          <div class="encounter-title" id="encounter-title"></div>
+          <div class="stack" id="enemy-list"></div>
+          <div class="stack" id="env-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMBAT: what Sebak can do in a fight -->
+    <section role="tabpanel" id="panel-combat" aria-labelledby="tab-combat" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title">Weapons</div>
+          <div class="table-wrap">
+            <table class="weapons-table">
+              <thead><tr><th>Weapon</th><th>Hit</th><th>Damage</th><th>Ammo</th></tr></thead>
+              <tbody id="weapons-body"></tbody>
+            </table>
+          </div>
+          <div class="panel-title">Traits</div>
+          <div class="stack" id="features-traits"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Chakra techniques</div>
+          <div class="stack" id="features-chakra"></div>
+          <div class="panel-title">Alar &amp; Sympathy</div>
+          <div class="stat-row">
+            <div class="stat-box"><strong id="alar-atk-2">-</strong><span>Binding attack</span></div>
+            <div class="stat-box"><strong id="alar-dc-2">-</strong><span>Sympathy DC</span></div>
+            <div class="stat-box"><strong id="exhaustion">0</strong><span>Exhaustion</span></div>
+          </div>
+          <div class="stack" id="features-sympathy"></div>
+          <p class="muted" id="alar-notes"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTER: stats, skills, who he is -->
+    <section role="tabpanel" id="panel-character" aria-labelledby="tab-character" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title"><span>Abilities</span><span class="legend"><span><span class="prof-dot proficient"></span> save proficient</span></span></div>
+          <div class="ability-grid" id="ability-grid"></div>
+          <div class="panel-title">Identity</div>
+          <dl class="facts" id="identity-facts"></dl>
+        </div>
+        <div class="panel">
+          <div class="panel-title">
+            <span>Skills</span>
+            <span class="legend"><span><span class="prof-dot proficient"></span> proficient</span><span><span class="prof-dot expertise"></span> expertise</span></span>
+          </div>
+          <div class="skill-list" id="skill-list"></div>
+          <div class="panel-title">Bloodlines</div>
+          <div class="stack" id="features-bloodline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GEAR: money and belongings -->
+    <section role="tabpanel" id="panel-gear" aria-labelledby="tab-gear" hidden>
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-title">Inventory</div>
+          <ul class="item-list" id="item-list"></ul>
+        </div>
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-title">Purse</div>
+            <div class="currency-bar">
+              <div class="coin-box"><strong id="coin-talents">-</strong>Silver Talents</div>
+              <div class="coin-box"><strong id="coin-jots">-</strong>Iron Jots</div>
+              <div class="coin-box"><strong id="coin-drabs">-</strong>Copper Drabs</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Keepsakes</div>
+            <div class="stack" id="keepsake-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY: the full log, newest first -->
+    <section role="tabpanel" id="panel-story" aria-labelledby="tab-story" hidden>
       <div class="panel">
-        <div class="panel-title">
-          <span>Ability Scores</span>
-          <small style="color:var(--text-muted);font-size:0.75rem;">Click to Roll</small>
-        </div>
-        <div class="ability-grid" id="ability-grid"></div>
-
-        <div class="panel-title">Saving Throws</div>
-        <div class="skill-list" id="save-list"></div>
-
-        <div class="panel-title">Skills <small style="color:var(--sympathy-amber);font-size:0.72rem;">&#9679; Expertise</small></div>
-        <div class="skill-list" id="skill-list"></div>
+        <div class="panel-title">Story log</div>
+        <div class="stack" id="log-list"><p class="muted">No entries yet.</p></div>
       </div>
-
-      <div class="panel">
-        <div class="panel-title">Weapons &amp; Shinobi Arsenal <small style="color:var(--text-muted);font-size:0.75rem;">Click Row to Roll</small></div>
-        <div class="table-wrap">
-          <table class="weapons-table">
-            <thead><tr><th>Weapon</th><th>Atk</th><th>Damage</th><th>Ammo / Properties</th></tr></thead>
-            <tbody id="weapons-body"></tbody>
-          </table>
-        </div>
-
-        <div class="panel-title">Internal Chakra Techniques</div>
-        <div id="features-chakra" class="skill-list"></div>
-
-        <div class="panel-title">Alar &amp; Sympathy Mechanics</div>
-        <div id="features-sympathy" class="skill-list"></div>
-        <p class="muted" id="alar-notes"></p>
-
-        <div class="panel-title">Story Log</div>
-        <div class="log-list" id="log-list"><p class="muted">No entries yet.</p></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">Bloodlines &amp; Class Traits</div>
-        <div id="features-traits" class="skill-list"></div>
-
-        <div class="panel-title">Temerant Purse</div>
-        <div class="currency-bar">
-          <div class="coin-box"><strong id="coin-talents">-</strong>Silver Talents</div>
-          <div class="coin-box"><strong id="coin-jots">-</strong>Iron Jots</div>
-          <div class="coin-box"><strong id="coin-drabs">-</strong>Copper Drabs</div>
-        </div>
-
-        <div class="panel-title">Inventory &amp; Gear</div>
-        <ul class="item-list" id="item-list"></ul>
-
-        <div class="panel-title">Keepsakes</div>
-        <ul class="item-list" id="keepsake-list"></ul>
-
-        <div class="panel-title">World</div>
-        <ul class="item-list" id="world-list"></ul>
-
-        <div class="panel-title">Active Encounter</div>
-        <div class="encounter-card" id="encounter-card">
-          <div style="font-weight:700;color:#fca5a5;margin-bottom:6px;" id="encounter-title"></div>
-          <div id="enemy-list"></div>
-          <div id="env-list"></div>
-        </div>
-      </div>
-    </main>
+    </section>
   </div>
 
   <script>
@@ -479,6 +414,7 @@
     const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
     const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
     const ABILITIES = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
+    const TABS = ['now', 'combat', 'character', 'gear', 'story'];
 
     let state = null;
     let source = '';
@@ -493,13 +429,13 @@
       const node = document.createElement(tag);
       for (const [k, v] of Object.entries(attrs)) {
         if (k === 'class') node.className = v;
-        else if (k === 'onclick') node.addEventListener('click', v);
         else node.setAttribute(k, v);
       }
       for (const c of children) if (c != null && c !== '') node.append(c);
       return node;
     }
-    const fill = (id, nodes) => $(id).replaceChildren(...nodes.filter((n) => n != null && n !== ""));
+    const fill = (id, nodes) => $(id).replaceChildren(...nodes.filter((n) => n != null && n !== ''));
+
     // Sets text, and after the first load briefly highlights anything that changed.
     let firstRender = true;
     const text = (id, value) => {
@@ -509,6 +445,39 @@
       node.textContent = next;
       if (!firstRender) { node.classList.remove('flash'); void node.offsetWidth; node.classList.add('flash'); }
     };
+
+    // Tabs. The chosen tab is kept in the URL hash so a refresh or a shared link
+    // opens the same tab. A tab whose content changes while you're elsewhere gets a dot.
+    function selectTab(name) {
+      if (!TABS.includes(name)) name = 'now';
+      for (const t of TABS) {
+        const on = t === name;
+        $(`tab-${t}`).setAttribute('aria-selected', on);
+        $(`tab-${t}`).tabIndex = on ? 0 : -1;
+        $(`panel-${t}`).hidden = !on;
+        if (on) $(`tab-${t}`).classList.remove('changed');
+      }
+      if (location.hash !== `#${name}`) history.replaceState(null, '', `#${name}`);
+    }
+    document.querySelectorAll('.tab').forEach((tab) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.tab));
+      tab.addEventListener('keydown', (e) => {
+        const i = TABS.indexOf(tab.dataset.tab);
+        const next = e.key === 'ArrowRight' ? TABS[(i + 1) % TABS.length] : e.key === 'ArrowLeft' ? TABS[(i + TABS.length - 1) % TABS.length] : null;
+        if (next) { selectTab(next); $(`tab-${next}`).focus(); }
+      });
+    });
+    window.addEventListener('hashchange', () => selectTab(location.hash.slice(1)));
+    selectTab(location.hash.slice(1));
+
+    const panelSnapshot = {};
+    function markChangedTabs() {
+      for (const t of TABS) {
+        const now = $(`panel-${t}`).textContent;
+        if (!firstRender && panelSnapshot[t] !== now && $(`panel-${t}`).hidden) $(`tab-${t}`).classList.add('changed');
+        panelSnapshot[t] = now;
+      }
+    }
 
     async function fetchFromApi(path) {
       const headers = { Accept: 'application/vnd.github.raw+json' };
@@ -532,10 +501,10 @@
     async function fetchText(path) {
       try {
         const body = await fetchFromApi(path);
-        source = 'live from GitHub';
+        source = 'live';
         return body;
       } catch (err) {
-        source = 'from the published copy (GitHub API unavailable, may lag a minute)';
+        source = 'published copy';
         return fetchFallback(path);
       }
     }
@@ -548,12 +517,13 @@
           state = JSON.parse(s);
           render(state);
           renderLog(JSON.parse(log));
+          markChangedTabs();
           lastRendered = s + log;
           firstRender = false;
         }
-        $('sync-dot').className = source.startsWith('live') ? 'status-dot' : 'status-dot stale';
-        const updated = state.updated_at ? new Date(state.updated_at).toLocaleString() : 'unknown';
-        text('sync-text', `State updated ${updated} · checked ${new Date().toLocaleTimeString()} ${source}`);
+        $('sync-dot').className = source === 'live' ? 'status-dot' : 'status-dot stale';
+        const updated = state.updated_at ? new Date(state.updated_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'unknown';
+        text('sync-text', source === 'live' ? `Live · updated ${updated}` : `Updated ${updated} · from the published copy, may lag a minute`);
       } catch (err) {
         $('sync-dot').className = 'status-dot error';
         text('sync-text', `Could not load game state: ${err.message}`);
@@ -570,199 +540,126 @@
       const mult = { none: 0, proficient: 1, expertise: 2 }[skill.proficiency] ?? 0;
       return abilityMod(skill.ability) + mult * state.vitals.proficiency_bonus;
     }
+    const facts = (pairs) => pairs.filter(([, v]) => v).flatMap(([k, v]) => [el('dt', {}, k), el('dd', {}, v)]);
+
+    function featureCard(f) {
+      const cls = { chakra: 'mechanic-card chakra-card', sympathy: 'mechanic-card sympathy-card' }[f.category] ?? 'mechanic-card';
+      const hidden = f.status === 'locked' || f.status === 'unknown';
+      const badge = hidden ? el('span', { class: 'chip' }, f.status.toUpperCase())
+        : f.cost ? el('span', { class: f.category === 'sympathy' ? 'chip amber' : 'chip blue' }, f.cost) : null;
+      return el('div', { class: hidden ? `${cls} locked` : cls },
+        el('div', { class: 'mechanic-header' }, el('span', { class: 'mechanic-title' }, f.name), badge),
+        el('p', { class: 'mechanic-desc' }, f.description));
+    }
 
     function render(s) {
       const c = s.character, v = s.vitals;
+
+      // Header and vitals
       text('char-name', c.name);
       text('char-title', c.title);
-      text('char-lineage', [c.lineage, c.background, c.alignment].filter(Boolean).join(' • '));
-      const tags = [['Class', `${c.class} - Level ${c.level}`]];
-      if (s.world?.location) tags.push(['Location', s.world.location]);
-      for (const comp of s.world?.companions ?? []) tags.push([comp.role || 'Companion', comp.name]);
-      fill('identity-tags', tags.map(([k, val]) => el('span', { class: 'tag' }, el('strong', {}, `${k}: `), val)));
-
-      // Vitals
+      text('char-class', `${c.class} · Level ${c.level}`);
       text('hp-current', v.hp_current);
       text('hp-max', v.hp_max);
-      text('hit-dice', `${v.hit_dice_remaining ?? c.level} × ${v.hit_die ?? ''}`);
-      text('hp-temp', v.hp_temp ? ` • Temp HP: ${v.hp_temp}` : '');
       const pct = Math.max(0, Math.min(100, (v.hp_current / v.hp_max) * 100));
       $('hp-bar-fill').style.width = `${pct}%`;
       $('hp-bar-fill').style.background = pct > 50 ? 'var(--success)' : pct > 25 ? 'var(--sympathy-amber)' : 'var(--uchiha-glow)';
-      fill('conditions', (v.conditions ?? []).map((x) => el('span', { class: 'condition' }, x)));
+      const chips = (v.conditions ?? []).map((x) => el('span', { class: 'chip' }, x));
+      if (v.hp_temp) chips.unshift(el('span', { class: 'chip blue' }, `+${v.hp_temp} temp`));
+      if (v.exhaustion) chips.push(el('span', { class: 'chip amber' }, `Exhaustion ${v.exhaustion}`));
+      fill('conditions', chips);
       text('ac-val', v.ac);
       text('ac-notes', v.ac_notes);
-      text('init-val', signed(abilityMod('dex')));
-      text('speed-val', v.speed);
-      text('prof-val', signed(v.proficiency_bonus));
-      text('exhaustion', v.exhaustion ?? 0);
-
       text('chakra-count', s.chakra.current);
       text('chakra-max', s.chakra.max);
-      text('chakra-recovery', s.chakra.recovery ? `Recovers on ${s.chakra.recovery}` : '');
       fill('chakra-orbs', Array.from({ length: s.chakra.max }, (_, i) => el('div', { class: i < s.chakra.current ? 'chakra-orb' : 'chakra-orb empty' })));
-
       const alarAtk = s.alar?.attack_bonus ?? abilityMod('int') + v.proficiency_bonus;
       const alarDc = s.alar?.save_dc ?? 8 + abilityMod('int') + v.proficiency_bonus;
       text('alar-atk', signed(alarAtk));
       text('alar-dc', alarDc);
       text('alar-splits', s.alar?.mental_splits ?? '-');
-      text('alar-notes', s.alar?.notes);
+      text('init-val', signed(abilityMod('dex')));
+      text('speed-val', v.speed);
+      text('prof-val', signed(v.proficiency_bonus));
+
+      // Now
       text('dm-last-log', s.last_log);
+      const w = s.world ?? {};
+      fill('world-facts', facts([
+        ['Location', w.location], ['Time', w.time], ['Weather', w.weather],
+        ...(w.companions ?? []).map((p) => [p.name, [p.role, p.notes].filter(Boolean).join(' · ')]),
+      ]));
+      const enc = s.encounter;
+      $('encounter-panel').classList.toggle('active', enc.active);
+      if (!enc.active) {
+        text('encounter-title', 'No active encounter');
+        fill('encounter-round', []);
+        fill('enemy-list', []);
+        fill('env-list', []);
+      } else {
+        text('encounter-title', enc.title ?? 'Encounter');
+        fill('encounter-round', [el('span', { class: 'chip' }, enc.round ? `Round ${enc.round}` : 'Surprise round')]);
+        fill('enemy-list', (enc.enemies ?? []).map((e) =>
+          el('div', { class: 'enemy' },
+            el('span', { class: 'enemy-name' }, e.name),
+            e.status ? el('span', { class: 'chip amber' }, e.status) : el('span'),
+            el('span', { class: 'enemy-meta' }, [e.position, e.notes].filter(Boolean).join(' · ')))));
+        fill('env-list', (enc.environment ?? []).map((x) => el('div', { class: 'env-item' }, x)));
+      }
 
-      // Abilities, saves, skills
-      fill('ability-grid', Object.entries(ABILITIES).map(([key, label]) =>
-        el('div', { class: 'ability-box', onclick: () => rollCheck(`${label} Check`, abilityMod(key)) },
-          el('div', { class: 'ability-name' }, label),
-          el('div', { class: 'ability-mod' }, signed(abilityMod(key))),
-          el('div', { class: 'ability-score' }, String(s.abilities[key].score)))));
-      fill('save-list', Object.entries(ABILITIES).map(([key, label]) =>
-        el('div', { class: 'skill-row', onclick: () => rollCheck(`${label} Save`, saveBonus(key)) },
-          el('div', { class: 'skill-left' }, el('span', { class: s.abilities[key].save_proficient ? 'prof-dot proficient' : 'prof-dot' }), `${label} Save`),
-          el('span', { class: 'skill-bonus' }, signed(saveBonus(key))))));
-      fill('skill-list', s.skills.map((sk) =>
-        el('div', { class: 'skill-row', onclick: () => rollCheck(sk.name, skillBonus(sk)) },
-          el('div', { class: 'skill-left' }, el('span', { class: `prof-dot ${sk.proficiency === 'none' ? '' : sk.proficiency}` }), `${sk.name} (${sk.ability.toUpperCase()})`),
-          el('span', { class: 'skill-bonus' }, signed(skillBonus(sk))))));
-
-      // Weapons, plus an Alar binding row derived from the sympathy numbers
-      const rows = s.weapons.map((w) =>
-        el('tr', { onclick: () => rollWeapon(w) },
-          el('td', {}, el('strong', {}, w.name)),
-          el('td', {}, signed(w.attack_bonus)),
-          el('td', {}, `${w.damage}${w.damage_type ? ' ' + w.damage_type : ''}`),
-          el('td', {}, w.ammo != null ? el('strong', {}, `${w.ammo} left`) : '', w.ammo != null && w.properties ? ' • ' : '', w.properties ?? '')));
-      rows.push(el('tr', { onclick: () => rollCheck('Sympathetic Binding (Alar)', alarAtk) },
-        el('td', {}, el('strong', {}, 'Alar Binding')), el('td', {}, signed(alarAtk)), el('td', {}, `Variable / DC ${alarDc}`), el('td', {}, `${s.alar?.mental_splits ?? 1} Mental Split(s)`)));
-      fill('weapons-body', rows);
-
-      // Features, grouped by category
-      const cardClass = { chakra: 'mechanic-card chakra-card', sympathy: 'mechanic-card sympathy-card' };
-      const featureCard = (f) => {
-        const badge = f.status === 'locked' || f.status === 'unknown'
-          ? el('span', { class: 'badge-locked' }, f.status.toUpperCase())
-          : f.cost ? el('span', { class: 'badge-cost' }, f.cost) : null;
-        return el('div', { class: cardClass[f.category] ?? 'mechanic-card' },
-          el('div', { class: 'mechanic-header' }, el('span', { class: 'mechanic-title' }, f.name), badge),
-          el('p', { class: 'mechanic-desc' }, f.description));
-      };
+      // Combat
+      fill('weapons-body', s.weapons.map((wp) =>
+        el('tr', {},
+          el('td', {}, el('strong', {}, wp.name), el('div', { class: 'muted' }, wp.properties ?? '')),
+          el('td', {}, signed(wp.attack_bonus)),
+          el('td', {}, wp.damage, el('div', { class: 'muted' }, wp.damage_type ?? '')),
+          el('td', { class: wp.ammo != null && wp.ammo <= 2 ? 'ammo low' : 'ammo' }, wp.ammo != null ? String(wp.ammo) : '—'))));
+      text('alar-atk-2', signed(alarAtk));
+      text('alar-dc-2', alarDc);
+      text('exhaustion', v.exhaustion ?? 0);
+      text('alar-notes', s.alar?.notes);
       const byCat = (cats) => s.features.filter((f) => cats.includes(f.category)).map(featureCard);
       fill('features-chakra', byCat(['chakra']));
       fill('features-sympathy', byCat(['sympathy']));
-      fill('features-traits', byCat(['trait', 'bloodline', 'other']));
+      fill('features-traits', byCat(['trait', 'other']));
 
-      // Inventory
+      // Character
+      fill('ability-grid', Object.entries(ABILITIES).map(([key, label]) =>
+        el('div', { class: 'ability-box' },
+          el('div', { class: 'ability-name' }, label),
+          el('div', { class: 'ability-mod' }, signed(abilityMod(key))),
+          el('div', { class: 'ability-foot' },
+            el('span', {}, `Score ${s.abilities[key].score}`),
+            el('span', { class: s.abilities[key].save_proficient ? 'prof' : '' }, `Save ${signed(saveBonus(key))}`)))));
+      fill('skill-list', s.skills.map((sk) =>
+        el('div', { class: 'skill-row' },
+          el('div', { class: 'skill-left' }, el('span', { class: `prof-dot ${sk.proficiency === 'none' ? '' : sk.proficiency}` }), sk.name, el('span', { class: 'skill-ability' }, sk.ability.toUpperCase())),
+          el('span', { class: 'skill-bonus' }, signed(skillBonus(sk))))));
+      fill('identity-facts', facts([['Lineage', c.lineage], ['Background', c.background], ['Alignment', c.alignment]]));
+      fill('features-bloodline', byCat(['bloodline']));
+
+      // Gear
       const cur = s.inventory.currency;
       text('coin-talents', cur.talents);
       text('coin-jots', cur.jots);
       text('coin-drabs', cur.drabs);
       fill('item-list', s.inventory.items.map((it) =>
-        el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), it.name, it.notes ? el('span', { class: 'notes' }, ` (${it.notes})`) : null)));
-      fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('li', {}, k)));
+        el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
+      fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
+    }
 
-      const world = [];
-      if (s.world?.time) world.push(['Time', s.world.time]);
-      if (s.world?.weather) world.push(['Weather', s.world.weather]);
-      for (const comp of s.world?.companions ?? []) world.push([comp.name, [comp.role, comp.notes].filter(Boolean).join(': ')]);
-      fill('world-list', world.map(([k, val]) => el('li', {}, el('span', { class: 'qty' }, `${k}:`), val)));
-
-      // Encounter
-      const enc = s.encounter;
-      if (!enc.active) {
-        text('encounter-title', 'No active encounter');
-        fill('enemy-list', []);
-        fill('env-list', []);
-      } else {
-        text('encounter-title', `${enc.title ?? 'Encounter'}${enc.round ? ` (Round ${enc.round})` : ''}`);
-        fill('enemy-list', (enc.enemies ?? []).map((e, i) =>
-          el('div', { class: 'enemy-item' },
-            el('span', {}, `${i + 1}. ${e.name}${e.status ? ` (${e.status})` : ''}`),
-            el('span', { class: 'enemy-meta' }, [e.position, e.notes].filter(Boolean).join(' • ')))));
-        fill('env-list', (enc.environment ?? []).map((x) =>
-          el('div', { class: 'enemy-item', style: 'border:none;' }, el('span', { style: 'color:var(--sympathy-amber);' }, `Environment: ${x}`))));
-      }
+    function logEntry(e) {
+      return el('div', { class: 'log-entry' },
+        el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })),
+        el('h3', {}, e.title),
+        el('p', {}, e.text));
     }
 
     function renderLog(log) {
       if (!Array.isArray(log) || log.length === 0) return;
-      fill('log-list', log.slice(-10).reverse().map((e) =>
-        el('div', { class: 'log-entry' },
-          el('time', { datetime: e.at }, new Date(e.at).toLocaleString()),
-          el('h3', {}, e.title),
-          el('p', {}, e.text))));
-    }
-
-    // Dice. Advantage/disadvantage applies to the d20; Copy puts a plain-text
-    // summary of the last roll on the clipboard to paste into the story thread.
-    const d = (sides) => Math.floor(Math.random() * sides) + 1;
-    let rollMode = 'normal';
-    let lastRollText = '';
-    const history = [];
-
-    function setRollMode(mode) {
-      rollMode = mode;
-      document.querySelectorAll('.mode-btn[data-mode]').forEach((b) => b.classList.toggle('on', b.dataset.mode === mode));
-    }
-
-    function rollD20() {
-      const a = d(20);
-      if (rollMode === 'normal') return { d20: a, detail: `${a}` };
-      const b = d(20);
-      const d20 = rollMode === 'adv' ? Math.max(a, b) : Math.min(a, b);
-      return { d20, detail: `${a}, ${b} ${rollMode === 'adv' ? 'adv' : 'dis'} → ${d20}` };
-    }
-
-    function showRoll(parts, total, summary) {
-      fill('roll-log', parts);
-      $('roll-log').classList.remove('muted');
-      text('roll-total', total);
-      lastRollText = summary;
-      history.unshift(summary);
-      history.length = Math.min(history.length, 5);
-      fill('roll-history', history.slice(1).map((h) => el('li', {}, h)));
-    }
-
-    function critTag(d20) {
-      return d20 === 20 ? el('span', { style: 'color:#10b981;font-weight:bold;' }, ' (CRITICAL!)')
-        : d20 === 1 ? el('span', { style: 'color:#ef4444;font-weight:bold;' }, ' (NAT 1!)') : null;
-    }
-
-    function rollCheck(name, mod) {
-      const { d20, detail } = rollD20();
-      const total = d20 + mod;
-      const crit = d20 === 20 ? ' (nat 20)' : d20 === 1 ? ' (nat 1)' : '';
-      showRoll([el('strong', {}, `${name}: `), `1d20 (${detail}) ${signed(mod)}`, critTag(d20)], total,
-        `${name}: ${total}${crit} [d20 ${detail} ${signed(mod)}]`);
-    }
-
-    function rollWeapon(w) {
-      const [, count, sides, bonus] = w.damage.match(/^(\d+)d(\d+)([+-]\d+)?$/);
-      const { d20, detail } = rollD20();
-      const hit = d20 + w.attack_bonus;
-      // A natural 20 doubles the damage dice (including Sneak Attack).
-      const diceCount = d20 === 20 ? +count * 2 : +count;
-      const dice = Array.from({ length: diceCount }, () => d(+sides));
-      const dmg = dice.reduce((a, b) => a + b, 0) + (+bonus || 0);
-      const sneakDice = Array.from({ length: d20 === 20 ? 2 : 1 }, () => d(6));
-      const sneak = sneakDice.reduce((a, b) => a + b, 0);
-      const crit = d20 === 20 ? ' (CRIT)' : d20 === 1 ? ' (nat 1)' : '';
-      showRoll([
-        el('strong', {}, `${w.name}: `), 'To Hit ', el('strong', {}, String(hit)), ` (d20 ${detail}${signed(w.attack_bonus)})`, critTag(d20),
-        ' | Damage ', el('strong', {}, String(dmg)), ` (${dice.join('+')}${bonus ?? ''})`,
-        ' | with Sneak Attack (', sneakDice.join('+'), '): ', el('strong', {}, String(dmg + sneak)),
-      ], `${hit} Hit`,
-        `${w.name}: ${hit} to hit${crit}, ${dmg} damage (${dmg + sneak} with Sneak Attack) [d20 ${detail}]`);
-    }
-
-    async function copyLastRoll() {
-      if (!lastRollText) return;
-      try {
-        await navigator.clipboard.writeText(lastRollText);
-        $('copy-btn').textContent = '✓ Copied';
-      } catch {
-        $('copy-btn').textContent = 'Copy blocked';
-      }
-      setTimeout(() => { $('copy-btn').textContent = '📋 Copy roll'; }, 1500);
+      const newestFirst = log.slice().reverse();
+      fill('recent-log', newestFirst.slice(0, 3).map(logEntry));
+      fill('log-list', newestFirst.map(logEntry));
     }
 
     loadState();
