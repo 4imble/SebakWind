@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19T20:41:36Z",
+  "updated_at": "2026-10-19T20:46:04Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -191,7 +191,7 @@
   ],
   "inventory": {
     "currency": {
-      "talents": 2,
+      "talents": 1,
       "jots": 12,
       "drabs": 17
     },
@@ -247,14 +247,14 @@
     ]
   },
   "world": {
-    "location": "The outskirts of Imre, on the road in from the south",
+    "location": "Imre, in the apothecary's shop off the south road",
     "time": "Before dawn, Autumn (Fallow)",
     "weather": "Cold drizzle easing",
     "companions": [
       {
         "name": "Bram",
         "role": "Employer",
-        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Awake and drifting in and out at 1 HP; his wound reopened and Sebak re-dressed it.",
+        "notes": "Portly tinker driving a mule-drawn wagon from Crosson. Laid on a cot in the apothecary's shop in Imre, feverish, treated for a few days (Sebak paid the first talent).",
         "icon": "🧔",
         "hp_current": 1,
         "hp_max": 11,
@@ -295,6 +295,6 @@
       "Felled oak blocking the road"
     ]
   },
-  "last_log": "Sebak reached the outskirts of Imre before dawn with Bram feverish but alive in the wagon, and needs a healer and a bed.",
+  "last_log": "The apothecary took Bram in for treatment and gave Sebak a roof and a stall for the mule; Sebak paid a talent.",
   "notes": ""
 }
