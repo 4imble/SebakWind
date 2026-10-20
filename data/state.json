@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-20T16:45:37Z",
+  "updated_at": "2026-10-20T16:45:54Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -115,14 +115,6 @@
       "damage_type": "piercing",
       "properties": "Finesse, Thrown (20/60)",
       "ammo": 10
-    },
-    {
-      "name": "Twine bolas (2 kunai)",
-      "attack_bonus": 3,
-      "damage": "none",
-      "damage_type": "restrains",
-      "properties": "Thrown (10/20 ft), improvised, no proficiency; hit restrains the target until it uses an action to free itself, Strength check DC 11; two kunai are tied up in it",
-      "ammo": 1
     },
     {
       "name": "Twine bolas (2 kunai)",
