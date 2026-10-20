@@ -18,6 +18,7 @@
         "lineage": { "type": "string" },
         "class": { "type": "string" },
         "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "xp": { "type": "integer", "minimum": 0 },
         "background": { "type": "string" },
         "alignment": { "type": "string" }
       }

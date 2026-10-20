@@ -30,6 +30,7 @@ Fields marked *derived* are computed by the page and must **not** be stored.
 | `updated_at` | UTC timestamp | `YYYY-MM-DDTHH:MM:SSZ`. |
 | `character.name`, `.title`, `.lineage`, `.class`, `.background`, `.alignment` | string | Header text. |
 | `character.level` | integer 1–20 | Raise `vitals.proficiency_bonus` by hand when the level calls for it. |
+| `character.xp` | integer, optional | Total experience points earned, never reset on level-up. The sheet draws an XP bar under the level using the 5e thresholds (300 for level 2, 900, 2700, 6500...) and says "level up ready" once the total reaches the next one. Raise `level` only when the story levels Sebak up. |
 | `vitals.hp_current`, `.hp_max`, `.hp_temp` | integer | `hp_current` may not exceed `hp_max`. Temp HP is separate. |
 | `vitals.hit_die`, `.hit_dice_remaining` | string, integer | e.g. `"1d8"`, `1`. |
 | `vitals.ac`, `.ac_notes` | integer, string | AC is stored, not derived (armour varies). |
