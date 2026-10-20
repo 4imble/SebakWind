@@ -256,17 +256,17 @@
     .item-list .notes { color: var(--text-muted); font-size: 0.78rem; }
     .keepsake { font-size: 0.88rem; color: var(--text-soft); font-style: italic; }
 
-    /* Changed values: a solid amber highlight that holds, then fades over 8s, with a "was" tag for short values. */
+    /* Changed values: a solid amber highlight that holds, then fades over 5s, with a "was" tag for short values. */
     @keyframes flash {
       0%, 30% { background-color: rgba(245, 158, 11, 0.35); box-shadow: 0 0 0 2px var(--sympathy-amber), 0 0 14px rgba(245, 158, 11, 0.6); }
       100% { background-color: transparent; box-shadow: 0 0 0 2px transparent, 0 0 14px transparent; }
     }
     @keyframes was-fade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
-    .flash { animation: flash 8s ease-in; border-radius: 4px; }
+    .flash { animation: flash 5s ease-in; border-radius: 4px; }
     .flash[data-was]::after {
       content: 'was ' attr(data-was); margin-left: 6px; padding: 1px 6px; border-radius: 999px;
       background: var(--sympathy-amber); color: #111; font-size: 0.65rem; font-weight: 700; letter-spacing: 0;
-      text-transform: none; vertical-align: middle; white-space: nowrap; animation: was-fade 8s ease-in forwards;
+      text-transform: none; vertical-align: middle; white-space: nowrap; animation: was-fade 5s ease-in forwards;
     }
 
     @media (max-width: 900px) {
