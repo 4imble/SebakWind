@@ -111,6 +111,16 @@
     .chip.amber { background: rgba(245, 158, 11, 0.12); color: #fcd34d; border-color: rgba(245, 158, 11, 0.5); }
     .chip.blue { background: rgba(56, 189, 248, 0.12); color: var(--chakra-blue); border-color: rgba(56, 189, 248, 0.4); }
 
+    .subtabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .subtab {
+      background: var(--bg-panel-alt); border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 99px;
+      padding: 4px 12px; font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+    .subtab:hover { color: var(--text-soft); }
+    .subtab[aria-selected="true"] { color: #fff; border-color: var(--uchiha-red); background: rgba(185, 28, 28, 0.2); }
+    .subtab .count { color: var(--text-muted); font-weight: 400; margin-left: 4px; }
+    .note-group-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sympathy-amber); margin: 6px 0 -2px; }
+
     /* TABS */
     .tabs {
       position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; overflow-x: auto;
@@ -495,6 +505,7 @@
     <section role="tabpanel" id="panel-notes" aria-labelledby="tab-notes" hidden>
       <div class="panel">
         <div class="panel-title">Notes</div>
+        <div class="subtabs" id="note-groups" role="tablist" aria-label="Note groups" hidden></div>
         <div class="stack" id="note-list"></div>
       </div>
     </section>
@@ -880,7 +891,7 @@
       fill('item-list', s.inventory.items.map((it) =>
         el('li', {}, el('span', { class: 'qty' }, `${it.qty}×`), el('span', {}, it.name, it.notes ? el('div', { class: 'notes' }, it.notes) : null))));
       const notes = s.player_notes ?? [];
-      fill('note-list', notes.length ? notes.map(noteEntry) : [el('p', { class: 'muted' }, 'Nothing noted yet. Ask in the story to have something written down.')]);
+      renderNotes(s.player_notes ?? []);
       fill('keepsake-list', (s.inventory.keepsakes ?? []).map((k) => el('p', { class: 'keepsake' }, k)));
     }
 
@@ -992,6 +1003,36 @@
         e.at ? el('time', { datetime: e.at }, new Date(e.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })) : null,
         el('h3', {}, e.title),
         el('p', {}, e.text));
+    }
+
+    // Notes, grouped by their optional `group` in order of first appearance. With more than
+    // one group, pill sub-tabs pick one group or All (which shows every group under a heading).
+    let lastNotes = [];
+    let noteGroup = 'All';
+    function renderNotes(notes) {
+      lastNotes = notes;
+      if (!notes.length) {
+        $('note-groups').hidden = true;
+        fill('note-list', [el('p', { class: 'muted' }, 'Nothing noted yet. Ask in the story to have something written down.')]);
+        return;
+      }
+      const groups = new Map();
+      notes.forEach((n, i) => {
+        const g = n.group?.trim() || 'General';
+        if (!groups.has(g)) groups.set(g, []);
+        groups.get(g).push(noteEntry(n, i));
+      });
+      if (noteGroup !== 'All' && !groups.has(noteGroup)) noteGroup = 'All';
+      const tabs = [['All', notes.length], ...[...groups].map(([g, cards]) => [g, cards.length])];
+      $('note-groups').hidden = groups.size < 2;
+      $('note-groups').replaceChildren(...tabs.map(([g, count]) => {
+        const b = el('button', { class: 'subtab', type: 'button', role: 'tab', 'aria-selected': String(g === noteGroup) }, g, el('span', { class: 'count' }, String(count)));
+        b.addEventListener('click', () => { noteGroup = g; renderNotes(lastNotes); });
+        return b;
+      }));
+      if (groups.size < 2) fill('note-list', [...groups.values()][0]);
+      else if (noteGroup === 'All') fill('note-list', [...groups].flatMap(([g, cards]) => [el('h3', { class: 'note-group-title' }, g), ...cards]));
+      else fill('note-list', groups.get(noteGroup));
     }
 
     // A note card with a button that copies an out-of-character request to delete it,
