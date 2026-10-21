@@ -51,9 +51,12 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .who { display: flex; align-items: center; gap: 16px; min-width: 0; }
-    .avatar { flex: none; width: 76px; height: 76px; border-radius: 50%; overflow: hidden; border: 2px solid var(--uchiha-red); box-shadow: 0 0 14px rgba(185, 28, 28, 0.4); }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Portrait strip: fills the header's full height, flush to its left edge, with the red accent on its right. */
+    .header-banner.has-avatar { position: relative; overflow: hidden; border-left: 1px solid var(--border-color); padding-left: 136px; }
+    .who { min-width: 0; }
+    .avatar { position: absolute; top: 0; bottom: 0; left: 0; width: 116px; border-right: 4px solid var(--uchiha-red); }
+    .avatar[hidden] { display: none; }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
     .portrait { display: block; margin: 0 0 12px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
     .portrait img { width: 100%; max-height: 420px; object-fit: cover; object-position: center 15%; display: block; }
     .identity-block h1 {
@@ -304,7 +307,8 @@
     @media (max-width: 560px) {
       body { padding: 12px 16px; }
       .identity-block h1 { font-size: 1.5rem; }
-      .avatar { width: 56px; height: 56px; }
+      .header-banner.has-avatar { padding-left: 104px; }
+      .avatar { width: 88px; }
       .vitals-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .vitals-grid .vital-card:first-child { grid-column: 1 / -1; }
       .vital-card { padding: 8px 10px; }
@@ -318,10 +322,10 @@
 </head>
 <body>
   <div class="container">
-    <header class="header-banner">
+    <header class="header-banner has-avatar">
       <div class="who">
       <a class="avatar" href="assets/sebak-portrait.jpg" target="_blank" rel="noopener" title="Open Sebak's portrait">
-        <img src="assets/sebak-avatar.jpg" alt="Sebak" onerror="this.parentElement.hidden = true">
+        <img src="assets/sebak-avatar.jpg" alt="Sebak" onerror="this.parentElement.hidden = true; this.closest('header').classList.remove('has-avatar')">
       </a>
       <div class="identity-block">
         <h1><span id="char-name">Sebak</span> <span class="crow-badge" id="char-title"></span></h1>
