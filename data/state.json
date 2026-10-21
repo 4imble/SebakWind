@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-21T21:39:15Z",
+  "updated_at": "2026-10-21T21:46:23Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -379,6 +379,12 @@
       "text": "Woman with a tight pinned braid, grey gown, white seal; she runs the inquiry into Orrel and the bars. Took Dobb's testimony and my account. Promised a sealed letter of character for the University.",
       "group": "People",
       "at": "2026-10-21T20:41Z"
+    },
+    {
+      "title": "Hale",
+      "text": "Stooped, ink-stained ledger-keeper for the University Masters, met at the Ferry-Pole inn. Wears a grey University cloak. Explained the interview: a board of Masters asks what it pleases, tuition is set there, and honesty about what you can and cannot do matters. Left a hand-drawn map of the ridge road, with a detour round the bend where grey-cloaked men robbed a drover, and a line: ask for him at the Archives, in daylight.",
+      "group": "People",
+      "at": "2026-10-21T21:46Z"
     }
   ]
 }
