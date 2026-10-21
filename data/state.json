@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-21T20:21:53Z",
+  "updated_at": "2026-10-21T20:24:51Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -343,32 +343,38 @@
     {
       "title": "The delivery (done)",
       "text": "Bram's strongbox went to Rennick of Gilder's Row, who buys nightsilver for Warrick, a journeywoman of the Artificery. I gave Warrick one bar at the Stonebridge gardens. Master Orrel, her master, stole the other five through the porter Dobb. I traced them to the Artificery, and Warden Maren Isk found them in Orrel's cold furnace. Orrel is suspended and the wardens hold the bars. Bram's wage of 1.5 talents is due from Warrick once the bars are released.",
-      "at": "2026-10-21T20:21:53Z"
-    },
-    {
-      "title": "Ashdown",
-      "text": "Thin, pale, soft-spoken, long grey coat, wide hat, smells of lavender. Calls himself Ashdown. Signs with a drawn square. He says he is the nightsilver supplier. He taught me an hour of binding, gave me a bar, and told me what nightsilver does. Contact him through Penn, the chandler with the green door on Candle Row, with a folded note marked with a drawn square. I promised never to give his name to the Academy. He would not say if he is a sympathist; he plainly is.",
-      "at": "2026-10-21T20:21:53Z"
-    },
-    {
-      "title": "Nightsilver: what I know",
-      "text": "A pale, heavy metal. It relays a binding with almost no slippage, so a sliver in a chain drops each link a tier. It stores heat, motion or chakra and gives it back in a rush. Never heat it fast: it flares white and blinds. I keep one bar. My shaving is still bound to the five bars the wardens hold.",
-      "at": "2026-10-21T20:21:53Z"
+      "at": "2026-10-21T20:21:53Z",
+      "group": "Story"
     },
     {
       "title": "Open threads",
       "text": "Verrin, the scar-faced crossbowman who hired the robbers and killed two carriers, is still loose. Dobb is hiding at Penn's and will testify at first bell at the wardens' hall (west bank, white seal over the door). Warden Isk wants my account. The Salt Barrel's barman slipped away. Marta wants a sliver of nightsilver for a test. Voss expects an account and a drink. Pell was to point out the heavy brigand at the Salt Barrel; his hearing is still pending.",
-      "at": "2026-10-21T20:21:53Z"
+      "at": "2026-10-21T20:21:53Z",
+      "group": "Story"
+    },
+    {
+      "title": "Ashdown",
+      "text": "Thin, pale, soft-spoken, long grey coat, wide hat, smells of lavender. Calls himself Ashdown. Signs with a drawn square. He says he is the nightsilver supplier. He taught me an hour of binding, gave me a bar, and told me what nightsilver does. Contact him through Penn, the chandler with the green door on Candle Row, with a folded note marked with a drawn square. I promised never to give his name to the Academy. He would not say if he is a sympathist; he plainly is.",
+      "at": "2026-10-21T20:21:53Z",
+      "group": "People"
     },
     {
       "title": "Who is who",
       "text": "Bram: tinker from Crosson, recovering at Marta's. Marta: the apothecary. Sergeant Voss: south gate watch; Hesk is his plain-clothes man. Rennick: factor in metals, Gilder's Row. Warrick: journeywoman. Orrel: her master, now suspended. Dobb: Penn's cousin and the Artificery porter. Penn: chandler. Tam: the boy on his step. Gorrow: the chestnut seller who passes messages. Warden Maren Isk: grey gown, white seal, a trained sympathist.",
-      "at": "2026-10-21T20:21:53Z"
+      "at": "2026-10-21T20:21:53Z",
+      "group": "People"
+    },
+    {
+      "title": "Nightsilver: what I know",
+      "text": "A pale, heavy metal. It relays a binding with almost no slippage, so a sliver in a chain drops each link a tier. It stores heat, motion or chakra and gives it back in a rush. Never heat it fast: it flares white and blinds. I keep one bar. My shaving is still bound to the five bars the wardens hold.",
+      "at": "2026-10-21T20:21:53Z",
+      "group": "Lore"
     },
     {
       "title": "Seeking out at the Academy",
       "text": "Ashdown's advice: Master Kilvin of the Artificery (plain, soot to the elbows, respects honest craft), Master Lorren of the Archives (careful, slow), and Master Elodin, who teaches names. Marta also mentioned Corwin Hale of the Medica. I intend to apply to the University. No referral is needed.",
-      "at": "2026-10-21T20:21:53Z"
+      "at": "2026-10-21T20:21:53Z",
+      "group": "Plans"
     }
   ]
 }
