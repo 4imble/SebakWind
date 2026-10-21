@@ -552,7 +552,8 @@
       return node;
     }
     // After the first load, anything that changed is highlighted. A highlight on a
-    // hidden tab waits there and plays when the tab is opened.
+    // hidden tab waits there and plays once when the tab is opened; switching away
+    // mid-flash cancels it, so a highlight never replays on a later tab switch.
     let firstRender = true;
     function flash(node, was) {
       node.classList.remove('flash');
@@ -560,9 +561,12 @@
       if (was) node.dataset.was = was; else delete node.dataset.was;
       node.classList.add('flash');
     }
-    document.addEventListener('animationend', (e) => {
+    const endFlash = (e) => {
       if (e.animationName === 'flash' && !e.pseudoElement) { e.target.classList.remove('flash'); delete e.target.dataset.was; }
-    });
+    };
+    document.addEventListener('animationend', endFlash);
+    document.addEventListener('animationcancel', endFlash);
+    let quiet = false; // set while re-rendering for a UI click, not new data
 
     // Replaces a list's contents, highlighting only entries whose text is new.
     const fill = (id, nodes) => {
@@ -570,7 +574,7 @@
       const before = new Set([...box.children].map((c) => c.textContent));
       const next = nodes.filter((n) => n != null && n !== '');
       box.replaceChildren(...next);
-      if (firstRender || before.size === 0) return;
+      if (firstRender || quiet || before.size === 0) return;
       for (const n of next) {
         if (n instanceof Element && n.tagName !== 'svg' && n.textContent && !before.has(n.textContent)) flash(n);
       }
@@ -1027,7 +1031,7 @@
       $('note-groups').hidden = groups.size < 2;
       $('note-groups').replaceChildren(...tabs.map(([g, count]) => {
         const b = el('button', { class: 'subtab', type: 'button', role: 'tab', 'aria-selected': String(g === noteGroup) }, g, el('span', { class: 'count' }, String(count)));
-        b.addEventListener('click', () => { noteGroup = g; renderNotes(lastNotes); });
+        b.addEventListener('click', () => { noteGroup = g; quiet = true; try { renderNotes(lastNotes); } finally { quiet = false; } });
         return b;
       }));
       if (groups.size < 2) fill('note-list', [...groups.values()][0]);
