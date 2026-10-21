@@ -31,6 +31,14 @@ const combatLog = state.encounter?.combat_log ?? [];
 for (let i = 1; i < combatLog.length; i++) {
   rule(combatLog[i - 1].round <= combatLog[i].round, `encounter.combat_log entry ${i} is from an earlier round than the one before it (append new entries at the end)`);
 }
+const noteGroups = new Map();
+for (const n of state.player_notes ?? []) {
+  if (!n.group) continue;
+  const key = n.group.trim().toLowerCase();
+  const seen = noteGroups.get(key);
+  rule(seen == null || seen === n.group, `player_notes group "${n.group}" differs from "${seen}" only by case or spacing (use the same spelling so they share a sub-tab)`);
+  if (seen == null) noteGroups.set(key, n.group);
+}
 const map = state.encounter?.map;
 if (map) {
   for (const t of map.terrain ?? []) {
