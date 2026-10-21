@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-21T20:11:44Z",
+  "updated_at": "2026-10-21T20:12:04Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -382,7 +382,7 @@
     },
     {
       "title": "Join the Academy",
-      "text": "The bars are with the wardens, Orrel is suspended, and Dobb will testify at first bell. My part in the delivery is done. I mean to apply to the University now. I have 1 talent, 7 jots and 4 drabs, and the one bar from Ashdown.",
+      "text": "The bars are with the wardens, Orrel is suspended, and Dobb will testify at first bell. My part in the delivery is done. I mean to apply to the University now.",
       "at": "2026-10-21T20:11:44Z"
     }
   ]
