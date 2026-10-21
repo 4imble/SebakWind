@@ -124,6 +124,18 @@
     .subtab .count { color: var(--text-muted); font-weight: 400; margin-left: 4px; }
     .note-group-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sympathy-amber); margin: 6px 0 -2px; }
 
+    .log-day { border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.015); }
+    .log-day > summary {
+      list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 10px 14px; font-weight: 600; color: var(--text-soft);
+    }
+    .log-day > summary::-webkit-details-marker { display: none; }
+    .log-day > summary::before { content: '▸'; color: var(--sympathy-amber); margin-right: 8px; transition: transform 0.2s; display: inline-block; }
+    .log-day[open] > summary::before { transform: rotate(90deg); }
+    .log-day > summary > span:first-child { flex: 1; }
+    .log-day > summary .count { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+    .log-day > .stack { padding: 0 12px 12px; }
+
     /* TABS */
     .tabs {
       position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; overflow-x: auto;
@@ -1068,11 +1080,41 @@
       return ok;
     }
 
+    // The full log, newest first, in one collapsible section per day (local date).
+    // The newest day starts open; days you open or close stay that way across updates.
+    const dayOpen = new Map();
+    let seenLog = null;
     function renderLog(log) {
       if (!Array.isArray(log) || log.length === 0) return;
       const newestFirst = log.slice().reverse();
       fill('recent-log', newestFirst.slice(0, 2).map(logEntry));
-      fill('log-list', newestFirst.map(logEntry));
+      const days = new Map();
+      for (const e of newestFirst) {
+        const d = new Date(e.at);
+        const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+        if (!days.has(key)) days.set(key, { label: d.toLocaleDateString([], { weekday: 'long', day: 'numeric', month: 'long' }), entries: [] });
+        days.get(key).entries.push(e);
+      }
+      const newest = days.keys().next().value;
+      const fresh = [];
+      const sections = [...days].map(([key, day]) => {
+        const cards = day.entries.map((e) => {
+          const card = logEntry(e);
+          if (seenLog && !seenLog.has(e.at + e.title)) fresh.push(card);
+          return card;
+        });
+        const n = day.entries.length;
+        const details = el('details', { class: 'log-day' },
+          el('summary', {}, el('span', {}, day.label), el('span', { class: 'count' }, `${n} ${n === 1 ? 'entry' : 'entries'}`)),
+          el('div', { class: 'stack' }, ...cards));
+        details.open = dayOpen.get(key) ?? key === newest;
+        details.addEventListener('toggle', () => dayOpen.set(key, details.open));
+        if (fresh.some((c) => details.contains(c))) details.open = true;
+        return details;
+      });
+      $('log-list').replaceChildren(...sections);
+      fresh.forEach((c) => flash(c));
+      seenLog = new Set(log.map((e) => e.at + e.title));
     }
 
     loadState();
