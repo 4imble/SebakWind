@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-23T21:57:13Z",
+  "updated_at": "2026-10-23T21:58:28Z",
   "character": {
     "name": "Sebak",
     "title": "The Crow in the Wind",
@@ -311,6 +311,11 @@
         "name": "Sample vials",
         "qty": 4,
         "notes": "Small stoppered glass vials with wax and labelled tags for blood and hair samples; one holds the hooded man's blood cloth."
+      },
+      {
+        "name": "Warden Isk's sealed letter",
+        "qty": 1,
+        "notes": "A letter of character sealed with white wax, to be given to whoever interviews Sebak at the University."
       }
     ],
     "keepsakes": [
